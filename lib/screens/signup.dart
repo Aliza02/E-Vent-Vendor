@@ -7,6 +7,7 @@ import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
 import '../widget/numberfield.dart';
+import '../widget/progressbar.dart';
 import '../widget/subheading.dart';
 import '../widget/textfield.dart';
 import '../widget/passwordfield.dart';
@@ -19,7 +20,14 @@ class signup extends StatefulWidget {
 }
 
 class _signupState extends State<signup> {
-  bool isChecked = false;
+  void validation() {
+    currentindex += 1;
+    print(currentindex);
+    Navigator.pushNamed(context, '/signup_business');
+    currentindex = 0;
+  }
+
+  int currentindex = 0;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -36,7 +44,6 @@ class _signupState extends State<signup> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(0.0),
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: logo(width: width * 0.4, height: height * 0.08),
               ),
@@ -49,15 +56,14 @@ class _signupState extends State<signup> {
                 title: "Create an Account",
                 fontSize: width * 0.04,
               ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              progressbar(index: currentindex),
               Container(
                 height: height * 0.05,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: textFormField(title: 'Full Name'),
-              ),
-              Container(
-                height: height * 0.05,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: numberField(title: 'Phone Number', maxLength: 11),
               ),
               Container(
                 height: height * 0.05,
@@ -77,51 +83,16 @@ class _signupState extends State<signup> {
               SizedBox(
                 height: height * 0.01,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    height: height * 0.01,
-                    width: width * 0.08,
-                    child: Checkbox(
-                      activeColor: Color(0xFFCB585A),
-                      side: BorderSide(
-                        color: Color(0xFFCB585A),
-                        width: 2.0,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                          color: Color(0xFFCB585A),
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    // margin: EdgeInsets.fromLTRB(0.0, 0.0, 100.0, 0.0),
-                    child: Text(
-                      'I agree to all the term and conditions',
-                      style: TextStyle(
-                        fontSize: width * 0.03,
-                        fontFamily: constant.font,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF464646),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Container(
                 width: width * 0.4,
                 height: height * 0.06,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.035, 0.0, 0.0),
-                child: button(label: 'Create Account'),
+                child: button(
+                  label: 'Next',
+                  onpressed: () {
+                    validation();
+                  },
+                ),
               ),
               SizedBox(height: height * 0.03),
               Row(

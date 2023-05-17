@@ -1,71 +1,93 @@
-import 'package:eventually_vendor/constants/constant.dart';
-import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/constant.dart';
 import '../widget/button.dart';
-import '../widget/googleButton.dart';
 import '../widget/heading.dart';
+import '../widget/logo.dart';
+import '../widget/numberfield.dart';
+import '../widget/progressbar.dart';
 import '../widget/subheading.dart';
 import '../widget/textfield.dart';
-import '../widget/passwordfield.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class signup_business extends StatefulWidget {
+  const signup_business({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<signup_business> createState() => _signup_businessState();
 }
 
-class _loginState extends State<login> {
+class _signup_businessState extends State<signup_business> {
+  void validationbusiness() {
+    currentindex += 1;
+  }
+
+  int currentindex = 1;
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color(constant.background),
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.08),
           width: width,
           height: height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(0.0),
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.04, 0.0, 0.0),
-                child: logo(width: width * 0.9, height: height * 0.15),
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: logo(width: width * 0.4, height: height * 0.08),
               ),
               heading(
-                title: 'Welcome Back',
+                title: 'Sign Up',
                 heightFromTop: height * 0.008,
                 fontSize: width * 0.11,
               ),
               subHeading(
-                title: "Welcome back, you've been missed.",
+                title: "Create an Account",
                 fontSize: width * 0.04,
               ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              progressbar(index: currentindex),
               Container(
-                height: height * 0.07,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.03, 0.0, 0.0),
-                child: textFormField(title: 'Email'),
+                height: height * 0.05,
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: textFormField(title: 'Business Name'),
               ),
               Container(
-                height: height * 0.07,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.03, 0.0, 0.0),
-                child: PasswordField(title: 'Password'),
+                height: height * 0.05,
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: textFormField(title: 'Business Category'),
+              ),
+              Container(
+                height: height * 0.05,
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: textFormField(title: 'Business Location'),
+              ),
+              Container(
+                height: height * 0.05,
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: numberField(title: 'CNIC', maxLength: 14),
+              ),
+              Container(
+                height: height * 0.05,
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                child: numberField(title: 'Contact Number', maxLength: 11),
               ),
               SizedBox(
                 height: height * 0.01,
               ),
               Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  Container(
                     height: height * 0.01,
                     width: width * 0.08,
                     child: Checkbox(
@@ -92,24 +114,13 @@ class _loginState extends State<login> {
                   Container(
                     // margin: EdgeInsets.fromLTRB(0.0, 0.0, 100.0, 0.0),
                     child: Text(
-                      'Remember me',
-                      textAlign: TextAlign.start,
+                      'I agree to all the term and conditions',
                       style: TextStyle(
-                        fontSize: width * 0.04,
+                        fontSize: width * 0.03,
                         fontFamily: constant.font,
-                        // fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w700,
                         color: Color(0xFF464646),
                       ),
-                    ),
-                  ),
-                  Spacer(),
-                  Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFFCB585A),
-                      fontSize: width * 0.04,
                     ),
                   ),
                 ],
@@ -117,54 +128,20 @@ class _loginState extends State<login> {
               Container(
                 width: width * 0.4,
                 height: height * 0.06,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.04, 0.0, 0.0),
+                margin: EdgeInsets.fromLTRB(0.0, height * 0.035, 0.0, 0.0),
                 child: button(
-                  label: 'Login',
-                  index: 0,
-                  onpressed: () {},
+                  label: 'Create Account',
+                  onpressed: () {
+                    validationbusiness();
+                  },
                 ),
               ),
               SizedBox(height: height * 0.03),
               Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xFFCB585A),
-                      height: 20.0,
-                      thickness: 2,
-                      indent: 9,
-                      endIndent: 9,
-                    ),
-                  ),
-                  Text(
-                    'or continue with',
-                    style: TextStyle(
-                      color: Color(0xff555555),
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w400,
-                      fontSize: width * 0.04,
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xFFCB585A),
-                      height: 20.0,
-                      thickness: 2,
-                      indent: 9,
-                      endIndent: 9,
-                    ),
-                  ),
-                ],
-              ),
-              googleButton(),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Don’t have an account?',
+                    'Already have an account?',
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: Color(0xFF555555),
@@ -177,7 +154,7 @@ class _loginState extends State<login> {
                       Navigator.pushNamed(context, '/signup');
                     },
                     child: Text(
-                      'Sign up',
+                      'Sign In',
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: Color(0xFFCB585A),
@@ -187,7 +164,7 @@ class _loginState extends State<login> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),

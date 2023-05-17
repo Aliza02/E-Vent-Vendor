@@ -22,7 +22,7 @@ class _numberFieldState extends State<numberField> {
     return TextFormField(
       maxLength: widget.maxLength,
       cursorColor: Color(0xFFCB585A),
-      textAlign: widget.maxLength == 11 ? TextAlign.start : TextAlign.center,
+      textAlign: widget.maxLength >= 11 ? TextAlign.start : TextAlign.center,
       keyboardType: TextInputType.number,
       // controller: widget.textcontroller,
       decoration: InputDecoration(
