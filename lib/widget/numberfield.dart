@@ -24,7 +24,6 @@ class _numberFieldState extends State<numberField> {
       cursorColor: Color(0xFFCB585A),
       textAlign: widget.maxLength >= 11 ? TextAlign.start : TextAlign.center,
       keyboardType: TextInputType.number,
-      // controller: widget.textcontroller,
       decoration: InputDecoration(
         fillColor: Color(0xFFEFEFEF).withOpacity(0.5),
         filled: true,

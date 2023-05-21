@@ -120,7 +120,6 @@ class _loginState extends State<login> {
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.04, 0.0, 0.0),
                 child: button(
                   label: 'Login',
-                  index: 0,
                   onpressed: () {},
                 ),
               ),

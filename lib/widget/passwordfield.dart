@@ -6,7 +6,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../constants/constant.dart';
 
 class PasswordField extends StatefulWidget {
-  // TextEditingController passwordcontroller;
   String title;
   PasswordField({required this.title});
 
@@ -20,7 +19,6 @@ class _PasswordFieldState extends State<PasswordField> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return TextFormField(
-      // controller: widget.passwordcontroller,
       obscureText: obscureText,
       decoration: InputDecoration(
         fillColor: Color(0xFFEFEFEF).withOpacity(0.5),

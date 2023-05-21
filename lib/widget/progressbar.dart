@@ -22,34 +22,32 @@ class _progressbarState extends State<progressbar> {
       children: [
         Column(
           children: [
-            Text(widget.index.toString()),
+            // Text(widget.index.toString()),
             Row(
               children: [
                 Container(
-                    height: height * 0.03,
-                    width: width * 0.06,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(constant.red),
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.white,
+                  height: height * 0.03,
+                  width: width * 0.06,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(constant.red),
+                      width: 1.0,
                     ),
-                    child: widget.index >= 1
-                        ? Text(widget.index.toString())
-                        // Icon(
-                        //     Icons.check,
-                        //     color: Color(constant.red),
-                        //     size: 16.0,
-                        //   )
-                        : Text(widget.index.toString())
-                    // Icon(
-                    //     Icons.circle,
-                    //     color: Color(constant.red),
-                    //     size: 16.0,
-                    //   ),
-                    ),
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.white,
+                  ),
+                  child: widget.index >= 1
+                      ? Icon(
+                          Icons.check,
+                          color: Color(constant.red),
+                          size: 16.0,
+                        )
+                      : Icon(
+                          Icons.circle,
+                          color: Color(constant.red),
+                          size: 16.0,
+                        ),
+                ),
                 Container(
                   margin: EdgeInsets.only(top: height * 0.003),
                   height: height * 0.001,
@@ -71,11 +69,11 @@ class _progressbarState extends State<progressbar> {
                     color: Color(constant.background),
                   ),
                   child: widget.index >= 1
-                      ? Text(widget.index.toString())
-                      // Icon(
-                      //     Icons.circle,
-                      //     color: Color(constant.red),
-                      //   )
+                      ? Icon(
+                          Icons.circle,
+                          color: Color(constant.red),
+                          size: 16.0,
+                        )
                       : Container(),
                 ),
               ],

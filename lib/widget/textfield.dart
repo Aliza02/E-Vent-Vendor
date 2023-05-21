@@ -20,7 +20,6 @@ class _textFormFieldState extends State<textFormField> {
     double height = MediaQuery.of(context).size.height;
     return TextFormField(
       textAlignVertical: TextAlignVertical.center,
-      // controller: widget.textcontroller,
       decoration: InputDecoration(
         fillColor: Color(0xFFEFEFEF).withOpacity(0.5),
         filled: true,

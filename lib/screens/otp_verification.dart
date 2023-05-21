@@ -1,3 +1,5 @@
+import 'package:email_otp/email_otp.dart';
+import 'package:eventually_vendor/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -9,7 +11,7 @@ import '../widget/numberfield.dart';
 import '../widget/subheading.dart';
 
 class otp_verification extends StatefulWidget {
-  const otp_verification({super.key});
+  otp_verification({super.key});
 
   @override
   State<otp_verification> createState() => _otp_verificationState();
@@ -28,10 +30,12 @@ class _otp_verificationState extends State<otp_verification> {
     );
   }
 
+  TextEditingController otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -70,7 +74,6 @@ class _otp_verificationState extends State<otp_verification> {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.02),
-                // margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, height * 0.08),
                 child: Text(
                   'Enter the OTP code we just sent ',
                   style: TextStyle(
@@ -100,6 +103,7 @@ class _otp_verificationState extends State<otp_verification> {
                   (index) => buildOTPFields(index, context),
                 ),
               ),
+              button(label: 'verify', onpressed: () {}),
             ],
           ),
         ),
