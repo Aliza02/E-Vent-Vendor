@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/screens/forgot_password.dart';
 import 'package:eventually_vendor/screens/login.dart';
 import 'package:eventually_vendor/screens/onboard.dart';
 import 'package:eventually_vendor/screens/otp_verification.dart';
@@ -18,13 +19,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/signup',
+        initialRoute: '/forgotpassword',
         routes: {
           '/onboard': (context) => onboard(),
           '/login': (context) => login(),
           '/signup': (context) => signup(),
           '/otpverification': (context) => otp_verification(),
           '/signup_business': (context) => signup_business(),
+          '/forgotpassword': (context) => forgotPassword(),
         });
   }
 }

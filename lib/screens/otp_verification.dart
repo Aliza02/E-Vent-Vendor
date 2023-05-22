@@ -1,4 +1,3 @@
-import 'package:email_otp/email_otp.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -30,7 +29,6 @@ class _otp_verificationState extends State<otp_verification> {
     );
   }
 
-  TextEditingController otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
