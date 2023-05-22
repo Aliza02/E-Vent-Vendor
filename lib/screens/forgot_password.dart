@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/constants/images.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:eventually_vendor/widget/forgot_password_image.dart';
 import 'package:eventually_vendor/widget/heading.dart';
@@ -33,7 +34,9 @@ class _forgotPasswordState extends State<forgotPassword> {
                   title: 'Forgot Password',
                   heightFromTop: height * 0.03,
                   fontSize: width * 0.07),
-              forgotPasswordImage(), // image
+              forgotPasswordImage(
+                imageUrl: AppImages.forgotPassword,
+              ), // image
               subHeading(
                   title: "Forgot password?No worries, let's",
                   fontSize: width * 0.05),
