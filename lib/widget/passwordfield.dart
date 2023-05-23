@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
+import '../constants/colors.dart';
 import '../constants/constant.dart';
 
 class PasswordField extends StatefulWidget {
@@ -21,7 +22,7 @@ class _PasswordFieldState extends State<PasswordField> {
     return TextFormField(
       obscureText: obscureText,
       decoration: InputDecoration(
-        fillColor: Color(0xFFEFEFEF).withOpacity(0.5),
+        fillColor: AppColors.fieldFillColor.withOpacity(0.5),
         filled: true,
         hintText: widget.title,
         hintStyle: TextStyle(
@@ -32,14 +33,14 @@ class _PasswordFieldState extends State<PasswordField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(width * 0.02),
           borderSide: BorderSide(
-            color: Color(0xFFCB585A),
+            color: AppColors.pink,
             width: 1.3,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(width * 0.02),
           borderSide: BorderSide(
-            color: Color(0xFFCB585A),
+            color: AppColors.pink,
             width: 1.3,
           ),
         ),

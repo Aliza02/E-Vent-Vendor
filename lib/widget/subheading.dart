@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
 import '../constants/constant.dart';
 
 class subHeading extends StatefulWidget {
@@ -22,7 +23,7 @@ class _subHeadingState extends State<subHeading> {
         style: TextStyle(
           fontFamily: constant.font,
           fontWeight: FontWeight.w400,
-          color: Color(0xFF555555),
+          color: AppColors.grey,
           fontSize: widget.fontSize,
         ),
       ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
 import '../widget/button.dart';
 
 class passwrordReset extends StatefulWidget {
@@ -24,7 +25,7 @@ class _passwrordResetState extends State<passwrordReset> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: AppColors.screenBackground,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.08),
           width: width,

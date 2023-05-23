@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -22,7 +23,7 @@ class _googleButtonState extends State<googleButton> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(width * 0.07),
         border: Border.all(
-          color: Color(0xFFEBE9F1),
+          color: AppColors.googleButtonBorder,
           width: 1.3,
         ),
       ),

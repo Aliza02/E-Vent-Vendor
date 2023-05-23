@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
 import '../constants/constant.dart';
 import '../widget/heading.dart';
 import '../widget/logo.dart';
@@ -37,7 +38,7 @@ class _otp_verificationState extends State<otp_verification> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: AppColors.screenBackground,
         body: Container(
           width: width,
           height: height,
@@ -65,7 +66,7 @@ class _otp_verificationState extends State<otp_verification> {
                   style: TextStyle(
                     fontFamily: constant.font,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFFCB585A),
+                    color: AppColors.pink,
                     fontSize: width * 0.08,
                   ),
                 ),
@@ -77,7 +78,7 @@ class _otp_verificationState extends State<otp_verification> {
                   style: TextStyle(
                     fontFamily: constant.font,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF555555),
+                    color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),
                 ),
@@ -89,7 +90,7 @@ class _otp_verificationState extends State<otp_verification> {
                   style: TextStyle(
                     fontFamily: constant.font,
                     fontWeight: FontWeight.w400,
-                    color: Color(0xFF555555),
+                    color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),
                 ),
@@ -101,7 +102,11 @@ class _otp_verificationState extends State<otp_verification> {
                   (index) => buildOTPFields(index, context),
                 ),
               ),
-              button(label: 'verify', onpressed: () {}),
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: width * 0.08),
+                  width: width * 0.5,
+                  height: height * 0.07,
+                  child: button(label: 'verify', onpressed: () {})),
             ],
           ),
         ),

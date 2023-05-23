@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
+
 class button extends StatelessWidget {
   String label;
 
@@ -26,8 +28,8 @@ class button extends StatelessWidget {
       ),
       style: ElevatedButton.styleFrom(
         elevation: 10.0,
-        shadowColor: Color(0xFFCB585A).withOpacity(0.4),
-        backgroundColor: Color(0xFFCB585A),
+        shadowColor: AppColors.pink.withOpacity(0.4),
+        backgroundColor: AppColors.pink,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

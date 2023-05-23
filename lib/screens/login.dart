@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -27,7 +28,7 @@ class _loginState extends State<login> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: AppColors.screenBackground,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
           width: width,
@@ -69,14 +70,14 @@ class _loginState extends State<login> {
                     height: height * 0.01,
                     width: width * 0.08,
                     child: Checkbox(
-                      activeColor: Color(0xFFCB585A),
+                      activeColor: AppColors.pink,
                       side: BorderSide(
-                        color: Color(0xFFCB585A),
+                        color: AppColors.pink,
                         width: 2.0,
                       ),
                       shape: RoundedRectangleBorder(
                         side: BorderSide(
-                          color: Color(0xFFCB585A),
+                          color: AppColors.pink,
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.circular(5.0),
@@ -98,7 +99,7 @@ class _loginState extends State<login> {
                         fontSize: width * 0.04,
                         fontFamily: constant.font,
                         // fontWeight: FontWeight.w700,
-                        color: Color(0xFF464646),
+                        color: AppColors.grey,
                       ),
                     ),
                   ),
@@ -108,7 +109,7 @@ class _loginState extends State<login> {
                     style: TextStyle(
                       fontFamily: constant.font,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFFCB585A),
+                      color: AppColors.pink,
                       fontSize: width * 0.04,
                     ),
                   ),
@@ -128,7 +129,7 @@ class _loginState extends State<login> {
                 children: [
                   Expanded(
                     child: Divider(
-                      color: Color(0xFFCB585A),
+                      color: AppColors.pink,
                       height: 20.0,
                       thickness: 2,
                       indent: 9,
@@ -138,7 +139,7 @@ class _loginState extends State<login> {
                   Text(
                     'or continue with',
                     style: TextStyle(
-                      color: Color(0xff555555),
+                      color: AppColors.grey,
                       fontFamily: constant.font,
                       fontWeight: FontWeight.w400,
                       fontSize: width * 0.04,
@@ -146,7 +147,7 @@ class _loginState extends State<login> {
                   ),
                   Expanded(
                     child: Divider(
-                      color: Color(0xFFCB585A),
+                      color: AppColors.pink,
                       height: 20.0,
                       thickness: 2,
                       indent: 9,
@@ -166,7 +167,7 @@ class _loginState extends State<login> {
                     'Don’t have an account?',
                     style: TextStyle(
                       fontSize: width * 0.04,
-                      color: Color(0xFF555555),
+                      color: AppColors.grey,
                       fontFamily: constant.font,
                       fontWeight: FontWeight.w500,
                     ),
@@ -179,7 +180,7 @@ class _loginState extends State<login> {
                       'Sign up',
                       style: TextStyle(
                         fontSize: width * 0.04,
-                        color: Color(0xFFCB585A),
+                        color: AppColors.pink,
                         fontFamily: constant.font,
                         fontWeight: FontWeight.w800,
                       ),

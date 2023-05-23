@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:eventually_vendor/models/onboardpage_model.dart';
 
+import '../constants/colors.dart';
 import '../constants/constant.dart';
 
 class onboard extends StatefulWidget {
@@ -26,14 +27,16 @@ class _onboardState extends State<onboard> {
     super.dispose();
   }
 
-  Container buildDot(int index, BuildContext context, int color) {
+  Container buildDot(int index, BuildContext context, Color color) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.015,
       width: MediaQuery.of(context).size.width * 0.03,
       margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.008),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width),
-        color: currentindex == index ? Color(color) : Color(0xFFD9D9D9),
+        color: currentindex == index
+            ? AppColors.pageIndicator[index]
+            : AppColors.inactivePage,
       ),
     );
   }
@@ -64,7 +67,7 @@ class _onboardState extends State<onboard> {
                         children: List.generate(
                           content.length,
                           (index) => buildDot(
-                              index, context, constant.pageIndicator[index]),
+                              index, context, AppColors.pageIndicator[index]),
                         ),
                       ),
                       currentindex < content.length - 1
@@ -118,7 +121,7 @@ class _onboardState extends State<onboard> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: constant.onboardingFont,
-                      color: Color(0xFF555555),
+                      color: AppColors.grey,
                       fontSize: width * 0.05,
                     ),
                   ),
@@ -131,7 +134,7 @@ class _onboardState extends State<onboard> {
                             EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFFB0F2),
+                            backgroundColor: AppColors.pageIndicator[2],
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0),
                             ),
@@ -142,7 +145,7 @@ class _onboardState extends State<onboard> {
                           child: Text(
                             'Get Your First Order',
                             style: TextStyle(
-                              color: Color(0xFF555555),
+                              color: AppColors.grey,
                               fontFamily: constant.onboardingFont,
                               fontSize: width * 0.06,
                               fontWeight: FontWeight.bold,

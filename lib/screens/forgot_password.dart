@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../constants/colors.dart';
+
 class forgotPassword extends StatefulWidget {
   const forgotPassword({super.key});
 
@@ -23,7 +25,7 @@ class _forgotPasswordState extends State<forgotPassword> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: AppColors.screenBackground,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.08),
           width: width,

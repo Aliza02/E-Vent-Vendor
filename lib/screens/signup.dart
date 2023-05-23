@@ -3,6 +3,7 @@ import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import '../constants/colors.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -35,7 +36,7 @@ class _signupState extends State<signup> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: AppColors.screenBackground,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.08),
           width: width,
@@ -99,7 +100,7 @@ class _signupState extends State<signup> {
                 children: [
                   Expanded(
                     child: Divider(
-                      color: Color(0xFFCB585A),
+                      color: AppColors.pink,
                       height: 20.0,
                       thickness: 2,
                       indent: 9,
@@ -109,7 +110,7 @@ class _signupState extends State<signup> {
                   Text(
                     'or continue with',
                     style: TextStyle(
-                      color: Color(0xff555555),
+                      color: AppColors.grey,
                       fontFamily: constant.font,
                       fontWeight: FontWeight.w400,
                       fontSize: width * 0.04,
@@ -117,7 +118,7 @@ class _signupState extends State<signup> {
                   ),
                   Expanded(
                     child: Divider(
-                      color: Color(0xFFCB585A),
+                      color: AppColors.pink,
                       height: 20.0,
                       thickness: 2,
                       indent: 9,
@@ -134,7 +135,7 @@ class _signupState extends State<signup> {
                     'Already have an account?',
                     style: TextStyle(
                       fontSize: width * 0.04,
-                      color: Color(0xFF555555),
+                      color: AppColors.grey,
                       fontFamily: constant.font,
                       fontWeight: FontWeight.w500,
                     ),
@@ -147,7 +148,7 @@ class _signupState extends State<signup> {
                       'Sign In',
                       style: TextStyle(
                         fontSize: width * 0.04,
-                        color: Color(0xFFCB585A),
+                        color: AppColors.pink,
                         fontFamily: constant.font,
                         fontWeight: FontWeight.w800,
                       ),
