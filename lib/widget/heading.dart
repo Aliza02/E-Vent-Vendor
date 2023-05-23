@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 
 class heading extends StatefulWidget {
   double heightFromTop;
@@ -30,9 +31,9 @@ class _headingState extends State<heading> {
         widget.title,
         style: TextStyle(
           color: AppColors.black,
-          fontFamily: constant.font,
+          fontFamily: manrope,
           fontSize: widget.fontSize,
-          fontWeight: FontWeight.w800,
+          fontWeight: extraBold,
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 
 class PasswordField extends StatefulWidget {
   String title;
@@ -26,7 +27,7 @@ class _PasswordFieldState extends State<PasswordField> {
         filled: true,
         hintText: widget.title,
         hintStyle: TextStyle(
-          fontFamily: constant.font,
+          fontFamily: manrope,
           color: Colors.grey,
           fontSize: width * 0.04,
         ),

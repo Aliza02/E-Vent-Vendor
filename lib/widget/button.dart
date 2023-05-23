@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
+import '../constants/font.dart';
 
 class button extends StatelessWidget {
   String label;
@@ -20,8 +21,8 @@ class button extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontFamily: constant.font,
-          fontWeight: FontWeight.w600,
+          fontFamily: manrope,
+          fontWeight: semiBold,
           fontSize: width * 0.04,
           color: Colors.white,
         ),

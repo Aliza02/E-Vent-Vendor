@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 import '../widget/button.dart';
 import '../widget/heading.dart';
 import '../widget/logo.dart';
@@ -118,8 +119,8 @@ class _signup_businessState extends State<signup_business> {
                       'I agree to all the term and conditions',
                       style: TextStyle(
                         fontSize: width * 0.03,
-                        fontFamily: constant.font,
-                        fontWeight: FontWeight.w700,
+                        fontFamily: manrope,
+                        fontWeight: bold,
                         color: AppColors.grey,
                       ),
                     ),
@@ -146,8 +147,8 @@ class _signup_businessState extends State<signup_business> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w500,
+                      fontFamily: manrope,
+                      fontWeight: medium,
                     ),
                   ),
                   TextButton(
@@ -159,8 +160,8 @@ class _signup_businessState extends State<signup_business> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: constant.font,
-                        fontWeight: FontWeight.w800,
+                        fontFamily: manrope,
+                        fontWeight: extraBold,
                       ),
                     ),
                   ),

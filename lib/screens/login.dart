@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
+import '../constants/font.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -64,7 +65,6 @@ class _loginState extends State<login> {
                 height: height * 0.01,
               ),
               Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: height * 0.01,
@@ -91,14 +91,12 @@ class _loginState extends State<login> {
                     ),
                   ),
                   Container(
-                    // margin: EdgeInsets.fromLTRB(0.0, 0.0, 100.0, 0.0),
                     child: Text(
                       'Remember me',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: width * 0.04,
-                        fontFamily: constant.font,
-                        // fontWeight: FontWeight.w700,
+                        fontFamily: manrope,
                         color: AppColors.grey,
                       ),
                     ),
@@ -107,8 +105,8 @@ class _loginState extends State<login> {
                   Text(
                     'Forgot Password?',
                     style: TextStyle(
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w700,
+                      fontFamily: manrope,
+                      fontWeight: bold,
                       color: AppColors.pink,
                       fontSize: width * 0.04,
                     ),
@@ -140,8 +138,8 @@ class _loginState extends State<login> {
                     'or continue with',
                     style: TextStyle(
                       color: AppColors.grey,
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w400,
+                      fontFamily: manrope,
+                      fontWeight: regular,
                       fontSize: width * 0.04,
                     ),
                   ),
@@ -168,8 +166,8 @@ class _loginState extends State<login> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w500,
+                      fontFamily: manrope,
+                      fontWeight: medium,
                     ),
                   ),
                   TextButton(
@@ -181,8 +179,8 @@ class _loginState extends State<login> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: constant.font,
-                        fontWeight: FontWeight.w800,
+                        fontFamily: manrope,
+                        fontWeight: extraBold,
                       ),
                     ),
                   ),

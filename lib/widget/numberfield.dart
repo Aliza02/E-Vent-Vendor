@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 
 class numberField extends StatefulWidget {
   String title;
@@ -33,7 +34,7 @@ class _numberFieldState extends State<numberField> {
         hintStyle: TextStyle(
           fontSize: width * 0.04,
           color: Colors.grey,
-          fontFamily: constant.font,
+          fontFamily: manrope,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(width * 0.02),

@@ -5,6 +5,7 @@ import 'package:eventually_vendor/models/onboardpage_model.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 
 class onboard extends StatefulWidget {
   const onboard({super.key});
@@ -83,7 +84,7 @@ class _onboardState extends State<onboard> {
                                   'skip',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontFamily: constant.font,
+                                    fontFamily: manrope,
                                     fontSize: width * 0.05,
                                   ),
                                 ),
@@ -146,7 +147,7 @@ class _onboardState extends State<onboard> {
                             'Get Your First Order',
                             style: TextStyle(
                               color: AppColors.grey,
-                              fontFamily: constant.onboardingFont,
+                              fontFamily: signika,
                               fontSize: width * 0.06,
                               fontWeight: FontWeight.bold,
                             ),

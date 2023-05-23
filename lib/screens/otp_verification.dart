@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 import '../widget/heading.dart';
 import '../widget/logo.dart';
 import '../widget/numberfield.dart';
@@ -64,8 +65,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   'Enter OTP',
                   style: TextStyle(
-                    fontFamily: constant.font,
-                    fontWeight: FontWeight.w700,
+                    fontFamily: manrope,
+                    fontWeight: bold,
                     color: AppColors.pink,
                     fontSize: width * 0.08,
                   ),
@@ -76,8 +77,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   'Enter the OTP code we just sent ',
                   style: TextStyle(
-                    fontFamily: constant.font,
-                    fontWeight: FontWeight.w400,
+                    fontFamily: manrope,
+                    fontWeight: regular,
                     color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),
@@ -88,8 +89,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   ' you on your registered Email.',
                   style: TextStyle(
-                    fontFamily: constant.font,
-                    fontWeight: FontWeight.w400,
+                    fontFamily: manrope,
+                    fontWeight: regular,
                     color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),

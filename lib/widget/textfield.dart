@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 import '../constants/constant.dart';
+import '../constants/font.dart';
 
 class textFormField extends StatefulWidget {
   String title;
@@ -28,7 +29,7 @@ class _textFormFieldState extends State<textFormField> {
         hintStyle: TextStyle(
           fontSize: width * 0.04,
           color: Colors.grey,
-          fontFamily: constant.font,
+          fontFamily: manrope,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(width * 0.02),

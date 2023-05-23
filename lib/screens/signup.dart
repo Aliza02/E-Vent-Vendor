@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import '../constants/colors.dart';
+import '../constants/font.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -111,8 +112,8 @@ class _signupState extends State<signup> {
                     'or continue with',
                     style: TextStyle(
                       color: AppColors.grey,
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w400,
+                      fontFamily: manrope,
+                      fontWeight: regular,
                       fontSize: width * 0.04,
                     ),
                   ),
@@ -136,8 +137,8 @@ class _signupState extends State<signup> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: constant.font,
-                      fontWeight: FontWeight.w500,
+                      fontFamily: manrope,
+                      fontWeight: medium,
                     ),
                   ),
                   TextButton(
@@ -149,8 +150,8 @@ class _signupState extends State<signup> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: constant.font,
-                        fontWeight: FontWeight.w800,
+                        fontFamily: manrope,
+                        fontWeight: extraBold,
                       ),
                     ),
                   ),
