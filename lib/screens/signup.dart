@@ -1,4 +1,3 @@
-import 'package:eventually_vendor/constants/constant.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';

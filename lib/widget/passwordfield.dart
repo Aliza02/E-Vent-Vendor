@@ -1,10 +1,9 @@
-import 'package:eventually_vendor/constants/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../constants/colors.dart';
-import '../constants/constant.dart';
+
 import '../constants/font.dart';
 
 class PasswordField extends StatefulWidget {

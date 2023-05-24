@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:eventually_vendor/models/onboardpage_model.dart';
 
 import '../constants/colors.dart';
-import '../constants/constant.dart';
+
 import '../constants/font.dart';
 
 class onboard extends StatefulWidget {
@@ -121,7 +121,7 @@ class _onboardState extends State<onboard> {
                     content[index].description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: constant.onboardingFont,
+                      fontFamily: signika,
                       color: AppColors.grey,
                       fontSize: width * 0.05,
                     ),
@@ -163,7 +163,7 @@ class _onboardState extends State<onboard> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
                               MediaQuery.of(context).size.width),
-                          color: Color(constant.pageIndicator[currentindex]),
+                          color: AppColors.pageIndicator[currentindex],
                         ),
                         child: GestureDetector(
                           onTap: () {

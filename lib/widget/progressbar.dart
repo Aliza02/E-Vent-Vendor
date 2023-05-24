@@ -2,7 +2,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 
-import '../constants/constant.dart';
+import '../constants/colors.dart';
+import '../constants/font.dart';
 
 class progressbar extends StatefulWidget {
   int index = 0;
@@ -30,7 +31,7 @@ class _progressbarState extends State<progressbar> {
                   width: width * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Color(constant.red),
+                      color: AppColors.pink,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(100),
@@ -39,12 +40,12 @@ class _progressbarState extends State<progressbar> {
                   child: widget.index >= 1
                       ? Icon(
                           Icons.check,
-                          color: Color(constant.red),
+                          color: AppColors.pink,
                           size: 16.0,
                         )
                       : Icon(
                           Icons.circle,
-                          color: Color(constant.red),
+                          color: AppColors.pink,
                           size: 16.0,
                         ),
                 ),
@@ -61,17 +62,16 @@ class _progressbarState extends State<progressbar> {
                   width: width * 0.06,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color:
-                          widget.index == 0 ? Colors.grey : Color(constant.red),
+                      color: widget.index == 0 ? Colors.grey : AppColors.pink,
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(100),
-                    color: Color(constant.background),
+                    color: AppColors.screenBackground,
                   ),
                   child: widget.index >= 1
                       ? Icon(
                           Icons.circle,
-                          color: Color(constant.red),
+                          color: AppColors.pink,
                           size: 16.0,
                         )
                       : Container(),
@@ -86,7 +86,7 @@ class _progressbarState extends State<progressbar> {
                   Text(
                     'Personal',
                     style: TextStyle(
-                      fontFamily: constant.font,
+                      fontFamily: manrope,
                       fontSize: width * 0.04,
                       fontWeight: widget.index == 0
                           ? FontWeight.bold
@@ -96,7 +96,7 @@ class _progressbarState extends State<progressbar> {
                   Text(
                     'Business',
                     style: TextStyle(
-                      fontFamily: constant.font,
+                      fontFamily: manrope,
                       fontSize: width * 0.04,
                       fontWeight: widget.index == 1
                           ? FontWeight.bold

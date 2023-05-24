@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
-import '../constants/constant.dart';
+
 import '../constants/font.dart';
 
 class subHeading extends StatefulWidget {
