@@ -15,4 +15,5 @@ class AppColors {
     Color(0xFFFFB0F2),
   ];
   static const Color inactivePage = Color(0xFFD9D9D9);
+  static const Color appBar = Color(0xFFFFE4F3);
 }

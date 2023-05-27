@@ -36,6 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_zoom_drawer: ^3.0.4+1
+  flutter_svg: ^2.0.5
   
 
 dev_dependencies:
@@ -68,8 +69,18 @@ flutter:
     - assets/images/screen2.png
     - assets/images/screen3.png
     - assets/images/google-logo.png
-    - assets/images/forgot_password_email.png
+    - assets/images/forgot_password.png
     - assets/images/reset_password.png
+    - assets/icons/home.svg
+    - assets/icons/addcircle.svg
+    - assets/icons/calendaredit.svg
+    - assets/icons/messages2.svg
+    - assets/icons/profilecircle.svg
+    - assets/icons/home_fill.svg
+    - assets/icons/messages2_fill.svg
+    - assets/icons/calendaredit_fill.svg
+    - assets/icons/profilecircle_fill.svg
+    - assets/icons/addcircle_fill.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
