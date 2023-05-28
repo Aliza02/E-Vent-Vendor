@@ -10,18 +10,20 @@ class appBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColors.appBar.withOpacity(0.2),
-      shadowColor: Colors.transparent,
-      leading: GestureDetector(
-        onTap: () {
-          ZoomDrawer.of(context)?.toggle();
-        },
-        child: Icon(
-          Icons.menu,
-          color: AppColors.pink,
-          size: 40.0,
-          weight: 10.0,
+    return Container(
+      child: AppBar(
+        backgroundColor: AppColors.appBar.withOpacity(0.2),
+        shadowColor: Colors.transparent,
+        leading: GestureDetector(
+          onTap: () {
+            ZoomDrawer.of(context)?.toggle();
+          },
+          child: Icon(
+            Icons.menu,
+            color: AppColors.pink,
+            size: 40.0,
+            weight: 10.0,
+          ),
         ),
       ),
     );
