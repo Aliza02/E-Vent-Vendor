@@ -84,7 +84,7 @@ class _onboardState extends State<onboard> {
                                   'skip',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontFamily: manrope,
+                                    fontFamily: AppFonts.manrope,
                                     fontSize: width * 0.05,
                                   ),
                                 ),
@@ -121,7 +121,7 @@ class _onboardState extends State<onboard> {
                     content[index].description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: signika,
+                      fontFamily: AppFonts.signika,
                       color: AppColors.grey,
                       fontSize: width * 0.05,
                     ),
@@ -147,7 +147,7 @@ class _onboardState extends State<onboard> {
                             'Get Your First Order',
                             style: TextStyle(
                               color: AppColors.grey,
-                              fontFamily: signika,
+                              fontFamily: AppFonts.signika,
                               fontSize: width * 0.06,
                               fontWeight: FontWeight.bold,
                             ),

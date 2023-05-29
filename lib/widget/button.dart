@@ -20,8 +20,8 @@ class button extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontFamily: manrope,
-          fontWeight: semiBold,
+          fontFamily: AppFonts.manrope,
+          fontWeight: AppFonts.semiBold,
           fontSize: width * 0.04,
           color: Colors.white,
         ),

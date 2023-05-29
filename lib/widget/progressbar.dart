@@ -86,7 +86,7 @@ class _progressbarState extends State<progressbar> {
                   Text(
                     'Personal',
                     style: TextStyle(
-                      fontFamily: manrope,
+                      fontFamily: AppFonts.manrope,
                       fontSize: width * 0.04,
                       fontWeight: widget.index == 0
                           ? FontWeight.bold
@@ -96,7 +96,7 @@ class _progressbarState extends State<progressbar> {
                   Text(
                     'Business',
                     style: TextStyle(
-                      fontFamily: manrope,
+                      fontFamily: AppFonts.manrope,
                       fontSize: width * 0.04,
                       fontWeight: widget.index == 1
                           ? FontWeight.bold

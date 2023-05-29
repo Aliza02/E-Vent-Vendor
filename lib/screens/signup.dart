@@ -111,8 +111,8 @@ class _signupState extends State<signup> {
                     'or continue with',
                     style: TextStyle(
                       color: AppColors.grey,
-                      fontFamily: manrope,
-                      fontWeight: regular,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.regular,
                       fontSize: width * 0.04,
                     ),
                   ),
@@ -136,8 +136,8 @@ class _signupState extends State<signup> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: manrope,
-                      fontWeight: medium,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.medium,
                     ),
                   ),
                   TextButton(
@@ -149,8 +149,8 @@ class _signupState extends State<signup> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: manrope,
-                        fontWeight: extraBold,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.extraBold,
                       ),
                     ),
                   ),

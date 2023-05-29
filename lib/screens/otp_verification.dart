@@ -64,8 +64,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   'Enter OTP',
                   style: TextStyle(
-                    fontFamily: manrope,
-                    fontWeight: bold,
+                    fontFamily: AppFonts.manrope,
+                    fontWeight: AppFonts.bold,
                     color: AppColors.pink,
                     fontSize: width * 0.08,
                   ),
@@ -76,8 +76,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   'Enter the OTP code we just sent ',
                   style: TextStyle(
-                    fontFamily: manrope,
-                    fontWeight: regular,
+                    fontFamily: AppFonts.manrope,
+                    fontWeight: AppFonts.regular,
                     color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),
@@ -88,8 +88,8 @@ class _otp_verificationState extends State<otp_verification> {
                 child: Text(
                   ' you on your registered Email.',
                   style: TextStyle(
-                    fontFamily: manrope,
-                    fontWeight: regular,
+                    fontFamily: AppFonts.manrope,
+                    fontWeight: AppFonts.regular,
                     color: AppColors.grey,
                     fontSize: width * 0.04,
                   ),

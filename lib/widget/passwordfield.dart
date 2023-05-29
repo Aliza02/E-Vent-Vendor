@@ -26,7 +26,7 @@ class _PasswordFieldState extends State<PasswordField> {
         filled: true,
         hintText: widget.title,
         hintStyle: TextStyle(
-          fontFamily: manrope,
+          fontFamily: AppFonts.manrope,
           color: Colors.grey,
           fontSize: width * 0.04,
         ),

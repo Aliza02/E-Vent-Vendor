@@ -49,10 +49,9 @@ class _MenuScreenState extends State<MenuScreen> {
           margin: EdgeInsets.symmetric(horizontal: width * 0.02),
           child: Text(
             menuItems[index],
-            // textAlign: TextAlign.start,
             style: TextStyle(
               color: AppColors.grey,
-              fontWeight: medium,
+              fontWeight: AppFonts.medium,
               fontSize: width * 0.034,
             ),
           ),
@@ -105,8 +104,8 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Text(
                 'User Name',
                 style: TextStyle(
-                    fontFamily: manrope,
-                    fontWeight: extraBold,
+                    fontFamily: AppFonts.manrope,
+                    fontWeight: AppFonts.extraBold,
                     fontSize: width * 0.05,
                     color: AppColors.grey),
               ),
@@ -115,9 +114,9 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Text(
                 'abc@gmail.com',
                 style: TextStyle(
-                  fontFamily: manrope,
+                  fontFamily: AppFonts.manrope,
                   // fontSize: width * 0.05,
-                  fontWeight: medium,
+                  fontWeight: AppFonts.medium,
                   color: AppColors.grey,
                 ),
               ),
@@ -149,7 +148,7 @@ class _MenuScreenState extends State<MenuScreen> {
                     style: TextStyle(
                       color: AppColors.pink,
                       fontSize: width * 0.04,
-                      fontWeight: bold,
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                 ),

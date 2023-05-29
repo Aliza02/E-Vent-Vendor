@@ -31,9 +31,9 @@ class _headingState extends State<heading> {
         widget.title,
         style: TextStyle(
           color: AppColors.black,
-          fontFamily: manrope,
+          fontFamily: AppFonts.manrope,
           fontSize: widget.fontSize,
-          fontWeight: extraBold,
+          fontWeight: AppFonts.extraBold,
         ),
       ),
     );

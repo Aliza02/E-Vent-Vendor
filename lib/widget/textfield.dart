@@ -28,7 +28,7 @@ class _textFormFieldState extends State<textFormField> {
         hintStyle: TextStyle(
           fontSize: width * 0.04,
           color: Colors.grey,
-          fontFamily: manrope,
+          fontFamily: AppFonts.manrope,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(width * 0.02),

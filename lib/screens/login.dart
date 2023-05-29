@@ -95,7 +95,7 @@ class _loginState extends State<login> {
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: width * 0.04,
-                        fontFamily: manrope,
+                        fontFamily: AppFonts.manrope,
                         color: AppColors.grey,
                       ),
                     ),
@@ -104,8 +104,8 @@ class _loginState extends State<login> {
                   Text(
                     'Forgot Password?',
                     style: TextStyle(
-                      fontFamily: manrope,
-                      fontWeight: bold,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.bold,
                       color: AppColors.pink,
                       fontSize: width * 0.04,
                     ),
@@ -137,8 +137,8 @@ class _loginState extends State<login> {
                     'or continue with',
                     style: TextStyle(
                       color: AppColors.grey,
-                      fontFamily: manrope,
-                      fontWeight: regular,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.regular,
                       fontSize: width * 0.04,
                     ),
                   ),
@@ -165,8 +165,8 @@ class _loginState extends State<login> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: manrope,
-                      fontWeight: medium,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.medium,
                     ),
                   ),
                   TextButton(
@@ -178,8 +178,8 @@ class _loginState extends State<login> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: manrope,
-                        fontWeight: extraBold,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.extraBold,
                       ),
                     ),
                   ),

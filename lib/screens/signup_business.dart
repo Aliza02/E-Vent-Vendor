@@ -117,8 +117,8 @@ class _signup_businessState extends State<signup_business> {
                       'I agree to all the term and conditions',
                       style: TextStyle(
                         fontSize: width * 0.03,
-                        fontFamily: manrope,
-                        fontWeight: bold,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.bold,
                         color: AppColors.grey,
                       ),
                     ),
@@ -145,8 +145,8 @@ class _signup_businessState extends State<signup_business> {
                     style: TextStyle(
                       fontSize: width * 0.04,
                       color: AppColors.grey,
-                      fontFamily: manrope,
-                      fontWeight: medium,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.medium,
                     ),
                   ),
                   TextButton(
@@ -158,8 +158,8 @@ class _signup_businessState extends State<signup_business> {
                       style: TextStyle(
                         fontSize: width * 0.04,
                         color: AppColors.pink,
-                        fontFamily: manrope,
-                        fontWeight: extraBold,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.extraBold,
                       ),
                     ),
                   ),

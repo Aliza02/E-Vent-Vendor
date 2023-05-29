@@ -22,8 +22,8 @@ class _subHeadingState extends State<subHeading> {
       child: Text(
         widget.title,
         style: TextStyle(
-          fontFamily: manrope,
-          fontWeight: regular,
+          fontFamily: AppFonts.manrope,
+          fontWeight: AppFonts.regular,
           color: AppColors.grey,
           fontSize: widget.fontSize,
         ),
