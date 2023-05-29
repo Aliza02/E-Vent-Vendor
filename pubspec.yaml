@@ -82,6 +82,13 @@ flutter:
     - assets/icons/calendaredit_fill.svg
     - assets/icons/profilecircle_fill.svg
     - assets/icons/addcircle_fill.svg
+    - assets/icons/payment.svg
+    - assets/icons/Profile.svg
+    - assets/icons/Share.svg
+    - assets/icons/setting.svg
+    - assets/icons/helpCenter.svg
+    - assets/icons/logout.svg
+    - assets/images/profileimage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

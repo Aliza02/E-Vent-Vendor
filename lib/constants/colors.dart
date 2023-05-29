@@ -6,6 +6,7 @@ class AppColors {
   static const Color cream = Color(0xFFECE9E2);
   static const Color screenBackground = Color(0xFFFAFAFA);
   static const Color black = Color(0xFF000000);
+  static const Color blue = Color(0xFF5886CB);
   static const Color grey = Color(0xFF555555);
   static const Color fieldFillColor = Color(0xFFEFEFEF);
   static const Color googleButtonBorder = Color(0xFFEBE9F1);
