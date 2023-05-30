@@ -6,18 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../constants/icons.dart';
+import '../../controller/pagecontroller.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+class MenuScreen extends GetView<testController> {
+  MenuScreen({super.key});
+  final pagecontroller = Get.put(testController());
+  int currentindex = 0;
 
-  @override
-  State<MenuScreen> createState() => _MenuScreenState();
-}
-
-class _MenuScreenState extends State<MenuScreen> {
   List<String> menuItems = [
+    'Orders',
     'Payment',
     'Tell a Friend',
     'Settings',
@@ -26,37 +28,60 @@ class _MenuScreenState extends State<MenuScreen> {
   ];
 
   List<String> menuIcons = [
+    AppIcons.order,
     AppIcons.payment,
     AppIcons.share,
     AppIcons.setting,
     AppIcons.Profile,
     AppIcons.helpCenter,
-    AppIcons.logout
   ];
 
-  Row buildMenuItems(BuildContext context, int index) {
+  List<String> menuIconsFilled = [
+    AppIcons.order_fill,
+    AppIcons.payment_fill,
+    AppIcons.share_fill,
+    AppIcons.setting_fill,
+    AppIcons.Profile_fill,
+    AppIcons.helpCenter_fill,
+  ];
+
+  Widget buildMenuItems(BuildContext context, int index) {
     double width = MediaQuery.of(context).size.width;
-    return Row(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: width * 0.06,
-            vertical: width * 0.03,
-          ),
-          child: SvgPicture.asset(menuIcons[index]),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: width * 0.02),
-          child: Text(
-            menuItems[index],
-            style: TextStyle(
-              color: AppColors.grey,
-              fontWeight: AppFonts.medium,
-              fontSize: width * 0.034,
+    return Obx(
+      () => Container(
+        width: width / 2,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: pagecontroller.indexOfDrawerMenuItems.value == index
+                ? AppColors.pink.withOpacity(0.2)
+                : Colors.transparent),
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: width * 0.06,
+                vertical: width * 0.03,
+              ),
+              child: pagecontroller.indexOfDrawerMenuItems.value == index
+                  ? SvgPicture.asset(menuIconsFilled[index])
+                  : SvgPicture.asset(menuIcons[index]),
             ),
-          ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: width * 0.02),
+              child: Text(
+                menuItems[index],
+                style: TextStyle(
+                  color: pagecontroller.indexOfDrawerMenuItems.value == index
+                      ? AppColors.pink
+                      : AppColors.grey,
+                  fontWeight: AppFonts.medium,
+                  fontSize: width * 0.034,
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -129,7 +154,13 @@ class _MenuScreenState extends State<MenuScreen> {
             Column(
               children: List.generate(
                 menuItems.length,
-                (index) => buildMenuItems(context, index),
+                (index) => GestureDetector(
+                  onTap: () {
+                    pagecontroller.indexOfDrawerMenuItems.value = index;
+                    print(pagecontroller.indexOfDrawerMenuItems.value);
+                  },
+                  child: buildMenuItems(context, index),
+                ),
               ),
             ),
             Spacer(),

@@ -27,6 +27,8 @@ class MainScreen extends GetView<testController> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: bottomNavBar(),
@@ -40,8 +42,8 @@ class MainScreen extends GetView<testController> {
             child: Icon(
               Icons.menu,
               color: AppColors.pink,
-              size: 40.0,
-              weight: 10.0,
+              size: width * 0.1,
+              weight: width * 0.1,
             ),
           ),
         ),

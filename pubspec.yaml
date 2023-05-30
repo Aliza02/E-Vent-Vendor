@@ -72,6 +72,8 @@ flutter:
     - assets/images/google-logo.png
     - assets/images/forgot_password.png
     - assets/images/reset_password.png
+    - assets/images/profileimage.png
+    # icons
     - assets/icons/home.svg
     - assets/icons/addcircle.svg
     - assets/icons/calendaredit.svg
@@ -88,7 +90,16 @@ flutter:
     - assets/icons/setting.svg
     - assets/icons/helpCenter.svg
     - assets/icons/logout.svg
-    - assets/images/profileimage.png
+    - assets/icons/order.svg
+    - assets/icons/order_fill.svg
+    - assets/icons/setting_fill.svg
+    - assets/icons/helpCenter_fill.svg
+    - assets/icons/payment_fill.svg
+    - assets/icons/profile_fill.svg
+    - assets/icons/share_fill.svg
+    - assets/icons/menu.svg
+    
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

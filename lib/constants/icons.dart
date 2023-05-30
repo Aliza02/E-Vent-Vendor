@@ -17,4 +17,12 @@ class AppIcons {
   static const setting = 'assets/icons/setting.svg';
   static const helpCenter = 'assets/icons/helpCenter.svg';
   static const logout = 'assets/icons/logout.svg';
+  static const order = 'assets/icons/order.svg';
+  static const order_fill = 'assets/icons/order_fill.svg';
+  static const setting_fill = 'assets/icons/setting_fill.svg';
+  static const helpCenter_fill = 'assets/icons/helpCenter_fill.svg';
+  static const payment_fill = 'assets/icons/payment_fill.svg';
+  static const Profile_fill = 'assets/icons/profile_fill.svg';
+  static const share_fill = 'assets/icons/share_fill.svg';
+  static const menu='assets/icons/menu.svg';
 }

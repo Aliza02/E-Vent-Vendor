@@ -20,7 +20,6 @@ class _drawerScreenState extends State<drawerScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ZoomDrawer(
-        // controller: zoomDrawerController,
         mainScreen: MainScreen(),
         menuScreen: MenuScreen(),
         menuBackgroundColor: AppColors.pink,
