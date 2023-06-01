@@ -25,7 +25,7 @@ class _passwrordResetState extends State<passwrordReset> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.white,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.08),
           width: width,

@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/screens/AddService/addService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -20,7 +21,7 @@ class MainScreen extends GetView<testController> {
   final pagecontroller = Get.put(testController());
 
   final List<Widget> _pages = [
-    pageOne(),
+    AddService(),
     pageTwo(),
     pageThree(),
   ];

@@ -28,7 +28,7 @@ class bottomNavBar extends GetView<testController> {
             gradient: LinearGradient(
                 transform: GradientRotation(0.0),
                 colors: [
-                  AppColors.screenBackground.withOpacity(0.1),
+                  AppColors.white.withOpacity(0.1),
                   AppColors.pink.withOpacity(0.2),
                 ],
                 begin: Alignment.topCenter,

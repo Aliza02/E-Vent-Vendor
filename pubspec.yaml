@@ -98,6 +98,10 @@ flutter:
     - assets/icons/profile_fill.svg
     - assets/icons/share_fill.svg
     - assets/icons/menu.svg
+    - assets/icons/edit_inactive.svg
+    - assets/icons/edit_active.svg
+    - assets/icons/add_active.svg
+    - assets/icons/add_inactive.svg
     
     
 

@@ -28,7 +28,7 @@ class _loginState extends State<login> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.white,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.05),
           width: width,

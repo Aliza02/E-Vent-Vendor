@@ -24,5 +24,9 @@ class AppIcons {
   static const payment_fill = 'assets/icons/payment_fill.svg';
   static const Profile_fill = 'assets/icons/profile_fill.svg';
   static const share_fill = 'assets/icons/share_fill.svg';
-  static const menu='assets/icons/menu.svg';
+  static const menu = 'assets/icons/menu.svg';
+  static const editInactive = 'assets/icons/edit_inactive.svg';
+  static const editActive = 'assets/icons/edit_active.svg';
+  static const addActive = 'assets/icons/add_active.svg';
+  static const addInactive = 'assets/icons/add_inactive.svg';
 }

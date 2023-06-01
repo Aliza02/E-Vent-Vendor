@@ -66,7 +66,7 @@ class _progressbarState extends State<progressbar> {
                       width: 1.0,
                     ),
                     borderRadius: BorderRadius.circular(100),
-                    color: AppColors.screenBackground,
+                    color: AppColors.white,
                   ),
                   child: widget.index >= 1
                       ? Icon(

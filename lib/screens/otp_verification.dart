@@ -38,7 +38,7 @@ class _otp_verificationState extends State<otp_verification> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.white,
         body: Container(
           width: width,
           height: height,

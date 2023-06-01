@@ -31,7 +31,7 @@ class _signup_businessState extends State<signup_business> {
     double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.screenBackground,
+        backgroundColor: AppColors.white,
         resizeToAvoidBottomInset: false,
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: width * 0.08),

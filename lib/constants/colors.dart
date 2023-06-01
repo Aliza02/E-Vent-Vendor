@@ -4,7 +4,7 @@ class AppColors {
   static const Color pink = Color(0xFFCB585A);
   static const Color maroon = Color(0xFF9C0C0C);
   static const Color cream = Color(0xFFECE9E2);
-  static const Color screenBackground = Color(0xFFFAFAFA);
+  static const Color white = Color(0xFFFAFAFA);
   static const Color black = Color(0xFF000000);
   static const Color blue = Color(0xFF5886CB);
   static const Color grey = Color(0xFF555555);
