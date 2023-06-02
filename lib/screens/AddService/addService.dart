@@ -1,23 +1,33 @@
 import 'package:eventually_vendor/constants/font.dart';
+import 'package:eventually_vendor/widget/AddServices/inactiveButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/icons.dart';
+import '../../controller/pagecontroller.dart';
+import '../../widget/AddServices/activeButton.dart';
 import '../../widget/AddServices/heading.dart';
 import '../../widget/AddServices/subheading.dart';
-// import '../drawer/test.dart';
 
-class AddService extends StatefulWidget {
-  const AddService({super.key});
+class AddService extends GetView<testController> {
+  AddService({super.key});
 
-  @override
-  State<AddService> createState() => _AddServiceState();
-}
+  final pagecontroller = Get.put(testController());
 
-class _AddServiceState extends State<AddService> {
+  void activeButton() {
+    pagecontroller.EditServiceSelected.value =
+        !pagecontroller.EditServiceSelected.value;
+    pagecontroller.AddServiceSelected.value =
+        !pagecontroller.AddServiceSelected.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -68,46 +78,56 @@ class _AddServiceState extends State<AddService> {
                         width: 1.0,
                       ),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: width * 0.35,
-                          height: height * 0.06,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                            ),
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                              AppIcons.addInactive,
-                            ),
-                            label: Text('Edit'),
-                          ),
-                        ),
-                        Container(
-                          width: width * 0.35,
-                          height: height * 0.06,
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                            ),
-                            onPressed: () {},
-                            icon: SvgPicture.asset(AppIcons.addActive),
-                            label: Text('Add'),
-                          ),
-                        ),
-                      ],
+                    child: Obx(
+                      () => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          pagecontroller.EditServiceSelected.value
+                              ? InactiveButton(
+                                  title: 'Edit',
+                                  icon: AppIcons.editInactive,
+                                  activeButton: () {
+                                    activeButton();
+                                  },
+                                )
+                              : ActiveButton(
+                                  activeButton: () {
+                                    if (!pagecontroller
+                                        .EditServiceSelected.value) {
+                                      activeButton();
+                                    }
+                                  },
+                                  icon: AppIcons.editActive,
+                                  title: 'Edit',
+                                  buttonColor: AppColors.pink,
+                                ),
+                          pagecontroller.AddServiceSelected.value
+                              ? InactiveButton(
+                                  title: 'Add',
+                                  icon: AppIcons.addInactive,
+                                  activeButton: () {
+                                    activeButton();
+                                  },
+                                )
+                              : ActiveButton(
+                                  activeButton: () {
+                                    if (!pagecontroller
+                                        .AddServiceSelected.value) {
+                                      activeButton();
+                                    }
+                                  },
+                                  icon: AppIcons.addActive,
+                                  title: 'Add',
+                                  buttonColor: AppColors.blue,
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ],
-          )
+          ),
         ],
       ),
     );

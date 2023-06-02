@@ -48,7 +48,6 @@ class bottomNavBar extends GetView<testController> {
                 IconButton(
                     onPressed: () {
                       pagecontroller.changeIndex(0);
-                      print(pagecontroller.currentindex.value);
                     },
                     icon: Obx(
                       () => pagecontroller.currentindex == 0

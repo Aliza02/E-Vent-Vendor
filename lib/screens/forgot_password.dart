@@ -5,8 +5,6 @@ import 'package:eventually_vendor/widget/heading.dart';
 import 'package:eventually_vendor/widget/subheading.dart';
 import 'package:eventually_vendor/widget/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../constants/colors.dart';
 

@@ -21,9 +21,9 @@ class MainScreen extends GetView<testController> {
   final pagecontroller = Get.put(testController());
 
   final List<Widget> _pages = [
-    AddService(),
+    pageOne(),
     pageTwo(),
-    pageThree(),
+    AddService(),
   ];
 
   @override

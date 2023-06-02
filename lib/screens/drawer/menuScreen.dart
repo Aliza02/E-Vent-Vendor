@@ -1,14 +1,8 @@
-import 'dart:ui';
-
 import 'package:eventually_vendor/constants/colors.dart';
 import 'package:eventually_vendor/constants/font.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
@@ -18,7 +12,7 @@ class MenuScreen extends GetView<testController> {
   final pagecontroller = Get.put(testController());
   int currentindex = 0;
 
-  List<String> menuItems = [
+  final List<String> menuItems = [
     'Orders',
     'Payment',
     'Tell a Friend',
@@ -27,7 +21,7 @@ class MenuScreen extends GetView<testController> {
     'Help Center'
   ];
 
-  List<String> menuIcons = [
+  final List<String> menuIcons = [
     AppIcons.order,
     AppIcons.payment,
     AppIcons.share,
@@ -36,13 +30,13 @@ class MenuScreen extends GetView<testController> {
     AppIcons.helpCenter,
   ];
 
-  List<String> menuIconsFilled = [
-    AppIcons.order_fill,
-    AppIcons.payment_fill,
-    AppIcons.share_fill,
-    AppIcons.setting_fill,
-    AppIcons.Profile_fill,
-    AppIcons.helpCenter_fill,
+  final List<String> menuIconsFilled = [
+    AppIcons.orderFill,
+    AppIcons.paymentFill,
+    AppIcons.shareFill,
+    AppIcons.settingFill,
+    AppIcons.ProfileFill,
+    AppIcons.helpCenterFill,
   ];
 
   Widget buildMenuItems(BuildContext context, int index) {
@@ -115,7 +109,7 @@ class MenuScreen extends GetView<testController> {
                 Container(
                   margin: EdgeInsets.only(top: height * 0.05),
                   padding: EdgeInsets.all(width * 0.01),
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     radius: 50.0,
                     backgroundColor: Colors.transparent,
                     backgroundImage:
@@ -135,15 +129,13 @@ class MenuScreen extends GetView<testController> {
                     color: AppColors.grey),
               ),
             ),
-            Container(
-              child: Text(
-                'abc@gmail.com',
-                style: TextStyle(
-                  fontFamily: AppFonts.manrope,
-                  // fontSize: width * 0.05,
-                  fontWeight: AppFonts.medium,
-                  color: AppColors.grey,
-                ),
+            Text(
+              'abc@gmail.com',
+              style: TextStyle(
+                fontFamily: AppFonts.manrope,
+                // fontSize: width * 0.05,
+                fontWeight: AppFonts.medium,
+                color: AppColors.grey,
               ),
             ),
             Divider(
@@ -157,13 +149,12 @@ class MenuScreen extends GetView<testController> {
                 (index) => GestureDetector(
                   onTap: () {
                     pagecontroller.indexOfDrawerMenuItems.value = index;
-                    print(pagecontroller.indexOfDrawerMenuItems.value);
                   },
                   child: buildMenuItems(context, index),
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
                 Container(
