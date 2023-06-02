@@ -82,7 +82,7 @@ class AddService extends GetView<testController> {
                       () => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          pagecontroller.EditServiceSelected.value
+                          pagecontroller.EditServiceSelected.value == false
                               ? InactiveButton(
                                   title: 'Edit',
                                   icon: AppIcons.editInactive,
@@ -92,8 +92,9 @@ class AddService extends GetView<testController> {
                                 )
                               : ActiveButton(
                                   activeButton: () {
-                                    if (!pagecontroller
-                                        .EditServiceSelected.value) {
+                                    if (pagecontroller
+                                            .EditServiceSelected.value ==
+                                        false) {
                                       activeButton();
                                     }
                                   },
@@ -101,7 +102,7 @@ class AddService extends GetView<testController> {
                                   title: 'Edit',
                                   buttonColor: AppColors.pink,
                                 ),
-                          pagecontroller.AddServiceSelected.value
+                          pagecontroller.AddServiceSelected.value == false
                               ? InactiveButton(
                                   title: 'Add',
                                   icon: AppIcons.addInactive,
@@ -111,8 +112,9 @@ class AddService extends GetView<testController> {
                                 )
                               : ActiveButton(
                                   activeButton: () {
-                                    if (!pagecontroller
-                                        .AddServiceSelected.value) {
+                                    if (pagecontroller
+                                            .AddServiceSelected.value ==
+                                        false) {
                                       activeButton();
                                     }
                                   },

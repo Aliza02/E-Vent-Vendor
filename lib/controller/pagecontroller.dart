@@ -5,7 +5,7 @@ class testController extends GetxController {
   RxInt currentindex = 0.obs; // bottom navigation index
   RxInt indexOfDrawerMenuItems = 0.obs; // drawer menu
 
-  RxBool EditServiceSelected = false.obs; // edit service button
+  RxBool EditServiceSelected = true.obs; // edit service button
   RxBool AddServiceSelected = false.obs; // Add service button
 
   // function for changing index to navigate from bottom nav bar
