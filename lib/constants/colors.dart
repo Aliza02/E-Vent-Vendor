@@ -21,4 +21,6 @@ class AppColors {
   ];
   static const Color inactivePage = Color(0xFFD9D9D9);
   static const Color appBar = Color(0xFFFFE4F3);
+  //  add service
+  static const lightblue = Color(0xFF69B7F9);
 }
