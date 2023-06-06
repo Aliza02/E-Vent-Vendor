@@ -38,6 +38,7 @@ dependencies:
   flutter_zoom_drawer: ^3.0.4+1
   flutter_svg: ^2.0.5
   get: ^4.6.5
+  dotted_border: ^2.0.0+3
   
 
 dev_dependencies:
@@ -102,6 +103,7 @@ flutter:
     - assets/icons/edit_active.svg
     - assets/icons/add_active.svg
     - assets/icons/add_inactive.svg
+    - assets/icons/add_image.svg
     
     
 

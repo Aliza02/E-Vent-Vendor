@@ -29,4 +29,7 @@ class AppIcons {
   static const editActive = 'assets/icons/edit_active.svg';
   static const addActive = 'assets/icons/add_active.svg';
   static const addInactive = 'assets/icons/add_inactive.svg';
+
+  // add service
+  static const addImage = 'assets/icons/add_image.svg';
 }
