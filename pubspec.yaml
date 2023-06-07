@@ -39,6 +39,8 @@ dependencies:
   flutter_svg: ^2.0.5
   get: ^4.6.5
   dotted_border: ^2.0.0+3
+  image_picker: ^0.8.7+5
+  flutter_slidable: ^3.0.0
   
 
 dev_dependencies:
@@ -104,6 +106,7 @@ flutter:
     - assets/icons/add_active.svg
     - assets/icons/add_inactive.svg
     - assets/icons/add_image.svg
+    - assets/icons/trash.svg
     
     
 
