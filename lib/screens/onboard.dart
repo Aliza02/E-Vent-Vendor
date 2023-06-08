@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:eventually_vendor/models/onboardpage_model.dart';
-
+import 'package:get/get.dart';
 import '../constants/colors.dart';
-
 import '../constants/font.dart';
+import '../constants/images.dart';
 
 class onboard extends StatefulWidget {
   const onboard({super.key});
@@ -18,11 +16,13 @@ class _onboardState extends State<onboard> {
   int currentindex = 0;
   PageController? _pagescontroller;
 
+  @override
   void initState() {
     super.initState();
     _pagescontroller = PageController(initialPage: 0);
   }
 
+  @override
   void dispose() {
     _pagescontroller!.dispose();
     super.dispose();
@@ -30,11 +30,9 @@ class _onboardState extends State<onboard> {
 
   Container buildDot(int index, BuildContext context, Color color) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.015,
-      width: MediaQuery.of(context).size.width * 0.03,
-      margin: EdgeInsets.all(MediaQuery.of(context).size.width * 0.008),
+      margin: EdgeInsets.all(Get.width * 0.008),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width),
+        borderRadius: BorderRadius.circular(Get.width),
         color: currentindex == index
             ? AppColors.pageIndicator[index]
             : AppColors.inactivePage,
@@ -44,8 +42,6 @@ class _onboardState extends State<onboard> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -61,7 +57,7 @@ class _onboardState extends State<onboard> {
             return Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(width * 0.41, 0.0, 0.0, 0.0),
+                  margin: EdgeInsets.only(left: Get.width * 0.41),
                   child: Row(
                     children: [
                       Row(
@@ -73,9 +69,8 @@ class _onboardState extends State<onboard> {
                       ),
                       currentindex < content.length - 1
                           ? Container(
-                              margin:
-                                  EdgeInsets.fromLTRB(width * 0.2, 0, 0.0, 0.0),
-                              padding: EdgeInsets.all(width * 0.01),
+                              margin: EdgeInsets.only(left: Get.width * 0.2),
+                              padding: EdgeInsets.all(Get.width * 0.01),
                               child: TextButton(
                                 onPressed: () {
                                   _pagescontroller?.jumpToPage(2);
@@ -85,37 +80,33 @@ class _onboardState extends State<onboard> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: AppFonts.manrope,
-                                    fontSize: width * 0.05,
+                                    fontSize: Get.width * 0.05,
                                   ),
                                 ),
                               ))
                           : Container(
-                              height: MediaQuery.of(context).size.height * 0.01,
-                              width: MediaQuery.of(context).size.width * 0.03,
-                              margin: EdgeInsets.fromLTRB(
-                                  0.0,
-                                  MediaQuery.of(context).size.width * 0.1,
-                                  0.0,
-                                  0.0),
-                              padding: EdgeInsets.all(width * 0.01),
-                              decoration: BoxDecoration(
+                              height: Get.height * 0.01,
+                              width: Get.width * 0.03,
+                              margin: EdgeInsets.only(top: Get.width * 0.1),
+                              padding: EdgeInsets.all(Get.width * 0.01),
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                               )),
                     ],
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0.0, height * 0.01, 0.0, 0.0),
+                  margin: EdgeInsets.only(top: Get.height * 0.01),
                   child: Image.asset(
                     content[index].image,
-                    height: height * 0.4,
-                    width: width * 0.9,
+                    height: Get.height * 0.4,
+                    width: Get.width * 0.9,
                   ),
                 ),
                 Container(
-                  height: height * 0.17,
-                  margin: EdgeInsets.fromLTRB(0.0, height * 0.1, 0.0, 0.0),
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.13),
+                  height: Get.height * 0.17,
+                  margin: EdgeInsets.only(top: Get.height * 0.1),
+                  padding: EdgeInsets.symmetric(horizontal: Get.width * 0.13),
                   alignment: Alignment.center,
                   child: Text(
                     content[index].description,
@@ -123,16 +114,15 @@ class _onboardState extends State<onboard> {
                     style: TextStyle(
                       fontFamily: AppFonts.signika,
                       color: AppColors.grey,
-                      fontSize: width * 0.05,
+                      fontSize: Get.width * 0.05,
                     ),
                   ),
                 ),
                 currentindex == content.length - 1
                     ? Container(
-                        width: width * 0.7,
-                        height: height * 0.08,
-                        margin:
-                            EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                        width: Get.width * 0.7,
+                        height: Get.height * 0.08,
+                        margin: EdgeInsets.only(top: Get.height * 0.02),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.pageIndicator[2],
@@ -148,34 +138,32 @@ class _onboardState extends State<onboard> {
                             style: TextStyle(
                               color: AppColors.grey,
                               fontFamily: AppFonts.signika,
-                              fontSize: width * 0.06,
+                              fontSize: Get.width * 0.06,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       )
                     : Container(
-                        margin:
-                            EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                        margin: EdgeInsets.only(top: Get.height * 0.02),
                         alignment: Alignment.center,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        width: MediaQuery.of(context).size.width * 0.2,
+                        height: Get.height * 0.1,
+                        width: Get.width * 0.2,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              MediaQuery.of(context).size.width),
+                          borderRadius: BorderRadius.circular(Get.width),
                           color: AppColors.pageIndicator[currentindex],
                         ),
                         child: GestureDetector(
                           onTap: () {
                             _pagescontroller?.nextPage(
-                                duration: Duration(milliseconds: 10),
+                                duration: const Duration(milliseconds: 10),
                                 curve: Curves.bounceOut);
                           },
                           child: Center(
                             child: Image.asset(
-                              "assets/images/arrow.png",
-                              width: width * 0.6,
-                              height: height * 0.1,
+                              AppImages.arrow,
+                              width: Get.width * 0.6,
+                              height: Get.height * 0.1,
                             ),
                           ),
                         ),

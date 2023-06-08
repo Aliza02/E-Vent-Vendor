@@ -1,7 +1,8 @@
 import 'package:eventually_vendor/constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+
+import '../constants/images.dart';
 
 class googleButton extends StatefulWidget {
   const googleButton({super.key});
@@ -13,21 +14,19 @@ class googleButton extends StatefulWidget {
 class _googleButtonState extends State<googleButton> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.only(top: height * 0.02),
+      margin: EdgeInsets.only(top: Get.height * 0.02),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(width * 0.07),
+        borderRadius: BorderRadius.circular(Get.width * 0.07),
         border: Border.all(
           color: AppColors.googleButtonBorder,
           width: 1.3,
         ),
       ),
-      height: height * 0.09,
-      width: width * 0.2,
-      child: Image.asset("assets/images/google-logo.png"),
+      height: Get.height * 0.09,
+      width: Get.width * 0.2,
+      child: Image.asset(AppImages.googleLogo),
     );
   }
 }

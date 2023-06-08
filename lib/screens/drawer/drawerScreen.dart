@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-
+import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'mainScreen.dart';
 import 'menuScreen.dart';
@@ -26,7 +24,7 @@ class _drawerScreenState extends State<drawerScreen> {
         showShadow: true,
         style: DrawerStyle.defaultStyle,
         angle: 0.0,
-        slideWidth: MediaQuery.of(context).size.width * .65,
+        slideWidth: Get.width * .65,
       ),
     );
   }

@@ -1,8 +1,6 @@
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../widget/button.dart';
@@ -23,59 +21,56 @@ class _loginState extends State<login> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.white,
         body: Container(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-          width: width,
-          height: height,
+          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+          width: Get.width,
+          height: Get.height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(0.0),
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.04, 0.0, 0.0),
-                child: logo(width: width * 0.9, height: height * 0.15),
+                margin: EdgeInsets.only(top: Get.height * 0.04),
+                child: logo(width: Get.width * 0.9, height: Get.height * 0.15),
               ),
               heading(
                 title: 'Welcome Back',
-                heightFromTop: height * 0.008,
-                fontSize: width * 0.11,
+                heightFromTop: Get.height * 0.008,
+                fontSize: Get.width * 0.11,
               ),
               subHeading(
                 title: "Welcome back, you've been missed.",
-                fontSize: width * 0.04,
+                fontSize: Get.width * 0.04,
               ),
               Container(
-                height: height * 0.07,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.03, 0.0, 0.0),
-                child: textFormField(title: 'Email'),
+                height: Get.height * 0.07,
+                margin: EdgeInsets.only(top: Get.height * 0.03),
+                child: const textFormField(title: 'Email'),
               ),
               Container(
-                height: height * 0.07,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.03, 0.0, 0.0),
-                child: PasswordField(title: 'Password'),
+                height: Get.height * 0.07,
+                margin: EdgeInsets.only(top: Get.height * 0.03),
+                child: const PasswordField(title: 'Password'),
               ),
               SizedBox(
-                height: height * 0.01,
+                height: Get.height * 0.01,
               ),
               Row(
                 children: [
                   SizedBox(
-                    height: height * 0.01,
-                    width: width * 0.08,
+                    height: Get.height * 0.01,
+                    width: Get.width * 0.08,
                     child: Checkbox(
                       activeColor: AppColors.pink,
-                      side: BorderSide(
+                      side: const BorderSide(
                         color: AppColors.pink,
                         width: 2.0,
                       ),
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: AppColors.pink,
                           width: 1.0,
                         ),
@@ -89,42 +84,40 @@ class _loginState extends State<login> {
                       },
                     ),
                   ),
-                  Container(
-                    child: Text(
-                      'Remember me',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: width * 0.04,
-                        fontFamily: AppFonts.manrope,
-                        color: AppColors.grey,
-                      ),
+                  Text(
+                    'Remember me',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: Get.width * 0.04,
+                      fontFamily: AppFonts.manrope,
+                      color: AppColors.grey,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     'Forgot Password?',
                     style: TextStyle(
                       fontFamily: AppFonts.manrope,
                       fontWeight: AppFonts.bold,
                       color: AppColors.pink,
-                      fontSize: width * 0.04,
+                      fontSize: Get.width * 0.04,
                     ),
                   ),
                 ],
               ),
               Container(
-                width: width * 0.4,
-                height: height * 0.06,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.04, 0.0, 0.0),
+                width: Get.width * 0.4,
+                height: Get.height * 0.06,
+                margin: EdgeInsets.only(top: Get.height * 0.04),
                 child: button(
                   label: 'Login',
                   onpressed: () {},
                 ),
               ),
-              SizedBox(height: height * 0.03),
+              SizedBox(height: Get.height * 0.03),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       color: AppColors.pink,
                       height: 20.0,
@@ -139,10 +132,10 @@ class _loginState extends State<login> {
                       color: AppColors.grey,
                       fontFamily: AppFonts.manrope,
                       fontWeight: AppFonts.regular,
-                      fontSize: width * 0.04,
+                      fontSize: Get.width * 0.04,
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       color: AppColors.pink,
                       height: 20.0,
@@ -153,9 +146,9 @@ class _loginState extends State<login> {
                   ),
                 ],
               ),
-              googleButton(),
+              const googleButton(),
               SizedBox(
-                height: height * 0.04,
+                height: Get.height * 0.04,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +156,7 @@ class _loginState extends State<login> {
                   Text(
                     'Don’t have an account?',
                     style: TextStyle(
-                      fontSize: width * 0.04,
+                      fontSize: Get.width * 0.04,
                       color: AppColors.grey,
                       fontFamily: AppFonts.manrope,
                       fontWeight: AppFonts.medium,
@@ -176,7 +169,7 @@ class _loginState extends State<login> {
                     child: Text(
                       'Sign up',
                       style: TextStyle(
-                        fontSize: width * 0.04,
+                        fontSize: Get.width * 0.04,
                         color: AppColors.pink,
                         fontFamily: AppFonts.manrope,
                         fontWeight: AppFonts.extraBold,

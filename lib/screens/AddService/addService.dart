@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
+import '../../constants/images.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/AddServices/Button.dart';
 import '../../widget/AddServices/serviceCardSwipableButton.dart';
@@ -21,44 +22,42 @@ class AddService extends GetView<testController> {
 
 // add service section
   Widget addService(context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        Label(title: 'Service Name'),
+        const Label(title: 'Service Name'),
         const textFormField(),
-        Label(title: 'Description'),
+        const Label(title: 'Description'),
         const textFormField(),
-        Label(title: 'Price Range'),
+        const Label(title: 'Price Range'),
         const textFormField(),
-        Label(title: 'Number of Person'),
+        const Label(title: 'Number of Person'),
         const textFormField(),
-        Label(title: 'Customizable'),
+        const Label(title: 'Customizable'),
         Container(
-          margin: EdgeInsets.only(left: width * 0.06),
+          margin: EdgeInsets.only(left: Get.width * 0.06),
           child: Row(
             children: [
               Button(
                 label: 'Yes',
-                width: width * 0.25,
-                height: height * 0.06,
+                width: Get.width * 0.25,
+                height: Get.height * 0.06,
                 buttonColor: AppColors.blue,
-                fontSize: width * 0.04,
+                fontSize: Get.width * 0.04,
                 borderRadius: 18.0,
               ),
               Button(
                 label: 'No',
-                width: width * 0.25,
-                height: height * 0.06,
+                width: Get.width * 0.25,
+                height: Get.height * 0.06,
                 buttonColor: AppColors.pink,
-                fontSize: width * 0.04,
+                fontSize: Get.width * 0.04,
                 borderRadius: 18.0,
               ),
             ],
           ),
         ),
         const SizedBox(height: 6.0),
-        Label(title: 'Service Images'),
+        const Label(title: 'Service Images'),
         const SizedBox(height: 10.0),
         InkWell(
           onTap: () {},
@@ -69,22 +68,22 @@ class AddService extends GetView<testController> {
               strokeWidth: 2,
               dashPattern: const [8, 8],
               child: SizedBox(
-                width: width * 0.84,
-                height: height * 0.09,
+                width: Get.width * 0.84,
+                height: Get.height * 0.09,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
                       AppIcons.addImage,
-                      height: height * 0.04,
-                      width: width * 0.08,
+                      height: Get.height * 0.04,
+                      width: Get.width * 0.08,
                     ),
                     const SizedBox(width: 10.0),
                     Text(
                       'Upload Image',
                       style: TextStyle(
                         color: AppColors.grey.withOpacity(0.8),
-                        fontSize: width * 0.04,
+                        fontSize: Get.width * 0.04,
                         fontFamily: AppFonts.manrope,
                         fontWeight: AppFonts.bold,
                       ),
@@ -100,7 +99,7 @@ class AddService extends GetView<testController> {
           'Upload max 3 images',
           style: TextStyle(
             color: AppColors.grey.withOpacity(0.8),
-            fontSize: width * 0.04,
+            fontSize: Get.width * 0.04,
             fontFamily: AppFonts.manrope,
             fontWeight: AppFonts.bold,
           ),
@@ -108,10 +107,10 @@ class AddService extends GetView<testController> {
         const SizedBox(height: 20.0),
         Button(
           label: 'Add Service',
-          width: width * 0.45,
-          height: height * 0.06,
+          width: Get.width * 0.45,
+          height: Get.height * 0.06,
           buttonColor: AppColors.pink,
-          fontSize: width * 0.05,
+          fontSize: Get.width * 0.05,
           borderRadius: 16.0,
         ),
         const SizedBox(height: 10.0),
@@ -128,8 +127,8 @@ class AddService extends GetView<testController> {
       itemCount: 5,
       itemBuilder: (context, index) {
         return Slidable(
-          endActionPane: ActionPane(
-            motion: const ScrollMotion(),
+          endActionPane: const ActionPane(
+            motion: ScrollMotion(),
             children: [
               swipeableButton(
                 buttonColor: AppColors.blue,
@@ -147,9 +146,14 @@ class AddService extends GetView<testController> {
               width: Get.width * 0.8,
               height: Get.height * 0.1,
               decoration: BoxDecoration(
-                color: Colors.yellow,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(25.0),
               ),
+              child: Row(children: [
+                Container(
+                  child: Image.asset(AppImages.googleLogo),
+                ),
+              ]),
             ),
           ),
         );

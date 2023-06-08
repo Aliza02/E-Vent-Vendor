@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class serviceHeading extends StatelessWidget {
-  String title;
-  double fontSize;
-  String fontFamily;
-  Color fontColor;
-  FontWeight fontWeight;
-  serviceHeading(
+  final String title;
+  final double fontSize;
+  final String fontFamily;
+  final Color fontColor;
+  final FontWeight fontWeight;
+  const serviceHeading(
       {super.key,
       required this.title,
       required this.fontSize,
@@ -21,10 +19,10 @@ class serviceHeading extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-          fontSize: this.fontSize,
-          fontFamily: this.fontFamily,
-          color: this.fontColor,
-          fontWeight: this.fontWeight),
+          fontSize: fontSize,
+          fontFamily: fontFamily,
+          color: fontColor,
+          fontWeight: fontWeight),
     );
   }
 }

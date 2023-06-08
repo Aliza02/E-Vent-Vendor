@@ -4,14 +4,15 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../constants/font.dart';
 
+//  button for add/edit service
 class Button extends StatelessWidget {
-  String label;
-  double width;
-  double height;
-  Color buttonColor;
-  double fontSize;
-  double borderRadius;
-  Button(
+  final String label;
+  final double width;
+  final double height;
+  final Color buttonColor;
+  final double fontSize;
+  final double borderRadius;
+  const Button(
       {super.key,
       required this.label,
       required this.width,

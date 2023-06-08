@@ -40,10 +40,9 @@ class MenuScreen extends GetView<testController> {
   ];
 
   Widget buildMenuItems(BuildContext context, int index) {
-    double width = MediaQuery.of(context).size.width;
     return Obx(
       () => Container(
-        width: width / 2,
+        width: Get.width / 2,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: pagecontroller.indexOfDrawerMenuItems.value == index
@@ -53,15 +52,15 @@ class MenuScreen extends GetView<testController> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(
-                horizontal: width * 0.06,
-                vertical: width * 0.03,
+                horizontal: Get.width * 0.06,
+                vertical: Get.width * 0.03,
               ),
               child: pagecontroller.indexOfDrawerMenuItems.value == index
                   ? SvgPicture.asset(menuIconsFilled[index])
                   : SvgPicture.asset(menuIcons[index]),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: width * 0.02),
+              margin: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
               child: Text(
                 menuItems[index],
                 style: TextStyle(
@@ -69,7 +68,7 @@ class MenuScreen extends GetView<testController> {
                       ? AppColors.pink
                       : AppColors.grey,
                   fontWeight: AppFonts.medium,
-                  fontSize: width * 0.034,
+                  fontSize: Get.width * 0.034,
                 ),
               ),
             ),
@@ -81,8 +80,6 @@ class MenuScreen extends GetView<testController> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.cream,
@@ -92,9 +89,9 @@ class MenuScreen extends GetView<testController> {
               alignment: Alignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: height * 0.05),
-                  width: height / 8,
-                  height: height * 0.12,
+                  margin: EdgeInsets.only(top: Get.height * 0.05),
+                  width: Get.height / 8,
+                  height: Get.height * 0.12,
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -107,8 +104,8 @@ class MenuScreen extends GetView<testController> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: height * 0.05),
-                  padding: EdgeInsets.all(width * 0.01),
+                  margin: EdgeInsets.only(top: Get.height * 0.05),
+                  padding: EdgeInsets.all(Get.width * 0.01),
                   child: const CircleAvatar(
                     radius: 50.0,
                     backgroundColor: Colors.transparent,
@@ -119,21 +116,20 @@ class MenuScreen extends GetView<testController> {
               ],
             ),
             Container(
-              margin: EdgeInsets.only(top: height * 0.02),
+              margin: EdgeInsets.only(top: Get.height * 0.02),
               child: Text(
                 'User Name',
                 style: TextStyle(
                     fontFamily: AppFonts.manrope,
                     fontWeight: AppFonts.extraBold,
-                    fontSize: width * 0.05,
+                    fontSize: Get.width * 0.05,
                     color: AppColors.grey),
               ),
             ),
-            Text(
+            const Text(
               'abc@gmail.com',
               style: TextStyle(
                 fontFamily: AppFonts.manrope,
-                // fontSize: width * 0.05,
                 fontWeight: AppFonts.medium,
                 color: AppColors.grey,
               ),
@@ -159,17 +155,17 @@ class MenuScreen extends GetView<testController> {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: width * 0.06, vertical: width * 0.07),
+                      horizontal: Get.width * 0.06, vertical: Get.width * 0.07),
                   child: SvgPicture.asset(AppIcons.logout),
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: width * 0.06, vertical: width * 0.07),
+                      horizontal: Get.width * 0.06, vertical: Get.width * 0.07),
                   child: Text(
                     'Logout',
                     style: TextStyle(
                       color: AppColors.pink,
-                      fontSize: width * 0.04,
+                      fontSize: Get.width * 0.04,
                       fontWeight: AppFonts.bold,
                     ),
                   ),

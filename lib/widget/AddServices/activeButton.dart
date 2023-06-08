@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:get/get.dart';
 import '../../constants/colors.dart';
 
 class ActiveButton extends StatelessWidget {
-  String title;
-  String icon;
-  Function activeButton;
-  Color buttonColor;
-  ActiveButton(
+  final String title;
+  final String icon;
+  final Function activeButton;
+  final Color buttonColor;
+  const ActiveButton(
       {super.key,
       required this.title,
       required this.icon,
@@ -19,11 +17,9 @@ class ActiveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Container(
-      width: width * 0.38,
-      height: height * 0.06,
+      width: Get.width * 0.38,
+      height: Get.height * 0.06,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: const [
@@ -39,7 +35,7 @@ class ActiveButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: buttonColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            borderRadius: BorderRadius.circular(Get.width * 0.05),
           ),
         ),
         onPressed: () => activeButton,

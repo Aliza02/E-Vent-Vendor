@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../constants/colors.dart';
-import '../../constants/icons.dart';
 
 class InactiveButton extends StatelessWidget {
-  String title;
-  String icon;
-  Function activeButton;
-  InactiveButton(
+  final String title;
+  final String icon;
+  final Function activeButton;
+  const InactiveButton(
       {super.key,
       required this.title,
       required this.icon,
@@ -20,10 +16,10 @@ class InactiveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton.icon(
       onPressed: () => activeButton(),
-      icon: SvgPicture.asset(this.icon),
+      icon: SvgPicture.asset(icon),
       label: Text(
-        this.title,
-        style: TextStyle(
+        title,
+        style: const TextStyle(
           color: AppColors.grey,
         ),
       ),

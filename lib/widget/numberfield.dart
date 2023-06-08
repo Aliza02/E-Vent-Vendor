@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 
 class numberField extends StatefulWidget {
-  String title;
-  int maxLength;
+  final String title;
+  final int maxLength;
 
-  numberField({required this.title, required this.maxLength});
+  const numberField({super.key, required this.title, required this.maxLength});
 
   @override
   State<numberField> createState() => _numberFieldState();
@@ -18,8 +16,6 @@ class numberField extends StatefulWidget {
 class _numberFieldState extends State<numberField> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return TextFormField(
       maxLength: widget.maxLength,
       cursorColor: AppColors.pink,
@@ -31,20 +27,20 @@ class _numberFieldState extends State<numberField> {
         hintText: widget.title,
         counterText: "",
         hintStyle: TextStyle(
-          fontSize: width * 0.04,
+          fontSize: Get.width * 0.04,
           color: Colors.grey,
           fontFamily: AppFonts.manrope,
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(width * 0.02),
-          borderSide: BorderSide(
+          borderRadius: BorderRadius.circular(Get.width * 0.02),
+          borderSide: const BorderSide(
             color: AppColors.pink,
             width: 1.3,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(width * 0.02),
-          borderSide: BorderSide(
+          borderRadius: BorderRadius.circular(Get.width * 0.02),
+          borderSide: const BorderSide(
             color: AppColors.pink,
             width: 1.3,
           ),

@@ -1,15 +1,8 @@
 import 'package:eventually_vendor/screens/AddService/addService.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
-
 import '../../constants/colors.dart';
-import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/BottomNavBar/bottomNavBar.dart';
 
@@ -28,8 +21,6 @@ class MainScreen extends GetView<testController> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: bottomNavBar(),
@@ -43,8 +34,8 @@ class MainScreen extends GetView<testController> {
             child: Icon(
               Icons.menu,
               color: AppColors.pink,
-              size: width * 0.1,
-              weight: width * 0.1,
+              size: Get.width * 0.1,
+              weight: Get.width * 0.1,
             ),
           ),
         ),

@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
+import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 
 class button extends StatelessWidget {
-  String label;
+  final String label;
 
-  Function onpressed;
-  button({required this.label, required this.onpressed});
+  final Function onpressed;
+  const button({super.key, required this.label, required this.onpressed});
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return ElevatedButton(
       onPressed: () => onpressed(),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontFamily: AppFonts.manrope,
-          fontWeight: AppFonts.semiBold,
-          fontSize: width * 0.04,
-          color: Colors.white,
-        ),
-      ),
       style: ElevatedButton.styleFrom(
         elevation: 10.0,
         shadowColor: AppColors.pink.withOpacity(0.4),
         backgroundColor: AppColors.pink,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          fontFamily: AppFonts.manrope,
+          fontWeight: AppFonts.semiBold,
+          fontSize: Get.width * 0.04,
+          color: Colors.white,
         ),
       ),
     );
