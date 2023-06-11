@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:eventually_vendor/widget/AddServices/serviceHeader.dart';
 import 'package:flutter/material.dart';
@@ -11,115 +13,216 @@ import '../../constants/icons.dart';
 import '../../constants/images.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/AddServices/Button.dart';
+import '../../widget/AddServices/ImagesBoxLabels.dart';
 import '../../widget/AddServices/serviceCardSwipableButton.dart';
 import '../../widget/AddServices/textFieldLabel.dart';
 import '../../widget/AddServices/textFormField.dart';
 
-class AddService extends GetView<testController> {
+class AddService extends StatefulWidget {
   AddService({super.key});
 
+  @override
+  State<AddService> createState() => _AddServiceState();
+}
+
+class _AddServiceState extends State<AddService> {
   final pagecontroller = Get.put(testController());
+  // Rxint imageIndex = 0.obs;
+  int imgindex = 0;
+  File? _image;
+  List<File> selectedImage = [];
+  // This is the image picker
+  final _picker = ImagePicker();
+
+  // Implementing the image picker
+  Future<void> _openImagePicker() async {
+    final XFile? pickedImage =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedImage != null) {
+      print(selectedImage.length);
+      setState(() {
+        _image = File(pickedImage.path);
+        selectedImage.add(_image!);
+        pagecontroller.imageIndex.value++;
+        print('index');
+        print(pagecontroller.imageIndex.value);
+        // imageIndex++;
+      });
+    }
+  }
+
+  // widget to display selected images
+  Container buildImage(BuildContext context, int index) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Get.width * 0.02),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.pink.withOpacity(0.5),
+            spreadRadius: 0.1,
+            blurRadius: 10.0,
+          ),
+        ],
+      ),
+      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.01),
+      width: Get.width * 0.25,
+      height: Get.height * 0.13,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(Get.width * 0.02),
+        child: Image.file(
+          selectedImage[index],
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
 
 // add service section
   Widget addService(context) {
-    return Column(
-      children: [
-        const Label(title: 'Service Name'),
-        const textFormField(),
-        const Label(title: 'Description'),
-        const textFormField(),
-        const Label(title: 'Price Range'),
-        const textFormField(),
-        const Label(title: 'Number of Person'),
-        const textFormField(),
-        const Label(title: 'Customizable'),
-        Container(
-          margin: EdgeInsets.only(left: Get.width * 0.06),
-          child: Row(
-            children: [
-              Button(
-                label: 'Yes',
-                width: Get.width * 0.25,
-                height: Get.height * 0.06,
-                buttonColor: AppColors.blue,
-                fontSize: Get.width * 0.04,
-                borderRadius: 18.0,
-              ),
-              Button(
-                label: 'No',
-                width: Get.width * 0.25,
-                height: Get.height * 0.06,
-                buttonColor: AppColors.pink,
-                fontSize: Get.width * 0.04,
-                borderRadius: 18.0,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 6.0),
-        const Label(title: 'Service Images'),
-        const SizedBox(height: 10.0),
-        InkWell(
-          onTap: () {},
-          child: InkWell(
-            onTap: () {},
-            child: DottedBorder(
-              color: AppColors.grey,
-              strokeWidth: 2,
-              dashPattern: const [8, 8],
-              child: SizedBox(
-                width: Get.width * 0.84,
-                height: Get.height * 0.09,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      AppIcons.addImage,
-                      height: Get.height * 0.04,
-                      width: Get.width * 0.08,
-                    ),
-                    const SizedBox(width: 10.0),
-                    Text(
-                      'Upload Image',
-                      style: TextStyle(
-                        color: AppColors.grey.withOpacity(0.8),
-                        fontSize: Get.width * 0.04,
-                        fontFamily: AppFonts.manrope,
-                        fontWeight: AppFonts.bold,
-                      ),
-                    ),
-                  ],
+    return Obx(
+      () => Column(
+        children: [
+          const Label(title: 'Service Name'),
+          const textFormField(),
+          const Label(title: 'Description'),
+          const textFormField(),
+          const Label(title: 'Price Range'),
+          const textFormField(),
+          const Label(title: 'Number of Person'),
+          const textFormField(),
+          const Label(title: 'Customizable'),
+          Container(
+            margin: EdgeInsets.only(left: Get.width * 0.06),
+            child: Row(
+              children: [
+                // customized button "YES"
+                Button(
+                  label: 'Yes',
+                  width: Get.width * 0.25,
+                  height: Get.height * 0.06,
+                  buttonColor: AppColors.blue,
+                  fontSize: Get.width * 0.04,
+                  borderRadius: 18.0,
                 ),
-              ),
+
+                // customized button "NO"
+                Button(
+                  label: 'No',
+                  width: Get.width * 0.25,
+                  height: Get.height * 0.06,
+                  buttonColor: AppColors.pink,
+                  fontSize: Get.width * 0.04,
+                  borderRadius: 18.0,
+                ),
+              ],
             ),
           ),
-        ),
-        const SizedBox(height: 10.0),
-        Text(
-          'Upload max 3 images',
-          style: TextStyle(
-            color: AppColors.grey.withOpacity(0.8),
-            fontSize: Get.width * 0.04,
-            fontFamily: AppFonts.manrope,
-            fontWeight: AppFonts.bold,
+          SizedBox(height: Get.height * 0.01),
+          const Label(title: 'Service Images'),
+          SizedBox(height: Get.height * 0.01),
+          Container(
+            padding: pagecontroller.imageIndex.value == 0
+                ? EdgeInsets.all(0.0)
+                : EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+            child: Row(
+              mainAxisAlignment: pagecontroller.imageIndex.value == 0 ||
+                      pagecontroller.imageIndex.value == 3
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(selectedImage.length,
+                      (index) => buildImage(context, index)),
+                ),
+                pagecontroller.imageIndex.value <= 2
+                    ? SizedBox(
+                        width: pagecontroller.imageIndex.value > 0
+                            ? Get.width * 0.4
+                            : Get.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                _openImagePicker();
+                              },
+                              child: DottedBorder(
+                                // add image box
+                                color: AppColors.grey,
+                                strokeWidth: 2,
+                                dashPattern: const [8, 8],
+                                child: SizedBox(
+                                  width: pagecontroller.imageIndex.value > 0
+                                      ? Get.width * 0.3
+                                      : Get.width * 0.84,
+                                  height: Get.height * 0.09,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        AppIcons.addImage,
+                                        height:
+                                            pagecontroller.imageIndex.value > 0
+                                                ? Get.height * 0.03
+                                                : Get.height * 0.04,
+                                        width:
+                                            pagecontroller.imageIndex.value > 0
+                                                ? Get.width * 0.03
+                                                : Get.width * 0.08,
+                                      ),
+                                      SizedBox(width: Get.width * 0.01),
+                                      pagecontroller.imageIndex.value > 0
+                                          ? addImageBoxLabels(
+                                              title: 'Add More',
+                                              fontSize: Get.width * 0.04,
+                                              fontWeight: AppFonts.bold,
+                                              fontFamily: AppFonts.manrope)
+                                          : addImageBoxLabels(
+                                              title: 'Upload Image',
+                                              fontSize: Get.width * 0.04,
+                                              fontFamily: AppFonts.manrope,
+                                              fontWeight: AppFonts.bold,
+                                            )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Text(
+                              'Upload max 3 images',
+                              style: TextStyle(
+                                color: AppColors.grey.withOpacity(0.8),
+                                fontSize: Get.width * 0.03,
+                                fontFamily: AppFonts.manrope,
+                                fontWeight: AppFonts.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 20.0),
-        Button(
-          label: 'Add Service',
-          width: Get.width * 0.45,
-          height: Get.height * 0.06,
-          buttonColor: AppColors.pink,
-          fontSize: Get.width * 0.05,
-          borderRadius: 16.0,
-        ),
-        const SizedBox(height: 10.0),
-      ],
+          const SizedBox(height: 20.0),
+          Button(
+            label: 'Add Service',
+            width: Get.width * 0.45,
+            height: Get.height * 0.06,
+            buttonColor: AppColors.pink,
+            fontSize: Get.width * 0.05,
+            borderRadius: 16.0,
+          ),
+          const SizedBox(height: 10.0),
+        ],
+      ),
     );
   }
 
   // Edit Services
-
   Widget editService(context) {
     return ListView.builder(
       scrollDirection: Axis.vertical,
