@@ -1,7 +1,6 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
-import 'package:eventually_vendor/widget/AddServices/serviceHeader.dart';
+import 'package:eventually_vendor/widget/AddEditServices/serviceHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,14 +9,14 @@ import 'package:image_picker/image_picker.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
-import '../../constants/images.dart';
 import '../../controller/pagecontroller.dart';
-import '../../widget/AddServices/Button.dart';
-import '../../widget/AddServices/ImagesBoxLabels.dart';
-import '../../widget/AddServices/serviceCardSwipableButton.dart';
-import '../../widget/AddServices/textFieldLabel.dart';
-import '../../widget/AddServices/textFormField.dart';
-import '../../widget/EditServices/serviceTitle.dart';
+import '../../widget/AddEditServices/Button.dart';
+import '../../widget/AddEditServices/ImagesBoxLabels.dart';
+import '../../widget/AddEditServices/buildImage.dart';
+import '../../widget/AddEditServices/serviceCardSwipableButton.dart';
+import '../../widget/AddEditServices/textFieldLabel.dart';
+import '../../widget/AddEditServices/textFormField.dart';
+import '../../widget/AddEditServices/serviceCardDetail.dart';
 
 class AddService extends StatefulWidget {
   AddService({super.key});
@@ -44,7 +43,7 @@ class _AddServiceState extends State<AddService> {
       print(selectedImage.length);
       setState(() {
         _image = File(pickedImage.path);
-        selectedImage.add(_image!);
+        pagecontroller.selectedImage.add(_image!);
         pagecontroller.imageIndex.value++;
         print('index');
         print(pagecontroller.imageIndex.value);
@@ -54,30 +53,30 @@ class _AddServiceState extends State<AddService> {
   }
 
   // widget to display selected images
-  Container buildImage(BuildContext context, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Get.width * 0.02),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.pink.withOpacity(0.5),
-            spreadRadius: 0.1,
-            blurRadius: 10.0,
-          ),
-        ],
-      ),
-      margin: EdgeInsets.symmetric(horizontal: Get.width * 0.01),
-      width: Get.width * 0.25,
-      height: Get.height * 0.13,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(Get.width * 0.02),
-        child: Image.file(
-          selectedImage[index],
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
+  // Container buildImage(BuildContext context, int index) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(Get.width * 0.02),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: AppColors.pink.withOpacity(0.5),
+  //           spreadRadius: 0.1,
+  //           blurRadius: 10.0,
+  //         ),
+  //       ],
+  //     ),
+  //     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.01),
+  //     width: Get.width * 0.25,
+  //     height: Get.height * 0.13,
+  //     child: ClipRRect(
+  //       borderRadius: BorderRadius.circular(Get.width * 0.02),
+  //       child: Image.file(
+  //         selectedImage[index],
+  //         fit: BoxFit.cover,
+  //       ),
+  //     ),
+  //   );
+  // }
 
 // add service section
   Widget addService(context) {
@@ -134,8 +133,8 @@ class _AddServiceState extends State<AddService> {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(selectedImage.length,
-                      (index) => buildImage(context, index)),
+                  children: List.generate(pagecontroller.selectedImage.length,
+                      (index) => buildImage(index: index)),
                 ),
                 pagecontroller.imageIndex.value <= 2
                     ? SizedBox(
@@ -257,82 +256,87 @@ class _AddServiceState extends State<AddService> {
                 borderRadius: BorderRadius.circular(Get.width * 0.08),
               ),
               child: Row(
+                mainAxisAlignment: selectedImage.isEmpty
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Get.width * 0.08),
-                      bottomLeft: Radius.circular(Get.width * 0.08),
-                    ),
-                    child: selectedImage.isNotEmpty
-                        ? Image.file(
-                            width: Get.width * 0.25,
-                            selectedImage[0],
-                            fit: BoxFit.cover,
-                          )
-                        : Container(),
-                  ),
-                  Container(
-                    width: Get.width * 0.59,
-                    padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: Get.height * 0.01),
-                          child: ServiceCardDetails(
-                            text: 'Birthday Setup',
-                            fontSize: Get.width * 0.05,
-                            fontColor: AppColors.grey,
-                            fontFamily: AppFonts.manrope,
-                            fontWeight: AppFonts.semiBold,
-                            opacity: 1.0,
-                          ),
-                        ),
-                        ServiceCardDetails(
-                            text:
-                                'Complete stage decoration, tables setup with real flowers and balloons',
-                            fontSize: Get.width * 0.03,
-                            fontFamily: AppFonts.manrope,
-                            fontColor: AppColors.grey,
-                            fontWeight: AppFonts.medium,
-                            opacity: 1.0),
-                        // description
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Get.width * 0.08),
+                        bottomLeft: Radius.circular(Get.width * 0.08),
+                      ),
+                      child: selectedImage.isNotEmpty
+                          ? Image.file(
+                              width: Get.width * 0.25,
+                              selectedImage[0],
+                              fit: BoxFit.cover,
+                            )
+                          : const Center(
+                              child: ServiceCardDetails(),
+                            )),
+                  selectedImage.isNotEmpty ? ServiceCardDetails() : Container(),
+                  // Container(
+                  //   width: Get.width * 0.59,
+                  //   padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Container(
+                  //         margin: EdgeInsets.only(top: Get.height * 0.01),
+                  //         child: ServiceCardDetails(
+                  //           text: 'Birthday Setup',
+                  //           fontSize: Get.width * 0.05,
+                  //           fontColor: AppColors.grey,
+                  //           fontFamily: AppFonts.manrope,
+                  //           fontWeight: AppFonts.semiBold,
+                  //           opacity: 1.0,
+                  //         ),
+                  //       ),
+                  //       ServiceCardDetails(
+                  //           text:
+                  //               'Complete stage decoration, tables setup with real flowers and balloons',
+                  //           fontSize: Get.width * 0.03,
+                  //           fontFamily: AppFonts.manrope,
+                  //           fontColor: AppColors.grey,
+                  //           fontWeight: AppFonts.medium,
+                  //           opacity: 1.0),
+                  //       // description
 
-                        Row(
-                          children: [
-                            ServiceCardDetails(
-                              text: 'Rs 20,000',
-                              fontSize: Get.width * 0.04,
-                              fontFamily: AppFonts.manrope,
-                              fontColor: AppColors.pink,
-                              fontWeight: AppFonts.extraBold,
-                              opacity: 1.0,
-                            ),
-                            //
-                            const Spacer(),
-                            ServiceCardDetails(
-                              text: 'Per 20 persom',
-                              fontSize: Get.width * 0.03,
-                              fontFamily: AppFonts.manrope,
-                              fontColor: AppColors.grey,
-                              fontWeight: AppFonts.regular,
-                              opacity: 0.5,
-                            ),
-                          ],
-                        ),
+                  //       Row(
+                  //         children: [
+                  //           ServiceCardDetails(
+                  //             text: 'Rs 20,000',
+                  //             fontSize: Get.width * 0.04,
+                  //             fontFamily: AppFonts.manrope,
+                  //             fontColor: AppColors.pink,
+                  //             fontWeight: AppFonts.extraBold,
+                  //             opacity: 1.0,
+                  //           ),
+                  //           //
+                  //           const Spacer(),
+                  //           ServiceCardDetails(
+                  //             text: 'Per 20 person',
+                  //             fontSize: Get.width * 0.03,
+                  //             fontFamily: AppFonts.manrope,
+                  //             fontColor: AppColors.grey,
+                  //             fontWeight: AppFonts.regular,
+                  //             opacity: 0.8,
+                  //           ),
+                  //         ],
+                  //       ),
 
-                        ServiceCardDetails(
-                          text: 'Customizable',
-                          fontSize: Get.width * 0.03,
-                          fontFamily: AppFonts.manrope,
-                          fontColor: AppColors.grey,
-                          fontWeight: AppFonts.bold,
-                          opacity: 0.8,
-                        ),
-                      ],
-                    ),
-                  ),
+                  //       ServiceCardDetails(
+                  //         text: 'Customizable',
+                  //         fontSize: Get.width * 0.03,
+                  //         fontFamily: AppFonts.manrope,
+                  //         fontColor: AppColors.grey,
+                  //         fontWeight: AppFonts.bold,
+                  //         opacity: 0.8,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -344,8 +348,6 @@ class _AddServiceState extends State<AddService> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class ServiceCardDetails extends StatelessWidget {
+class ServiceCardText extends StatelessWidget {
   final String text;
   final double fontSize;
   final String fontFamily;
@@ -10,7 +10,7 @@ class ServiceCardDetails extends StatelessWidget {
   final Color fontColor;
   final double opacity;
 
-  ServiceCardDetails(
+  ServiceCardText(
       {super.key,
       required this.text,
       required this.fontSize,

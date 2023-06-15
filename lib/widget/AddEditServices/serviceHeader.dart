@@ -1,4 +1,4 @@
-import 'package:eventually_vendor/widget/AddServices/subheading.dart';
+import 'package:eventually_vendor/widget/AddEditServices/subheading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -45,15 +45,16 @@ class service_Header extends StatelessWidget {
               ),
             ),
             Container(
-                margin: EdgeInsets.symmetric(horizontal: Get.width * 0.07),
-                child: serviceSubHeading(
-                  title:
-                      "For adding a service, fill all the filelds and follow the service adding rules",
-                  fontColor: AppColors.grey,
-                  fontFamily: AppFonts.manrope,
-                  fontSize: Get.width * 0.03,
-                  fontWeight: AppFonts.bold,
-                )),
+              margin: EdgeInsets.symmetric(horizontal: Get.width * 0.07),
+              child: serviceSubHeading(
+                title:
+                    "For adding a service, fill all the filelds and follow the service adding rules",
+                fontColor: AppColors.grey,
+                fontFamily: AppFonts.manrope,
+                fontSize: Get.width * 0.03,
+                fontWeight: AppFonts.bold,
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.02),
               width: Get.width * 0.86,

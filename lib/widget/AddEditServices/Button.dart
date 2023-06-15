@@ -35,7 +35,9 @@ class Button extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/editservice');
+        },
         child: Text(
           label,
           style: TextStyle(

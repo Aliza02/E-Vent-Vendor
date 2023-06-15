@@ -14,6 +14,8 @@ import 'package:eventually_vendor/screens/signup_business.dart';
 import 'package:eventually_vendor/widget/textfield.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/EditService/EditServiceForm.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
           '/passwordReset': (context) => passwrordReset(),
           '/addService': (context) => AddService(),
           '/drawer': (context) => drawerScreen(),
+          '/editservice': (context) => EditServiceForm(),
         });
   }
 }
