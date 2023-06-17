@@ -226,16 +226,20 @@ class _AddServiceState extends State<AddService> {
       itemCount: 5,
       itemBuilder: (context, index) {
         return Slidable(
-          endActionPane: const ActionPane(
+          endActionPane: ActionPane(
             motion: ScrollMotion(),
             children: [
               swipeableButton(
                 buttonColor: AppColors.blue,
                 buttonIcon: AppIcons.editActive,
+                onPressed: () {
+                  Get.toNamed('/editServiceForm');
+                },
               ),
               swipeableButton(
                 buttonColor: AppColors.pink,
                 buttonIcon: AppIcons.delete,
+                onPressed: () {},
               ),
             ],
           ),
@@ -256,87 +260,24 @@ class _AddServiceState extends State<AddService> {
                 borderRadius: BorderRadius.circular(Get.width * 0.08),
               ),
               child: Row(
-                mainAxisAlignment: selectedImage.isEmpty
+                mainAxisAlignment: pagecontroller.selectedImage.isEmpty
                     ? MainAxisAlignment.center
                     : MainAxisAlignment.start,
                 children: [
                   ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Get.width * 0.08),
-                        bottomLeft: Radius.circular(Get.width * 0.08),
-                      ),
-                      child: selectedImage.isNotEmpty
-                          ? Image.file(
-                              width: Get.width * 0.25,
-                              selectedImage[0],
-                              fit: BoxFit.cover,
-                            )
-                          : const Center(
-                              child: ServiceCardDetails(),
-                            )),
-                  selectedImage.isNotEmpty ? ServiceCardDetails() : Container(),
-                  // Container(
-                  //   width: Get.width * 0.59,
-                  //   padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Container(
-                  //         margin: EdgeInsets.only(top: Get.height * 0.01),
-                  //         child: ServiceCardDetails(
-                  //           text: 'Birthday Setup',
-                  //           fontSize: Get.width * 0.05,
-                  //           fontColor: AppColors.grey,
-                  //           fontFamily: AppFonts.manrope,
-                  //           fontWeight: AppFonts.semiBold,
-                  //           opacity: 1.0,
-                  //         ),
-                  //       ),
-                  //       ServiceCardDetails(
-                  //           text:
-                  //               'Complete stage decoration, tables setup with real flowers and balloons',
-                  //           fontSize: Get.width * 0.03,
-                  //           fontFamily: AppFonts.manrope,
-                  //           fontColor: AppColors.grey,
-                  //           fontWeight: AppFonts.medium,
-                  //           opacity: 1.0),
-                  //       // description
-
-                  //       Row(
-                  //         children: [
-                  //           ServiceCardDetails(
-                  //             text: 'Rs 20,000',
-                  //             fontSize: Get.width * 0.04,
-                  //             fontFamily: AppFonts.manrope,
-                  //             fontColor: AppColors.pink,
-                  //             fontWeight: AppFonts.extraBold,
-                  //             opacity: 1.0,
-                  //           ),
-                  //           //
-                  //           const Spacer(),
-                  //           ServiceCardDetails(
-                  //             text: 'Per 20 person',
-                  //             fontSize: Get.width * 0.03,
-                  //             fontFamily: AppFonts.manrope,
-                  //             fontColor: AppColors.grey,
-                  //             fontWeight: AppFonts.regular,
-                  //             opacity: 0.8,
-                  //           ),
-                  //         ],
-                  //       ),
-
-                  //       ServiceCardDetails(
-                  //         text: 'Customizable',
-                  //         fontSize: Get.width * 0.03,
-                  //         fontFamily: AppFonts.manrope,
-                  //         fontColor: AppColors.grey,
-                  //         fontWeight: AppFonts.bold,
-                  //         opacity: 0.8,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Get.width * 0.08),
+                      bottomLeft: Radius.circular(Get.width * 0.08),
+                    ),
+                    child: pagecontroller.selectedImage.isNotEmpty
+                        ? Image.file(
+                            pagecontroller.selectedImage[0],
+                            width: Get.width * 0.25,
+                            fit: BoxFit.cover,
+                          )
+                        : const SizedBox(),
+                  ),
+                  ServiceCardDetails(),
                 ],
               ),
             ),

@@ -30,6 +30,8 @@ class _onboardState extends State<onboard> {
 
   Container buildDot(int index, BuildContext context, Color color) {
     return Container(
+      width: Get.width * 0.03,
+      height: Get.height * 0.015,
       margin: EdgeInsets.all(Get.width * 0.008),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(Get.width),
@@ -131,7 +133,7 @@ class _onboardState extends State<onboard> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/login');
+                            Get.toNamed('/login');
                           },
                           child: Text(
                             'Get Your First Order',

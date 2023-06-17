@@ -29,10 +29,27 @@ class _forgotPasswordState extends State<forgotPassword> {
           height: Get.height,
           child: Column(
             children: [
-              heading(
-                  title: 'Forgot Password',
-                  heightFromTop: Get.height * 0.03,
-                  fontSize: Get.width * 0.07),
+              Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: Get.height * 0.03),
+                    child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: Get.width * 0.02),
+                  heading(
+                      title: 'Forgot Password',
+                      heightFromTop: Get.height * 0.03,
+                      fontSize: Get.width * 0.07),
+                ],
+              ),
               const forgotPasswordImage(
                 imageUrl: AppImages.forgotPassword,
               ), // image

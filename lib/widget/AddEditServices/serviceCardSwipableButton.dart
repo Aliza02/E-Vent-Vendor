@@ -5,14 +5,18 @@ import 'package:get/get.dart';
 class swipeableButton extends StatelessWidget {
   final Color buttonColor;
   final String buttonIcon;
-  const swipeableButton(
-      {super.key, required this.buttonColor, required this.buttonIcon});
+  Function onPressed;
+  swipeableButton(
+      {super.key,
+      required this.buttonColor,
+      required this.buttonIcon,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('test');
+        onPressed();
       },
       child: Container(
         width: Get.width * 0.17,

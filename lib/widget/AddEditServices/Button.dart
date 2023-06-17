@@ -36,7 +36,7 @@ class Button extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Navigator.pushNamed(context, '/editservice');
+          // Navigator.pushNamed(context, '/editservice');
         },
         child: Text(
           label,

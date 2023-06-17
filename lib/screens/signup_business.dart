@@ -20,6 +20,7 @@ class signup_business extends StatefulWidget {
 class _signup_businessState extends State<signup_business> {
   void validationbusiness() {
     currentindex += 1;
+    Get.toNamed('/drawer');
   }
 
   int currentindex = 1;
@@ -146,7 +147,7 @@ class _signup_businessState extends State<signup_business> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Get.toNamed('/login');
                     },
                     child: Text(
                       'Sign In',

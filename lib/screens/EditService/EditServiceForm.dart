@@ -27,7 +27,9 @@ class _EditServiceFormState extends State<EditServiceForm> {
           backgroundColor: AppColors.appBar.withOpacity(0.2),
           elevation: 0.0,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
             icon: const Icon(
               Icons.arrow_back_ios,
               color: AppColors.grey,

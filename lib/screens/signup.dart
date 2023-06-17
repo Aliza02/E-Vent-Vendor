@@ -2,6 +2,7 @@ import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../widget/button.dart';
@@ -24,7 +25,7 @@ class _signupState extends State<signup> {
   void validation() {
     currentindex += 1;
     print(currentindex);
-    Navigator.pushNamed(context, '/signup_business');
+    Get.toNamed('/signup_business');
     currentindex = 0;
   }
 
@@ -98,7 +99,7 @@ class _signupState extends State<signup> {
               SizedBox(height: height * 0.03),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       color: AppColors.pink,
                       height: 20.0,
@@ -116,7 +117,7 @@ class _signupState extends State<signup> {
                       fontSize: width * 0.04,
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       color: AppColors.pink,
                       height: 20.0,
@@ -142,7 +143,7 @@ class _signupState extends State<signup> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Get.toNamed('/login');
                     },
                     child: Text(
                       'Sign In',

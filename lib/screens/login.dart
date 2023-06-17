@@ -94,13 +94,18 @@ class _loginState extends State<login> {
                     ),
                   ),
                   const Spacer(),
-                  Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                      fontFamily: AppFonts.manrope,
-                      fontWeight: AppFonts.bold,
-                      color: AppColors.pink,
-                      fontSize: Get.width * 0.04,
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed('/forgetpassword');
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.bold,
+                        color: AppColors.pink,
+                        fontSize: Get.width * 0.04,
+                      ),
                     ),
                   ),
                 ],
@@ -111,7 +116,9 @@ class _loginState extends State<login> {
                 margin: EdgeInsets.only(top: Get.height * 0.04),
                 child: button(
                   label: 'Login',
-                  onpressed: () {},
+                  onpressed: () {
+                    Get.toNamed('/drawer');
+                  },
                 ),
               ),
               SizedBox(height: Get.height * 0.03),
@@ -164,7 +171,7 @@ class _loginState extends State<login> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/signup');
+                      Get.toNamed('/signup');
                     },
                     child: Text(
                       'Sign up',
