@@ -18,7 +18,7 @@ class forgotPassword extends StatefulWidget {
 
 class _forgotPasswordState extends State<forgotPassword> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

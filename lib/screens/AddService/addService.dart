@@ -13,10 +13,13 @@ import '../../controller/pagecontroller.dart';
 import '../../widget/AddEditServices/Button.dart';
 import '../../widget/AddEditServices/ImagesBoxLabels.dart';
 import '../../widget/AddEditServices/buildImage.dart';
+import '../../widget/AddEditServices/deleteConfirmDialogButton.dart';
+import '../../widget/AddEditServices/deleteConfirmationDialogText.dart';
 import '../../widget/AddEditServices/serviceCardSwipableButton.dart';
 import '../../widget/AddEditServices/textFieldLabel.dart';
 import '../../widget/AddEditServices/textFormField.dart';
 import '../../widget/AddEditServices/serviceCardDetail.dart';
+import '../login.dart';
 
 class AddService extends StatefulWidget {
   AddService({super.key});
@@ -239,7 +242,38 @@ class _AddServiceState extends State<AddService> {
               swipeableButton(
                 buttonColor: AppColors.pink,
                 buttonIcon: AppIcons.delete,
-                onPressed: () {},
+                onPressed: () {
+                  Get.dialog(
+                    transitionCurve: const ElasticInCurve(0.4),
+                    transitionDuration: const Duration(milliseconds: 800),
+                    AlertDialog(
+                      shadowColor: AppColors.pink,
+                      actionsAlignment: MainAxisAlignment.center,
+                      content: dialog_Text(
+                        text: "Are you sure you want to delete this service?",
+                        fontSize: Get.width * 0.04,
+                        fontWeight: AppFonts.regular,
+                        textColor: AppColors.grey,
+                      ),
+                      title: dialog_Text(
+                        text: "Confirm Deletion",
+                        fontSize: Get.width * 0.06,
+                        fontWeight: AppFonts.extraBold,
+                        textColor: AppColors.pink,
+                      ),
+                      actions: [
+                        dialogButton(
+                          buttonTitle: 'Yes',
+                          buttonColor: AppColors.blue,
+                        ),
+                        dialogButton(
+                          buttonTitle: 'No',
+                          buttonColor: AppColors.pink,
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ],
           ),
