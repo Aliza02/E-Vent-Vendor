@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/screens/AddService/addService.dart';
+import 'package:eventually_vendor/screens/Orders/order_screens.dart';
 import 'package:eventually_vendor/screens/drawer/drawerScreen.dart';
 import 'package:eventually_vendor/screens/forgot_password.dart';
 import 'package:eventually_vendor/screens/login.dart';
@@ -79,21 +80,14 @@ class MyApp extends StatelessWidget {
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),
+        GetPage(
+          name: '/order',
+          page: () => Orders(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
       ],
-
-      initialRoute: '/onboard',
-      // routes: {
-      //   '/onboard': (context) => onboard(),
-      //   '/login': (context) => login(),
-      //   '/signup': (context) => signup(),
-      //   '/otpverification': (context) => otp_verification(),
-      //   '/signup_business': (context) => signup_business(),
-      //   '/forgotpassword': (context) => forgotPassword(),
-      //   '/passwordReset': (context) => passwrordReset(),
-      //   '/addService': (context) => AddService(),
-      //   '/drawer': (context) => drawerScreen(),
-      //   '/editservice': (context) => EditServiceForm(),
-      // },
+      initialRoute: '/order',
     );
   }
 }

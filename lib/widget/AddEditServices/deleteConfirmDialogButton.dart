@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../constants/colors.dart';
 
 class dialogButton extends StatelessWidget {
-  Color buttonColor;
-  String buttonTitle;
+  final Color buttonColor;
+  final String buttonTitle;
   dialogButton(
       {super.key, required this.buttonColor, required this.buttonTitle});
 

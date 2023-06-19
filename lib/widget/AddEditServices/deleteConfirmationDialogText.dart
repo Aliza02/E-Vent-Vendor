@@ -3,10 +3,10 @@ import '../../constants/colors.dart';
 import '../../constants/font.dart';
 
 class dialog_Text extends StatelessWidget {
-  String text;
-  double fontSize;
-  FontWeight fontWeight;
-  Color textColor;
+  final String text;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final Color textColor;
   dialog_Text(
       {super.key,
       required this.text,

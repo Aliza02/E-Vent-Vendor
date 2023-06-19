@@ -9,6 +9,11 @@ class testController extends GetxController {
   RxInt imageIndex = 0.obs;
   List selectedImage = <File>[].obs;
 
+  // variables to active and deactive tabs of orders screen
+  RxBool toCompleteActive = true.obs;
+  RxBool completeActive = false.obs;
+  RxBool allOrdersActive = false.obs;
+
   RxBool EditServiceSelected = true.obs; // edit service button
   RxBool AddServiceSelected = false.obs; // Add service button
 
