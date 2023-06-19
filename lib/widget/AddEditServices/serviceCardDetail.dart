@@ -22,7 +22,6 @@ class ServiceCardDetails extends StatelessWidget {
               text: 'Birthday Setup',
               fontSize: Get.width * 0.05,
               fontColor: AppColors.grey,
-              fontFamily: AppFonts.manrope,
               fontWeight: AppFonts.semiBold,
               opacity: 1.0,
             ),
@@ -31,7 +30,6 @@ class ServiceCardDetails extends StatelessWidget {
               text:
                   'Complete stage decoration, tables setup with real flowers and balloons',
               fontSize: Get.width * 0.03,
-              fontFamily: AppFonts.manrope,
               fontColor: AppColors.grey,
               fontWeight: AppFonts.medium,
               opacity: 1.0),
@@ -42,7 +40,6 @@ class ServiceCardDetails extends StatelessWidget {
               ServiceCardText(
                 text: 'Rs 20,000',
                 fontSize: Get.width * 0.04,
-                fontFamily: AppFonts.manrope,
                 fontColor: AppColors.pink,
                 fontWeight: AppFonts.extraBold,
                 opacity: 1.0,
@@ -52,7 +49,6 @@ class ServiceCardDetails extends StatelessWidget {
               ServiceCardText(
                 text: 'Per 20 person',
                 fontSize: Get.width * 0.03,
-                fontFamily: AppFonts.manrope,
                 fontColor: AppColors.grey,
                 fontWeight: AppFonts.regular,
                 opacity: 0.8,
@@ -63,7 +59,6 @@ class ServiceCardDetails extends StatelessWidget {
           ServiceCardText(
             text: 'Customizable',
             fontSize: Get.width * 0.03,
-            fontFamily: AppFonts.manrope,
             fontColor: AppColors.grey,
             fontWeight: AppFonts.bold,
             opacity: 0.8,

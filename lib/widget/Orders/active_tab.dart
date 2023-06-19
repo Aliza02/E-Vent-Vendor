@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../constants/colors.dart';
+import '../../constants/font.dart';
 
 class active_tab extends StatelessWidget {
   final String title;
@@ -35,7 +36,14 @@ class active_tab extends StatelessWidget {
           ),
         ),
         onPressed: () {},
-        child: Text(title),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontFamily: AppFonts.manrope,
+            fontWeight: AppFonts.bold,
+            fontSize: Get.width * 0.033,
+          ),
+        ),
       ),
     );
   }

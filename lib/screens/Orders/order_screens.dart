@@ -15,25 +15,28 @@ class Orders extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            order_header(),
-            Obx(
-              () => pagecontroller.toCompleteActive.value == true
-                  ? const toComplete()
-                  : Container(),
-            ),
-            Obx(
-              () => pagecontroller.completeActive.value == true
-                  ? complete_order()
-                  : Container(),
-            ),
-            Obx(
-              () => pagecontroller.allOrdersActive.value == true
-                  ? All_orders()
-                  : Container(),
-            ),
-          ],
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              order_header(),
+              Obx(
+                () => pagecontroller.toCompleteActive.value == true
+                    ? const toComplete()
+                    : Container(),
+              ),
+              Obx(
+                () => pagecontroller.completeActive.value == true
+                    ? complete_order()
+                    : Container(),
+              ),
+              Obx(
+                () => pagecontroller.allOrdersActive.value == true
+                    ? All_orders()
+                    : Container(),
+              ),
+            ],
+          ),
         ),
       ),
     );
