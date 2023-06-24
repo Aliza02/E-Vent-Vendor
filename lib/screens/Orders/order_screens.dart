@@ -30,12 +30,12 @@ class Orders extends StatelessWidget {
               ),
               Obx(
                 () => pagecontroller.completeActive.value == true
-                    ? complete_order()
+                    ? const complete_order()
                     : Container(),
               ),
               Obx(
                 () => pagecontroller.allOrdersActive.value == true
-                    ? All_orders()
+                    ? const All_orders()
                     : Container(),
               ),
             ],

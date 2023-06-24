@@ -15,10 +15,10 @@ class service_Header extends StatelessWidget {
   final pagecontroller = Get.put(testController());
   // function to activate add edit page
   void activeButton() {
-    pagecontroller.EditServiceSelected.value =
-        !pagecontroller.EditServiceSelected.value;
-    pagecontroller.AddServiceSelected.value =
-        !pagecontroller.AddServiceSelected.value;
+    pagecontroller.editServiceSelected.value =
+        !pagecontroller.editServiceSelected.value;
+    pagecontroller.addServiceSelected.value =
+        !pagecontroller.addServiceSelected.value;
   }
 
   @override
@@ -71,7 +71,7 @@ class service_Header extends StatelessWidget {
                 () => Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    pagecontroller.EditServiceSelected.value == false
+                    pagecontroller.editServiceSelected.value == false
                         ? InactiveButton(
                             title: 'Edit',
                             icon: AppIcons.editInactive,
@@ -81,7 +81,7 @@ class service_Header extends StatelessWidget {
                           )
                         : ActiveButton(
                             activeButton: () {
-                              if (pagecontroller.EditServiceSelected.value ==
+                              if (pagecontroller.editServiceSelected.value ==
                                   false) {
                                 activeButton();
                               }
@@ -90,7 +90,7 @@ class service_Header extends StatelessWidget {
                             title: 'Edit',
                             buttonColor: AppColors.pink,
                           ),
-                    pagecontroller.AddServiceSelected.value == false
+                    pagecontroller.addServiceSelected.value == false
                         ? InactiveButton(
                             title: 'Add',
                             icon: AppIcons.addInactive,
@@ -100,7 +100,7 @@ class service_Header extends StatelessWidget {
                           )
                         : ActiveButton(
                             activeButton: () {
-                              if (pagecontroller.AddServiceSelected.value ==
+                              if (pagecontroller.addServiceSelected.value ==
                                   false) {
                                 activeButton();
                               }

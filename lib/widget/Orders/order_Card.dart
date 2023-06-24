@@ -10,6 +10,17 @@ class order_card extends StatelessWidget {
   order_card({super.key});
   final pagecontroller = Get.put(testController());
 
+  Container status(BuildContext context, Color statusColor) {
+    return Container(
+      height: Get.height * 0.015,
+      width: Get.width * 0.03,
+      decoration: BoxDecoration(
+        color: statusColor,
+        borderRadius: BorderRadius.circular(100),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -54,20 +65,87 @@ class order_card extends StatelessWidget {
                       text: 'Shadi package',
                       fontColor: AppColors.grey,
                       fontSize: Get.width * 0.04),
-                  SizedBox(height: Get.height * 0.02),
+                  pagecontroller.allOrdersActive.value == true
+                      ? SizedBox(height: Get.height * 0.01)
+                      : SizedBox(
+                          height: Get.height * 0.02,
+                        ),
                   order_card_text(
                       text: 'Fahim Khan',
                       fontColor: AppColors.grey,
                       fontSize: Get.width * 0.03),
+                  Obx(
+                    () => pagecontroller.allOrdersActive.value == true
+                        ? order_card_text(
+                            text: '31st May 2023',
+                            fontColor: AppColors.grey,
+                            fontSize: Get.width * 0.03,
+                          )
+                        : Container(),
+                  ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      order_card_text(
-                        text: '9:00 pm - 12:00 pm',
-                        fontColor: AppColors.grey,
-                        fontSize: Get.width * 0.03,
+                      Obx(
+                        () => pagecontroller.completeActive.value == true ||
+                                pagecontroller.allOrdersActive.value == true
+                            ? Row(
+                                children: [
+                                  Obx(
+                                    () => pagecontroller.paymentPending.value ==
+                                            true
+                                        ? Row(
+                                            children: [
+                                              status(context,
+                                                  AppColors.statusColor[0]),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ), //status
+                                              const Text('Payment Pending'),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                  ),
+                                  Obx(
+                                    () => pagecontroller
+                                                .paymentRecieved.value ==
+                                            true
+                                        ? Row(
+                                            children: [
+                                              status(context,
+                                                  AppColors.statusColor[1]),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ), //status
+                                              const Text('Payment Recieved'),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                  ),
+                                  Obx(
+                                    () => pagecontroller.orderCompleted.value ==
+                                            false
+                                        ? Row(
+                                            children: [
+                                              status(context,
+                                                  AppColors.statusColor[2]),
+                                              SizedBox(
+                                                width: Get.width * 0.01,
+                                              ), //status
+                                              const Text('Order Completed'),
+                                            ],
+                                          )
+                                        : const SizedBox(),
+                                  ),
+                                ],
+                              )
+                            : order_card_text(
+                                text: '9:00 pm - 12:00 pm',
+                                fontColor: AppColors.grey,
+                                fontSize: Get.width * 0.03,
+                              ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       order_card_text(
                         text: 'Rs 60,000',
                         fontColor: AppColors.pink,

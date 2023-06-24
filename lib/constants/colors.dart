@@ -23,4 +23,11 @@ class AppColors {
   static const Color appBar = Color(0xFFFFE4F3);
   //  add service
   static const lightblue = Color(0xFF69B7F9);
+  // order status colors
+
+  static const List<Color> statusColor = [
+    Color(0xFFF77000),
+    Color(0xFF43FD6C),
+    Color(0xFF6D529D),
+  ];
 }

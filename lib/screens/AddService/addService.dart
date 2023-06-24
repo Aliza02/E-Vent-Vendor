@@ -333,7 +333,7 @@ class _AddServiceState extends State<AddService> {
             children: [
               service_Header(),
               Obx(
-                () => pagecontroller.AddServiceSelected.value
+                () => pagecontroller.addServiceSelected.value
                     ? addService(context)
                     : editService(context),
               ),

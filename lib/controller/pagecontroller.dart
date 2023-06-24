@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class testController extends GetxController {
   RxInt currentindex = 0.obs; // bottom navigation index
@@ -13,9 +11,11 @@ class testController extends GetxController {
   RxBool toCompleteActive = true.obs;
   RxBool completeActive = false.obs;
   RxBool allOrdersActive = false.obs;
-
-  RxBool EditServiceSelected = true.obs; // edit service button
-  RxBool AddServiceSelected = false.obs; // Add service button
+  RxBool editServiceSelected = true.obs; // edit service button
+  RxBool addServiceSelected = false.obs; // Add service button
+  RxBool paymentPending = false.obs;
+  RxBool paymentRecieved = false.obs;
+  RxBool orderCompleted = false.obs;
 
   // function for changing index to navigate from bottom nav bar
   void changeIndex(int index) {
