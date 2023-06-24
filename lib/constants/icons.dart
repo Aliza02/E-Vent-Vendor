@@ -33,4 +33,7 @@ class AppIcons {
   // add service
   static const addImage = 'assets/icons/add_image.svg';
   static const delete = 'assets/icons/trash.svg';
+
+  // order screen
+  static const sort = 'assets/icons/sort.svg';
 }

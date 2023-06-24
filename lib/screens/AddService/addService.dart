@@ -226,6 +226,7 @@ class _AddServiceState extends State<AddService> {
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: 5,
       itemBuilder: (context, index) {
         return Slidable(
@@ -311,7 +312,7 @@ class _AddServiceState extends State<AddService> {
                           )
                         : const SizedBox(),
                   ),
-                  ServiceCardDetails(),
+                  const ServiceCardDetails(),
                 ],
               ),
             ),
