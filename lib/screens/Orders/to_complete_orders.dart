@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../controller/pagecontroller.dart';
 import '../../widget/Orders/order_Card.dart';
 
 class toComplete extends StatelessWidget {
-  const toComplete({super.key});
+  toComplete({super.key});
+  final pagecontroller = Get.put(testController());
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,14 @@ class toComplete extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 8,
       itemBuilder: (context, index) {
-        return order_card();
+        return InkWell(
+          onTap: () {
+            pagecontroller.orderTabs.value = false;
+            print('ada');
+            Get.toNamed('/orderDetails');
+          },
+          child: order_card(),
+        );
       },
     );
   }

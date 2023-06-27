@@ -16,7 +16,7 @@ class testController extends GetxController {
   RxBool paymentPending = false.obs;
   RxBool paymentRecieved = false.obs;
   RxBool orderCompleted = false.obs;
-
+  RxBool orderTabs = true.obs;
   // function for changing index to navigate from bottom nav bar
   void changeIndex(int index) {
     currentindex.value = index;

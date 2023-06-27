@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../constants/colors.dart';
-import '../../constants/font.dart';
 import '../../controller/pagecontroller.dart';
 import 'Order_Card_Text.dart';
 

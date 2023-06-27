@@ -1,4 +1,4 @@
-import 'package:eventually_vendor/screens/AddService/addService.dart';
+import 'package:eventually_vendor/screens/Orders/order_details.dart';
 import 'package:eventually_vendor/screens/Orders/order_screens.dart';
 import 'package:eventually_vendor/screens/drawer/drawerScreen.dart';
 import 'package:eventually_vendor/screens/forgot_password.dart';
@@ -83,6 +83,12 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/order',
           page: () => Orders(),
+          transition: Transition.circularReveal,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/orderDetails',
+          page: () => order_details(),
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),

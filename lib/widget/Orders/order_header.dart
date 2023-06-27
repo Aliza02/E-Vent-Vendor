@@ -11,8 +11,6 @@ class order_header extends StatelessWidget {
 
   final pagecontroller = Get.put(testController());
 
-  //function to active tabs on order screen
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,19 +24,23 @@ class order_header extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // back button
             Container(
               alignment: Alignment.topLeft,
               height: Get.height * 0.035,
               margin: EdgeInsets.all(10.0),
               child: IconButton(
                 alignment: Alignment.topLeft,
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: AppColors.grey,
                 ),
               ),
             ),
+            // order heading
             Container(
               alignment: Alignment.topLeft,
               margin: EdgeInsets.symmetric(horizontal: Get.width * 0.085),
@@ -104,7 +106,7 @@ class order_header extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
+            )
           ],
         )
       ],
