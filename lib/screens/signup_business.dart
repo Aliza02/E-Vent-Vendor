@@ -58,17 +58,17 @@ class _signup_businessState extends State<signup_business> {
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                child: const textFormField(title: 'Business Name'),
+                // child: const textFormField(title: 'Business Name'),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                child: const textFormField(title: 'Business Category'),
+                // child: const textFormField(title: 'Business Category'),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                child: const textFormField(title: 'Business Location'),
+                // child: const textFormField(title: 'Business Location'),
               ),
               Container(
                 height: Get.height * 0.05,

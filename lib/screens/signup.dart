@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/widget/logo.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -22,14 +23,28 @@ class signup extends StatefulWidget {
 }
 
 class _signupState extends State<signup> {
-  void validation() {
+  int currentindex = 0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+
+  void validation() async {
+    print(_emailController.text);
+    print(_passwordController.text);
+    await _auth.createUserWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
     currentindex += 1;
     print(currentindex);
     Get.toNamed('/signup_business');
     currentindex = 0;
   }
 
-  int currentindex = 0;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -65,22 +80,34 @@ class _signupState extends State<signup> {
               Container(
                 height: height * 0.05,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: textFormField(title: 'Full Name'),
+                child: textFormField(
+                  title: 'Full Name',
+                  textcontroller: _nameController,
+                ),
               ),
               Container(
                 height: height * 0.05,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: textFormField(title: 'Email'),
+                child: textFormField(
+                  title: 'Email',
+                  textcontroller: _emailController,
+                ),
               ),
               Container(
                 height: height * 0.05,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: PasswordField(title: 'Password'),
+                child: PasswordField(
+                  title: 'Password',
+                  passwordController: _passwordController,
+                ),
               ),
               Container(
                 height: height * 0.05,
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: PasswordField(title: 'Confirm Password'),
+                child: PasswordField(
+                  title: 'Confirm Password',
+                  passwordController: _confirmPasswordController,
+                ),
               ),
               SizedBox(
                 height: height * 0.01,

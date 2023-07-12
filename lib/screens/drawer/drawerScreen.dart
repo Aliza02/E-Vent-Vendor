@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -7,7 +6,7 @@ import 'mainScreen.dart';
 import 'menuScreen.dart';
 
 class drawerScreen extends StatefulWidget {
-  const drawerScreen({super.key});
+  drawerScreen({super.key});
 
   @override
   State<drawerScreen> createState() => _drawerScreenState();

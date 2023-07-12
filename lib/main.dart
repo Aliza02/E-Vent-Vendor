@@ -8,11 +8,17 @@ import 'package:eventually_vendor/screens/otp_verification.dart';
 import 'package:eventually_vendor/screens/password_reset.dart';
 import 'package:eventually_vendor/screens/signup.dart';
 import 'package:eventually_vendor/screens/signup_business.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'firebase_options.dart';
 import 'screens/EditService/EditServiceForm.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -70,7 +76,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/drawer',
-          page: () => const drawerScreen(),
+          page: () => drawerScreen(),
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),
@@ -93,7 +99,7 @@ class MyApp extends StatelessWidget {
           transitionDuration: const Duration(milliseconds: 500),
         ),
       ],
-      initialRoute: '/order',
+      initialRoute: '/orderDetails',
     );
   }
 }

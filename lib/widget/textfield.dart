@@ -5,8 +5,9 @@ import '../constants/font.dart';
 
 class textFormField extends StatefulWidget {
   final String title;
+  TextEditingController textcontroller = TextEditingController();
 
-  const textFormField({required this.title});
+  textFormField({super.key, required this.title, required this.textcontroller});
 
   @override
   State<textFormField> createState() => _textFormFieldState();
@@ -16,6 +17,7 @@ class _textFormFieldState extends State<textFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.textcontroller,
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         fillColor: AppColors.fieldFillColor.withOpacity(0.5),

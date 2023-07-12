@@ -6,6 +6,7 @@ import '../../constants/colors.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/BottomNavBar/bottomNavBar.dart';
 import '../EditService/EditServiceForm.dart';
+import '../dashboard/dashboard.dart';
 
 class MainScreen extends GetView<testController> {
   MainScreen({
@@ -15,7 +16,7 @@ class MainScreen extends GetView<testController> {
   final pagecontroller = Get.put(testController());
 
   final List<Widget> _pages = [
-    pageOne(),
+    dashboard(),
     const pageTwo(),
     AddService(),
   ];

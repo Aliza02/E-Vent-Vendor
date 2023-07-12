@@ -5,7 +5,9 @@ import '../constants/font.dart';
 
 class PasswordField extends StatefulWidget {
   final String title;
-  const PasswordField({super.key, required this.title});
+  TextEditingController passwordController = TextEditingController();
+  PasswordField(
+      {super.key, required this.title, required this.passwordController});
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -16,6 +18,7 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.passwordController,
       obscureText: obscureText,
       decoration: InputDecoration(
         fillColor: AppColors.fieldFillColor.withOpacity(0.5),

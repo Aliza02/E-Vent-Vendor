@@ -48,12 +48,12 @@ class _loginState extends State<login> {
               Container(
                 height: Get.height * 0.07,
                 margin: EdgeInsets.only(top: Get.height * 0.03),
-                child: const textFormField(title: 'Email'),
+                // child: const textFormField(title: 'Email'),
               ),
               Container(
                 height: Get.height * 0.07,
                 margin: EdgeInsets.only(top: Get.height * 0.03),
-                child: const PasswordField(title: 'Password'),
+                // child: const PasswordField(title: 'Password'),
               ),
               SizedBox(
                 height: Get.height * 0.01,

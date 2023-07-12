@@ -18,7 +18,7 @@ class forgotPassword extends StatefulWidget {
 
 class _forgotPasswordState extends State<forgotPassword> {
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -61,7 +61,7 @@ class _forgotPasswordState extends State<forgotPassword> {
 
               Container(
                 margin: EdgeInsets.symmetric(vertical: Get.width * 0.1),
-                child: const textFormField(title: 'Enter Email'),
+                // child: const textFormField(title: 'Enter Email'),
               ),
 
               Container(

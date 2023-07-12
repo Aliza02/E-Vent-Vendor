@@ -1,10 +1,8 @@
 import 'package:eventually_vendor/widget/Orders/Order_Card_Text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
-import 'order_Progress_Bar.dart';
 import 'order_heading.dart';
 
 class order_Details_Header extends StatelessWidget {
