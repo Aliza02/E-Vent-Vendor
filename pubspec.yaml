@@ -94,6 +94,8 @@ flutter:
     - assets/icons/trash.svg
     - assets/icons/sort.svg
     - assets/icons/calendar.svg
+    - assets/icons/start_flag.svg
+    - assets/icons/end_flag.svg
     
     
 

@@ -49,7 +49,11 @@ class _passwrordResetState extends State<passwrordReset> {
                 margin: EdgeInsets.symmetric(vertical: Get.width * 0.07),
                 width: Get.width * 0.5,
                 height: Get.height * 0.07,
-                child: button(label: 'Enter', onpressed: () {}),
+                child: button(
+                  label: 'Enter',
+                  onpressed: () {},
+                  borderRadius: 20,
+                ),
               ),
             ],
           ),

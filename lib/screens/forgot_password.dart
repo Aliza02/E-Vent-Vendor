@@ -67,7 +67,11 @@ class _forgotPasswordState extends State<forgotPassword> {
               Container(
                 width: Get.width * 0.5,
                 height: Get.height * 0.07,
-                child: button(label: 'Enter', onpressed: () {}),
+                child: button(
+                  label: 'Enter',
+                  onpressed: () {},
+                  borderRadius: 20,
+                ),
               ),
             ],
           ),

@@ -99,7 +99,11 @@ class _otp_verificationState extends State<otp_verification> {
                   margin: EdgeInsets.symmetric(vertical: Get.width * 0.08),
                   width: Get.width * 0.5,
                   height: Get.height * 0.07,
-                  child: button(label: 'verify', onpressed: () {})),
+                  child: button(
+                    label: 'verify',
+                    onpressed: () {},
+                    borderRadius: 20,
+                  )),
             ],
           ),
         ),

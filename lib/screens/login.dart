@@ -130,6 +130,7 @@ class _loginState extends State<login> {
                         email: signincontroller.emailController.text,
                         password: signincontroller.passwordController.text);
                   },
+                  borderRadius: 20,
                 ),
               ),
               SizedBox(height: Get.height * 0.03),

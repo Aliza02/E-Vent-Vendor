@@ -23,4 +23,6 @@ class testController extends GetxController {
   void changeIndex(int index) {
     currentindex.value = index;
   }
+
+  RxDouble currentDateIndex = 0.0.obs;
 }

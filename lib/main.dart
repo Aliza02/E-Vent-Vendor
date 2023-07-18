@@ -1,3 +1,5 @@
+import 'package:eventually_vendor/screens/ManageAvailability/makeUnavailable.dart';
+import 'package:eventually_vendor/screens/ManageAvailability/manageAvailability.dart';
 import 'package:eventually_vendor/screens/Orders/order_details.dart';
 import 'package:eventually_vendor/screens/Orders/order_screens.dart';
 import 'package:eventually_vendor/screens/drawer/drawerScreen.dart';
@@ -95,6 +97,12 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/orderDetails',
           page: () => order_details(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/makeUnavailable',
+          page: () => makeUnavailable(),
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),

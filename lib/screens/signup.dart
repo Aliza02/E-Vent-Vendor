@@ -161,6 +161,7 @@ class _signupState extends State<signup> {
                   onpressed: () {
                     validation();
                   },
+                  borderRadius: 20,
                 ),
               ),
               SizedBox(height: height * 0.03),

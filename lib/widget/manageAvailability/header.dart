@@ -1,14 +1,14 @@
 import 'package:eventually_vendor/widget/manageAvailability/heading.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
+import '../../controller/pagecontroller.dart';
 
 class header extends StatefulWidget {
   const header({super.key});
@@ -18,6 +18,23 @@ class header extends StatefulWidget {
 }
 
 class _headerState extends State<header> {
+  ScrollController scrollController = new ScrollController();
+  final pagecontroller = Get.put(testController());
+  void scroll(double position) {
+    // for (int i = 0; i < pagecontroller.currentDateIndex.value; i++) {
+    scrollController.jumpTo(position);
+    // }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => scroll(70 * pagecontroller.currentDateIndex.value),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -30,9 +47,11 @@ class _headerState extends State<header> {
     for (int day = 1; day <= daysInMonth; day++) {
       DateTime date = DateTime(currentYear, currentMonth, day);
       datesInCurrentMonth.add(date);
-      print(DateTime(currentYear, currentMonth + 1, now.day));
-      print(DateTime.now().day);
+      // print(DateTime(currentYear, currentMonth + 1, now.day));
+      // print(DateTime.now().day);
+      // print(pagecontroller.currentDateIndex.value);
     }
+    pagecontroller.currentDateIndex.value = DateTime.now().day.toDouble();
 
     Map<int, String> weekdays = {
       1: 'Mon',
@@ -95,6 +114,7 @@ class _headerState extends State<header> {
           ),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            controller: scrollController,
             child: Row(
               children: List.generate(datesInCurrentMonth.length, (index) {
                 DateTime date = datesInCurrentMonth[index];

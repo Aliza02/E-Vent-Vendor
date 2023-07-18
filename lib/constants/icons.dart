@@ -38,4 +38,6 @@ class AppIcons {
   static const sort = 'assets/icons/sort.svg';
 
   static const calendar = 'assets/icons/calendar.svg';
+  static const startFlag = 'assets/icons/start_flag.svg';
+  static const endFlag = 'assets/icons/end_flag.svg';
 }

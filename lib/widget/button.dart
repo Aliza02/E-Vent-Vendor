@@ -5,9 +5,13 @@ import '../constants/font.dart';
 
 class button extends StatelessWidget {
   final String label;
-
+  double borderRadius;
   final Function onpressed;
-  const button({super.key, required this.label, required this.onpressed});
+  button(
+      {super.key,
+      required this.label,
+      required this.onpressed,
+      required this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,7 @@ class button extends StatelessWidget {
         shadowColor: AppColors.pink.withOpacity(0.4),
         backgroundColor: AppColors.pink,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
       ),
       child: Text(

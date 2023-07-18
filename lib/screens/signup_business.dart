@@ -224,6 +224,7 @@ class _signup_businessState extends State<signup_business> {
                   onpressed: () {
                     validationbusiness();
                   },
+                  borderRadius: 20,
                 ),
               ),
               SizedBox(height: Get.height * 0.03),
