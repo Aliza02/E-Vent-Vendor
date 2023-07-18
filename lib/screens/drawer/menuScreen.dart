@@ -1,16 +1,29 @@
 import 'package:eventually_vendor/constants/colors.dart';
 import 'package:eventually_vendor/constants/font.dart';
+import 'package:eventually_vendor/controller/signupController.dart';
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
+import '../../controller/signinController.dart';
 
 class MenuScreen extends GetView<testController> {
   MenuScreen({super.key});
   final pagecontroller = Get.put(testController());
   int currentindex = 0;
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  final signupcontroller = Get.put(signUpController());
+  final signincontroller = Get.put(signinController());
+
+  // String? userName = auth.currentUser?.displayName;
+
+  // final username=_auth.currentUser!.displayName;
 
   final List<String> menuItems = [
     'Orders',
@@ -118,7 +131,7 @@ class MenuScreen extends GetView<testController> {
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.02),
               child: Text(
-                'User Name',
+                auth.currentUser!.displayName!.toString(),
                 style: TextStyle(
                     fontFamily: AppFonts.manrope,
                     fontWeight: AppFonts.extraBold,
@@ -126,8 +139,8 @@ class MenuScreen extends GetView<testController> {
                     color: AppColors.grey),
               ),
             ),
-            const Text(
-              'abc@gmail.com',
+            Text(
+              auth.currentUser!.email.toString(),
               style: TextStyle(
                 fontFamily: AppFonts.manrope,
                 fontWeight: AppFonts.medium,
@@ -151,26 +164,34 @@ class MenuScreen extends GetView<testController> {
               ),
             ),
             const Spacer(),
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.06, vertical: Get.width * 0.07),
-                  child: SvgPicture.asset(AppIcons.logout),
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.06, vertical: Get.width * 0.07),
-                  child: Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: AppColors.pink,
-                      fontSize: Get.width * 0.04,
-                      fontWeight: AppFonts.bold,
+            InkWell(
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Get.offAllNamed('/login');
+              },
+              child: Row(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: Get.width * 0.06,
+                        vertical: Get.width * 0.07),
+                    child: SvgPicture.asset(AppIcons.logout),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        horizontal: Get.width * 0.06,
+                        vertical: Get.width * 0.07),
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                        color: AppColors.pink,
+                        fontSize: Get.width * 0.04,
+                        fontWeight: AppFonts.bold,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

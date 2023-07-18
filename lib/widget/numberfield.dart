@@ -6,8 +6,13 @@ import '../constants/font.dart';
 class numberField extends StatefulWidget {
   final String title;
   final int maxLength;
+  final TextEditingController controller;
 
-  const numberField({super.key, required this.title, required this.maxLength});
+  numberField(
+      {super.key,
+      required this.title,
+      required this.maxLength,
+      required this.controller});
 
   @override
   State<numberField> createState() => _numberFieldState();
@@ -17,6 +22,7 @@ class _numberFieldState extends State<numberField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       maxLength: widget.maxLength,
       cursorColor: AppColors.pink,
       textAlign: widget.maxLength >= 11 ? TextAlign.start : TextAlign.center,

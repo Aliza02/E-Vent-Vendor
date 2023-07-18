@@ -22,8 +22,8 @@ class _otp_verificationState extends State<otp_verification> {
       margin:
           EdgeInsets.fromLTRB(Get.width * 0.02, Get.height * 0.03, 0.0, 0.0),
       child: const Center(
-        child: numberField(title: ' ', maxLength: 1),
-      ),
+          // child: numberField(title: ' ', maxLength: 1),
+          ),
     );
   }
 

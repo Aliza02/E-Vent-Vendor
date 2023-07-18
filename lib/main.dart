@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
           transitionDuration: const Duration(milliseconds: 500),
         ),
       ],
-      initialRoute: '/orderDetails',
+      initialRoute: '/drawer',
     );
   }
 }

@@ -36,4 +36,6 @@ class AppIcons {
 
   // order screen
   static const sort = 'assets/icons/sort.svg';
+
+  static const calendar = 'assets/icons/calendar.svg';
 }

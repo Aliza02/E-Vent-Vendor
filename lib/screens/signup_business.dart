@@ -1,7 +1,10 @@
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
+import '../controller/signupController.dart';
 import '../widget/button.dart';
 import '../widget/heading.dart';
 import '../widget/logo.dart';
@@ -18,13 +21,85 @@ class signup_business extends StatefulWidget {
 }
 
 class _signup_businessState extends State<signup_business> {
-  void validationbusiness() {
-    currentindex += 1;
-    Get.toNamed('/drawer');
-  }
-
   int currentindex = 1;
   bool isChecked = false;
+  final businessSignupController = Get.put(signUpController());
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  void validationbusiness() {
+    if (businessSignupController.businessNameController.text.isEmpty ||
+        businessSignupController.businessCategoryController.text.isEmpty ||
+        businessSignupController.businessLocationController.text.isEmpty ||
+        businessSignupController.cnicController.text.isEmpty ||
+        businessSignupController.phoneController.text.isEmpty) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Incomplete Fields',
+          message: 'Enter complete details ',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (businessSignupController.cnicController.text.toString().length <
+        14) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Incomplete',
+          message: 'Enter complete CNIC number',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (businessSignupController.phoneController.text.toString().length <
+        11) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Incorrect Number',
+          message: 'Enter correct Number',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (isChecked == false) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Agreement',
+          message: 'Agree to the terms and conditions',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else {
+      currentindex += 1;
+
+      print(businessSignupController.emailController.text);
+
+      print(businessSignupController.passwordController.text);
+
+      Signup(
+          email: businessSignupController.emailController.text,
+          name: businessSignupController.nameController.text,
+          password: businessSignupController.passwordController.text,
+          confirmPassword:
+              businessSignupController.confirmPasswordController.text,
+          businessName: businessSignupController.businessNameController.text,
+          businessCategory:
+              businessSignupController.businessCategoryController.text,
+          businessLocation:
+              businessSignupController.businessLocationController.text,
+          CNIC: businessSignupController.cnicController.text,
+          phone: businessSignupController.phoneController.text);
+
+      Signin(
+          email: businessSignupController.emailController.text,
+          password: businessSignupController.passwordController.text);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,28 +133,47 @@ class _signup_businessState extends State<signup_business> {
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                // child: const textFormField(title: 'Business Name'),
+                child: textFormField(
+                  title: 'Business Name',
+                  textcontroller:
+                      businessSignupController.businessNameController,
+                ),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                // child: const textFormField(title: 'Business Category'),
+                child: textFormField(
+                  title: 'Business Category',
+                  textcontroller:
+                      businessSignupController.businessCategoryController,
+                ),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                // child: const textFormField(title: 'Business Location'),
+                child: textFormField(
+                  title: 'Business Location',
+                  textcontroller:
+                      businessSignupController.businessLocationController,
+                ),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                child: const numberField(title: 'CNIC', maxLength: 14),
+                child: numberField(
+                  title: 'CNIC',
+                  maxLength: 14,
+                  controller: businessSignupController.cnicController,
+                ),
               ),
               Container(
                 height: Get.height * 0.05,
                 margin: EdgeInsets.only(top: Get.height * 0.02),
-                child:
-                    const numberField(title: 'Contact Number', maxLength: 11),
+                child: numberField(
+                  title: 'Contact Number',
+                  maxLength: 11,
+                  controller: businessSignupController.phoneController,
+                ),
               ),
               SizedBox(
                 height: Get.height * 0.01,

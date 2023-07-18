@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
+import '../controller/signupController.dart';
+import '../firebaseMethods/userAuthentication.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -24,25 +27,61 @@ class signup extends StatefulWidget {
 
 class _signupState extends State<signup> {
   int currentindex = 0;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+
+  final SignUpController = Get.put(signUpController());
 
   void validation() async {
-    print(_emailController.text);
-    print(_passwordController.text);
-    await _auth.createUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    currentindex += 1;
-    print(currentindex);
-    Get.toNamed('/signup_business');
-    currentindex = 0;
+    if (SignUpController.passwordController.text.isEmpty ||
+        SignUpController.confirmPasswordController.text.isEmpty ||
+        SignUpController.emailController.text.isEmpty ||
+        SignUpController.nameController.text.isEmpty) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Incomplete Fields',
+          message: 'Enter complete details ',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (SignUpController.passwordController.text.toString().length < 6 ||
+        SignUpController.confirmPasswordController.text.toString().length < 6) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Password is too short',
+          message: 'Password should be atleast 6 characters',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (EmailValidator.validate(SignUpController.emailController.text) ==
+        false) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Invalid Email',
+          message: 'Enter a valid email',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else if (SignUpController.passwordController.text !=
+        SignUpController.confirmPasswordController.text) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Different Passwords',
+          message: 'Password and Confirm Password does not match',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else {
+      currentindex += 1;
+      Get.toNamed('/signup_business');
+      currentindex = 0;
+    }
   }
 
   @override
@@ -82,7 +121,7 @@ class _signupState extends State<signup> {
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: textFormField(
                   title: 'Full Name',
-                  textcontroller: _nameController,
+                  textcontroller: SignUpController.nameController,
                 ),
               ),
               Container(
@@ -90,7 +129,7 @@ class _signupState extends State<signup> {
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: textFormField(
                   title: 'Email',
-                  textcontroller: _emailController,
+                  textcontroller: SignUpController.emailController,
                 ),
               ),
               Container(
@@ -98,7 +137,7 @@ class _signupState extends State<signup> {
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: PasswordField(
                   title: 'Password',
-                  passwordController: _passwordController,
+                  passwordController: SignUpController.passwordController,
                 ),
               ),
               Container(
@@ -106,7 +145,8 @@ class _signupState extends State<signup> {
                 margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
                 child: PasswordField(
                   title: 'Confirm Password',
-                  passwordController: _confirmPasswordController,
+                  passwordController:
+                      SignUpController.confirmPasswordController,
                 ),
               ),
               SizedBox(

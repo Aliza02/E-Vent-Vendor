@@ -6,6 +6,7 @@ import '../../constants/colors.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/BottomNavBar/bottomNavBar.dart';
 import '../EditService/EditServiceForm.dart';
+import '../ManageAvailability/manageAvailability.dart';
 import '../dashboard/dashboard.dart';
 
 class MainScreen extends GetView<testController> {
@@ -19,6 +20,7 @@ class MainScreen extends GetView<testController> {
     dashboard(),
     const pageTwo(),
     AddService(),
+    manageAvailability(),
   ];
 
   @override

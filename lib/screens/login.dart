@@ -1,8 +1,10 @@
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
+import '../controller/signinController.dart';
 import '../widget/button.dart';
 import '../widget/googleButton.dart';
 import '../widget/heading.dart';
@@ -19,6 +21,7 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   bool isChecked = false;
+  final signincontroller = Get.put(signinController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,12 +51,18 @@ class _loginState extends State<login> {
               Container(
                 height: Get.height * 0.07,
                 margin: EdgeInsets.only(top: Get.height * 0.03),
-                // child: const textFormField(title: 'Email'),
+                child: textFormField(
+                  title: 'Email',
+                  textcontroller: signincontroller.emailController,
+                ),
               ),
               Container(
                 height: Get.height * 0.07,
                 margin: EdgeInsets.only(top: Get.height * 0.03),
-                // child: const PasswordField(title: 'Password'),
+                child: PasswordField(
+                  title: 'Password',
+                  passwordController: signincontroller.passwordController,
+                ),
               ),
               SizedBox(
                 height: Get.height * 0.01,
@@ -117,7 +126,9 @@ class _loginState extends State<login> {
                 child: button(
                   label: 'Login',
                   onpressed: () {
-                    Get.toNamed('/drawer');
+                    Signin(
+                        email: signincontroller.emailController.text,
+                        password: signincontroller.passwordController.text);
                   },
                 ),
               ),

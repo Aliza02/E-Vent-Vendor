@@ -23,6 +23,8 @@ dependencies:
   fl_chart: ^0.62.0
   firebase_core: ^2.14.0
   firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.2
+  email_validator: ^2.1.17
   
 
 dev_dependencies:
@@ -91,6 +93,7 @@ flutter:
     - assets/icons/add_image.svg
     - assets/icons/trash.svg
     - assets/icons/sort.svg
+    - assets/icons/calendar.svg
     
     
 
