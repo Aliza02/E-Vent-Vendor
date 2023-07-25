@@ -6,4 +6,7 @@ class signinController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   User? user;
+
+  RxBool isRemember = false.obs;
+  RxBool isLoggedIn = false.obs;
 }

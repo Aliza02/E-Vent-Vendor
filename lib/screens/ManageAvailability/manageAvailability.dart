@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/controller/pagecontroller.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import '../../constants/font.dart';
 import '../../widget/manageAvailability/header.dart';
 
 class manageAvailability extends StatelessWidget {
-  const manageAvailability({super.key});
+  manageAvailability({super.key});
+
+  final pagecontroller = Get.put(testController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class manageAvailability extends StatelessWidget {
                     fontWeight: AppFonts.bold,
                     fontColor: AppColors.grey,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   button(
                     label: 'Make Unavailable',
                     onpressed: () {
@@ -39,6 +42,9 @@ class manageAvailability extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Obx(
+              () => Text(pagecontroller.datesInCurrentMonth.toString()),
             ),
           ],
         ),

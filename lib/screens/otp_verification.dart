@@ -1,5 +1,7 @@
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
@@ -29,6 +31,7 @@ class _otp_verificationState extends State<otp_verification> {
 
   @override
   Widget build(BuildContext context) {
+    var otp;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -67,7 +70,8 @@ class _otp_verificationState extends State<otp_verification> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
                 child: Text(
-                  'Enter the OTP code we just sent ',
+                  'Enter the OTP code we just sent \n you on your registered Email',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: AppFonts.manrope,
                     fontWeight: AppFonts.regular,
@@ -76,24 +80,42 @@ class _otp_verificationState extends State<otp_verification> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: Get.width * 0.02),
-                child: Text(
-                  ' you on your registered Email.',
-                  style: TextStyle(
-                    fontFamily: AppFonts.manrope,
-                    fontWeight: AppFonts.regular,
-                    color: AppColors.grey,
-                    fontSize: Get.width * 0.04,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  6,
-                  (index) => buildOTPFields(index, context),
-                ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: List.generate(
+              //     6,
+              //     (index) => buildOTPFields(index, context),
+              //   ),
+              // ),
+
+              OtpTextField(
+                numberOfFields: 6,
+                borderColor: AppColors.pink,
+                keyboardType: TextInputType.number,
+                enabledBorderColor: AppColors.pink,
+                focusedBorderColor: AppColors.pink,
+                cursorColor: AppColors.pink,
+
+                //set to true to show as box or false to show as dash
+                showFieldAsBox: true,
+                //runs when a code is typed in
+                onCodeChanged: (String code) {
+                  //handle validation or checks here
+                },
+                //runs when every textfield is filled
+                onSubmit: (String verificationCode) {
+                  otp = verificationCode;
+                  verifyOtp(otp);
+
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         title: Text("Verification Code"),
+                  //         content: Text('Code entered is $verificationCode'),
+                  //       );
+                  //     });
+                }, // end onSubmit
               ),
               Container(
                   margin: EdgeInsets.symmetric(vertical: Get.width * 0.08),
@@ -101,7 +123,9 @@ class _otp_verificationState extends State<otp_verification> {
                   height: Get.height * 0.07,
                   child: button(
                     label: 'verify',
-                    onpressed: () {},
+                    onpressed: () {
+                      verifyOtp(otp);
+                    },
                     borderRadius: 20,
                   )),
             ],

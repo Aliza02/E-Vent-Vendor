@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/constants/icons.dart';
+import 'package:eventually_vendor/controller/pagecontroller.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,9 @@ class makeUnavailable extends StatefulWidget {
 class _makeUnavailableState extends State<makeUnavailable> {
   @override
   Widget build(BuildContext context) {
-    DateTime today = DateTime.now();
-    int currentMonth = today.month;
+    final pageController = Get.put(testController());
 
-    int currentYear = today.year;
-
-    Map<int, String> weekdays = {
+    Map<int, String> months = {
       1: 'Jan',
       2: 'Feb',
       3: 'March',
@@ -64,13 +62,29 @@ class _makeUnavailableState extends State<makeUnavailable> {
             heading(title: 'Make Unavailable'),
             Row(
               children: [
-                text(
-                  title: '${weekdays[currentMonth]} ${today.day}, $currentYear',
-                  fontSize: Get.width * 0.05,
-                  fontWeight: AppFonts.bold,
-                  fontColor: AppColors.grey,
+                Obx(
+                  () => text(
+                    title:
+                        '${months[pageController.date.value.month]} ${pageController.date.value.day}, ${pageController.date.value.year}',
+                    fontSize: Get.width * 0.05,
+                    fontWeight: AppFonts.bold,
+                    fontColor: AppColors.grey,
+                  ),
                 ),
-                SvgPicture.asset(AppIcons.calendar),
+                InkWell(
+                  onTap: () async {
+                    final DateTime? date = await showDatePicker(
+                      context: context,
+                      initialDate: pageController.date.value,
+                      firstDate: DateTime(2023),
+                      lastDate: DateTime(2025),
+                    );
+                    if (date != null) {
+                      pageController.date.value = date;
+                    }
+                  },
+                  child: SvgPicture.asset(AppIcons.calendar),
+                ),
               ],
             ),
             Container(

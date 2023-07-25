@@ -25,4 +25,8 @@ class testController extends GetxController {
   }
 
   RxDouble currentDateIndex = 0.0.obs;
+  Rx<DateTime> date = DateTime.now().obs;
+  Rxn<DateTime> selectedDate = Rxn<DateTime>();
+  List datesInCurrentMonth = <DateTime>[].obs;
+  RxInt daysInMonth = 0.obs;
 }

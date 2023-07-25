@@ -166,8 +166,9 @@ class MenuScreen extends GetView<testController> {
             const Spacer(),
             InkWell(
               onTap: () {
-                FirebaseAuth.instance.signOut();
+                Signout();
                 Get.offAllNamed('/login');
+                // Get.back();
               },
               child: Row(
                 children: [

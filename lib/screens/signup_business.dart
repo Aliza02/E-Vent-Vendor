@@ -80,23 +80,26 @@ class _signup_businessState extends State<signup_business> {
 
       print(businessSignupController.passwordController.text);
 
-      Signup(
-          email: businessSignupController.emailController.text,
-          name: businessSignupController.nameController.text,
-          password: businessSignupController.passwordController.text,
-          confirmPassword:
-              businessSignupController.confirmPasswordController.text,
-          businessName: businessSignupController.businessNameController.text,
-          businessCategory:
-              businessSignupController.businessCategoryController.text,
-          businessLocation:
-              businessSignupController.businessLocationController.text,
-          CNIC: businessSignupController.cnicController.text,
-          phone: businessSignupController.phoneController.text);
+      otpVerification(signupcontroller.phoneController.text);
+      Get.toNamed('/otpverification');
 
-      Signin(
-          email: businessSignupController.emailController.text,
-          password: businessSignupController.passwordController.text);
+      // Signup(
+      //     email: businessSignupController.emailController.text,
+      //     name: businessSignupController.nameController.text,
+      //     password: businessSignupController.passwordController.text,
+      //     confirmPassword:
+      //         businessSignupController.confirmPasswordController.text,
+      //     businessName: businessSignupController.businessNameController.text,
+      //     businessCategory:
+      //         businessSignupController.businessCategoryController.text,
+      //     businessLocation:
+      //         businessSignupController.businessLocationController.text,
+      //     CNIC: businessSignupController.cnicController.text,
+      //     phone: businessSignupController.phoneController.text);
+
+      // Signin(
+      //     email: businessSignupController.emailController.text,
+      //     password: businessSignupController.passwordController.text);
     }
   }
 
@@ -171,7 +174,7 @@ class _signup_businessState extends State<signup_business> {
                 margin: EdgeInsets.only(top: Get.height * 0.02),
                 child: numberField(
                   title: 'Contact Number',
-                  maxLength: 11,
+                  maxLength: 13,
                   controller: businessSignupController.phoneController,
                 ),
               ),

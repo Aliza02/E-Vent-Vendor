@@ -1,10 +1,9 @@
 import 'package:eventually_vendor/widget/manageAvailability/heading.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_month_picker/flutter_month_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
@@ -18,12 +17,10 @@ class header extends StatefulWidget {
 }
 
 class _headerState extends State<header> {
-  ScrollController scrollController = new ScrollController();
+  ScrollController scrollController = ScrollController();
   final pagecontroller = Get.put(testController());
   void scroll(double position) {
-    // for (int i = 0; i < pagecontroller.currentDateIndex.value; i++) {
     scrollController.jumpTo(position);
-    // }
   }
 
   @override
@@ -37,19 +34,17 @@ class _headerState extends State<header> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    int currentYear = now.year;
-    int currentMonth = now.month;
-
     List<DateTime> datesInCurrentMonth = [];
-    int daysInMonth = DateTime(currentYear, currentMonth + 1, 0).day;
-    int day = DateTime(currentYear, currentMonth, 1).day;
-    for (int day = 1; day <= daysInMonth; day++) {
-      DateTime date = DateTime(currentYear, currentMonth, day);
-      datesInCurrentMonth.add(date);
-      // print(DateTime(currentYear, currentMonth + 1, now.day));
-      // print(DateTime.now().day);
-      // print(pagecontroller.currentDateIndex.value);
+    pagecontroller.daysInMonth.value = DateTime(pagecontroller.date.value.year,
+            pagecontroller.date.value.month + 1, 0)
+        .day;
+
+    for (int day = 1; day <= pagecontroller.daysInMonth.value; day++) {
+      DateTime date = DateTime(
+          pagecontroller.date.value.year, pagecontroller.date.value.month, day);
+      pagecontroller.datesInCurrentMonth.add(date);
+
+      // print(datesInCurrentMonth.length);
     }
     pagecontroller.currentDateIndex.value = DateTime.now().day.toDouble();
 
@@ -61,6 +56,21 @@ class _headerState extends State<header> {
       5: 'Fri',
       6: 'Sat',
       7: 'Sun',
+    };
+
+    Map<int, String> months = {
+      1: 'Jan',
+      2: 'Feb',
+      3: 'March',
+      4: 'April',
+      5: 'May',
+      6: 'June',
+      7: 'July',
+      8: 'Aug',
+      9: 'Sept',
+      10: 'Oct',
+      11: 'Nov',
+      12: 'Dec',
     };
     return Stack(children: [
       Container(
@@ -80,34 +90,83 @@ class _headerState extends State<header> {
             padding: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
             child: Row(
               children: [
-                const Icon(
-                  Icons.arrow_back_outlined,
-                  size: 20,
-                ),
-                text(
-                  title: 'March',
-                  fontSize: Get.width * 0.035,
-                  fontWeight: AppFonts.regular,
-                  fontColor: AppColors.grey,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.arrow_back_outlined,
+                      size: 20,
+                    ),
+                    Obx(
+                      () => text(
+                        title: pagecontroller.date.value.month == 1
+                            ? months[pagecontroller.date.value.month + 11]
+                                .toString()
+                            : months[pagecontroller.date.value.month - 1]
+                                .toString(),
+                        fontSize: Get.width * 0.035,
+                        fontWeight: AppFonts.regular,
+                        fontColor: AppColors.grey,
+                      ),
+                    ),
+                  ],
                 ),
                 const Spacer(),
-                text(
-                  title: 'April',
-                  fontSize: Get.width * 0.1,
-                  fontWeight: AppFonts.bold,
-                  fontColor: AppColors.grey,
+                Obx(
+                  () => text(
+                    title: months[pagecontroller.date.value.month].toString(),
+                    fontSize: Get.width * 0.1,
+                    fontWeight: AppFonts.bold,
+                    fontColor: AppColors.grey,
+                  ),
                 ),
-                SvgPicture.asset(AppIcons.calendar),
+                InkWell(
+                  onTap: () async {
+                    final selected = await showMonthPicker(
+                      context: context,
+                      initialDate: pagecontroller.date.value,
+                      firstDate: DateTime(2023),
+                      lastDate: DateTime(2035),
+                    );
+
+                    if (selected != null) {
+                      pagecontroller.datesInCurrentMonth.clear();
+                      pagecontroller.date.value = selected;
+                      pagecontroller.daysInMonth.value = DateTime(
+                              pagecontroller.date.value.year,
+                              pagecontroller.date.value.month + 1,
+                              0)
+                          .day;
+                      for (int day = 1;
+                          day <= pagecontroller.daysInMonth.value;
+                          day++) {
+                        DateTime date = DateTime(pagecontroller.date.value.year,
+                            pagecontroller.date.value.month, day);
+                        pagecontroller.datesInCurrentMonth.add(date);
+                      }
+                    }
+                  },
+                  child: SvgPicture.asset(AppIcons.calendar),
+                ),
                 const Spacer(),
-                text(
-                  title: 'May',
-                  fontSize: Get.width * 0.035,
-                  fontWeight: AppFonts.regular,
-                  fontColor: AppColors.grey,
-                ),
-                const Icon(
-                  Icons.arrow_forward_outlined,
-                  size: 20,
+                Row(
+                  children: [
+                    Obx(
+                      () => text(
+                        title: pagecontroller.date.value.month == 12
+                            ? months[pagecontroller.date.value.month - 11]
+                                .toString()
+                            : months[pagecontroller.date.value.month + 1]
+                                .toString(),
+                        fontSize: Get.width * 0.035,
+                        fontWeight: AppFonts.regular,
+                        fontColor: AppColors.grey,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_outlined,
+                      size: 20,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -115,54 +174,62 @@ class _headerState extends State<header> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             controller: scrollController,
-            child: Row(
-              children: List.generate(datesInCurrentMonth.length, (index) {
-                DateTime date = datesInCurrentMonth[index];
-                return Container(
-                  width: Get.width * 0.17,
-                  height: Get.height * 0.12,
-                  margin: EdgeInsets.symmetric(
-                      horizontal: Get.width * 0.02,
-                      vertical: Get.height * 0.015),
-                  decoration: ShapeDecoration(
-                    color: date.day == DateTime.now().day
-                        ? AppColors.pink
-                        : Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.97),
-                    ),
-                    shadows: [
-                      BoxShadow(
-                        color: AppColors.googleButtonBorder,
-                        blurRadius: Get.width * 0.02,
-                        offset: Offset(0, 3.66),
-                        spreadRadius: 0,
-                      )
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      text(
-                        title: date.day.toString(),
-                        fontSize: Get.width * 0.05,
-                        fontWeight: AppFonts.bold,
-                        fontColor: date.day == DateTime.now().day
-                            ? Colors.white
-                            : AppColors.grey,
+            child: Obx(
+              () => Row(
+                children: List.generate(
+                  pagecontroller.datesInCurrentMonth.length,
+                  (index) {
+                    DateTime date = pagecontroller.datesInCurrentMonth[index];
+                    // pagecontroller.date.value = datesInCurrentMonth[index];
+                    print(date.day);
+
+                    return Container(
+                      width: Get.width * 0.17,
+                      height: Get.height * 0.12,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: Get.width * 0.02,
+                          vertical: Get.height * 0.015),
+                      decoration: ShapeDecoration(
+                        color: date.day == DateTime.now().day
+                            ? AppColors.pink
+                            : Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.97),
+                        ),
+                        shadows: [
+                          BoxShadow(
+                            color: AppColors.googleButtonBorder,
+                            blurRadius: Get.width * 0.02,
+                            offset: Offset(0, 3.66),
+                            spreadRadius: 0,
+                          )
+                        ],
                       ),
-                      text(
-                        title: weekdays[date.weekday].toString(),
-                        fontSize: Get.width * 0.035,
-                        fontWeight: AppFonts.bold,
-                        fontColor: date.day == DateTime.now().day
-                            ? Colors.white
-                            : AppColors.grey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          text(
+                            title: date.day.toString(),
+                            fontSize: Get.width * 0.05,
+                            fontWeight: AppFonts.bold,
+                            fontColor: date.day == DateTime.now().day
+                                ? Colors.white
+                                : AppColors.grey,
+                          ),
+                          text(
+                            title: weekdays[date.weekday].toString(),
+                            fontSize: Get.width * 0.035,
+                            fontWeight: AppFonts.bold,
+                            fontColor: date.day == DateTime.now().day
+                                ? Colors.white
+                                : AppColors.grey,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              }),
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ],
