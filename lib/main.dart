@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/controller/signinController.dart';
+import 'package:eventually_vendor/screens/ManageAvailability/makeOtherDayUnavailable.dart';
 import 'package:eventually_vendor/screens/ManageAvailability/makeUnavailable.dart';
 import 'package:eventually_vendor/screens/Orders/order_details.dart';
 import 'package:eventually_vendor/screens/Orders/order_screens.dart';
@@ -54,85 +55,91 @@ class MyApp extends StatelessWidget {
     final signincontroller = Get.put(signinController());
 
     return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        // initialRoute: '/drawer',
-        getPages: [
-          GetPage(
-            name: '/onboard',
-            page: () => const onboard(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/login',
-            page: () => const login(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/signup',
-            page: () => const signup(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/otpverification',
-            page: () => otp_verification(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/forgetpassword',
-            page: () => const forgotPassword(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/signup_business',
-            page: () => const signup_business(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/passwordreset',
-            page: () => const passwrordReset(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/drawer',
-            page: () => drawerScreen(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/editServiceForm',
-            page: () => const EditServiceForm(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/order',
-            page: () => Orders(),
-            transition: Transition.circularReveal,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/orderDetails',
-            page: () => order_details(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-          GetPage(
-            name: '/makeUnavailable',
-            page: () => makeUnavailable(),
-            transition: Transition.leftToRightWithFade,
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        ],
-        initialRoute: '/signup'
+      debugShowCheckedModeBanner: false,
+      // initialRoute: '/drawer',
+      getPages: [
+        GetPage(
+          name: '/onboard',
+          page: () => const onboard(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/login',
+          page: () => const login(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/signup',
+          page: () => const signup(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/otpverification',
+          page: () => otp_verification(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/forgetpassword',
+          page: () => const forgotPassword(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/signup_business',
+          page: () => const signup_business(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/passwordreset',
+          page: () => const passwrordReset(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/drawer',
+          page: () => drawerScreen(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/editServiceForm',
+          page: () => const EditServiceForm(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/order',
+          page: () => Orders(),
+          transition: Transition.circularReveal,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/orderDetails',
+          page: () => order_details(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/makeUnavailable',
+          page: () => makeUnavailable(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/makeOtherDayUnavailable',
+          page: () => makeOtherDayUnavailable(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+      ],
+      initialRoute: '/makeOtherDayUnavailable',
 
-        // isLoggedin == true ? '/drawer' : '/login',
-        );
+      // isLoggedin == true ? '/drawer' : '/login',
+    );
   }
 }

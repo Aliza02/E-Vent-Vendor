@@ -66,6 +66,7 @@ flutter:
     - assets/images/reset_password.png
     - assets/images/profileimage.png
     - assets/images/food.png
+    - assets/images/unavailable.png
     # icons
     - assets/icons/home.svg
     - assets/icons/addcircle.svg

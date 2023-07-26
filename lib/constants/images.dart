@@ -9,4 +9,5 @@ class AppImages {
   static const String googleLogo = 'assets/images/google-logo.png';
   static const String forgotPassword = 'assets/images/forgot_password.png';
   static const String resetPassword = 'assets/images/reset_password.png';
+  static const String unavailable = 'assets/images/unavailable.png';
 }
