@@ -29,7 +29,9 @@ dependencies:
   flutter_month_picker: ^0.0.2
   shared_preferences: ^2.2.0
   flutter_otp_text_field: ^1.1.1
-  firebase_app_check: ^0.1.5+1
+  email_auth: ^1.0.0
+  auto_size_text: ^3.0.0
+  
   
 
 dev_dependencies:
@@ -67,6 +69,7 @@ flutter:
     - assets/images/profileimage.png
     - assets/images/food.png
     - assets/images/unavailable.png
+    - assets/images/trophy.png
     # icons
     - assets/icons/home.svg
     - assets/icons/addcircle.svg
@@ -102,6 +105,12 @@ flutter:
     - assets/icons/calendar.svg
     - assets/icons/start_flag.svg
     - assets/icons/end_flag.svg
+    - assets/icons/star.svg
+    - assets/icons/profile_menu_icon.svg
+    - assets/icons/editPersonalInfo.svg
+    - assets/icons/profileName.svg
+    - assets/icons/profilePhone.svg
+    - assets/icons/profileLocation.svg
     
     
 

@@ -40,4 +40,11 @@ class AppIcons {
   static const calendar = 'assets/icons/calendar.svg';
   static const startFlag = 'assets/icons/start_flag.svg';
   static const endFlag = 'assets/icons/end_flag.svg';
+// profile screens icons
+  static const star = 'assets/icons/star.svg';
+  static const profileMenuIcon = 'assets/icons/profile_menu_icon.svg';
+  static const editPersonalInfo = 'assets/icons/editPersonalInfo.svg';
+  static const profileName = 'assets/icons/profileName.svg';
+  static const profileLocation = 'assets/icons/profileLocation.svg';
+  static const profilePhone = 'assets/icons/profilePhone.svg';
 }

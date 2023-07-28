@@ -133,10 +133,11 @@ class MenuScreen extends GetView<testController> {
               child: Text(
                 auth.currentUser!.displayName!.toString(),
                 style: TextStyle(
-                    fontFamily: AppFonts.manrope,
-                    fontWeight: AppFonts.extraBold,
-                    fontSize: Get.width * 0.05,
-                    color: AppColors.grey),
+                  fontFamily: AppFonts.manrope,
+                  fontWeight: AppFonts.extraBold,
+                  fontSize: Get.width * 0.05,
+                  color: AppColors.grey,
+                ),
               ),
             ),
             Text(

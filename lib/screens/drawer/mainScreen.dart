@@ -8,6 +8,7 @@ import '../../widget/BottomNavBar/bottomNavBar.dart';
 import '../EditService/EditServiceForm.dart';
 import '../ManageAvailability/manageAvailability.dart';
 import '../dashboard/dashboard.dart';
+import '../profile/profile.dart';
 
 class MainScreen extends GetView<testController> {
   MainScreen({
@@ -21,6 +22,7 @@ class MainScreen extends GetView<testController> {
     const pageTwo(),
     AddService(),
     manageAvailability(),
+    profileScreen(),
   ];
 
   @override

@@ -1,3 +1,4 @@
+import 'package:email_auth/email_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ User? user;
 var verification_Id;
 
 // var user;
+
 Future Signup(
     {required String email,
     required String name,
@@ -32,6 +34,7 @@ Future Signup(
       password: password,
     );
     user = userCredentials?.user;
+    await user!.sendEmailVerification();
 
     if (user != null) {
       user?.updateDisplayName(name);

@@ -30,4 +30,10 @@ class AppColors {
     Color(0xFF43FD6C),
     Color(0xFF6D529D),
   ];
+
+  static const List<Color> reviewsColor = [
+    Color(0xFFF8E0E0),
+    Color(0xFFFAE2CE),
+    Color(0xFFE0F0CC),
+  ];
 }

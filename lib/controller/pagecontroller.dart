@@ -24,6 +24,7 @@ class testController extends GetxController {
     currentindex.value = index;
   }
 
+// availability
   RxDouble currentDateIndex = 0.0.obs;
   Rx<DateTime> date = DateTime.now().obs;
   Rxn<DateTime> selectedDate = Rxn<DateTime>();

@@ -87,140 +87,143 @@ class _signupState extends State<signup> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.white,
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-          width: width,
-          height: height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: logo(width: width * 0.4, height: height * 0.08),
-              ),
-              heading(
-                title: 'Sign Up',
-                heightFromTop: height * 0.008,
-                fontSize: width * 0.11,
-              ),
-              subHeading(
-                title: "Create an Account",
-                fontSize: width * 0.04,
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              progressbar(index: currentindex),
-              Container(
-                height: height * 0.05,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: textFormField(
-                  title: 'Full Name',
-                  textcontroller: SignUpController.nameController,
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+            width: width,
+            height: height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                  child: logo(width: width * 0.4, height: height * 0.08),
                 ),
-              ),
-              Container(
-                height: height * 0.05,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: textFormField(
-                  title: 'Email',
-                  textcontroller: SignUpController.emailController,
+                heading(
+                  title: 'Sign Up',
+                  heightFromTop: height * 0.008,
+                  fontSize: width * 0.11,
                 ),
-              ),
-              Container(
-                height: height * 0.05,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: PasswordField(
-                  title: 'Password',
-                  passwordController: SignUpController.passwordController,
+                subHeading(
+                  title: "Create an Account",
+                  fontSize: width * 0.04,
                 ),
-              ),
-              Container(
-                height: height * 0.05,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                child: PasswordField(
-                  title: 'Confirm Password',
-                  passwordController:
-                      SignUpController.confirmPasswordController,
+                SizedBox(
+                  height: height * 0.02,
                 ),
-              ),
-              SizedBox(
-                height: height * 0.01,
-              ),
-              Container(
-                width: width * 0.4,
-                height: height * 0.06,
-                margin: EdgeInsets.fromLTRB(0.0, height * 0.035, 0.0, 0.0),
-                child: button(
-                  label: 'Next',
-                  onpressed: () {
-                    validation();
-                  },
-                  borderRadius: 20,
-                ),
-              ),
-              SizedBox(height: height * 0.03),
-              Row(
-                children: [
-                  const Expanded(
-                    child: Divider(
-                      color: AppColors.pink,
-                      height: 20.0,
-                      thickness: 2,
-                      indent: 9,
-                      endIndent: 9,
-                    ),
+                progressbar(index: currentindex),
+                Container(
+                  height: height * 0.05,
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                  child: textFormField(
+                    title: 'Full Name',
+                    textcontroller: SignUpController.nameController,
                   ),
-                  Text(
-                    'or continue with',
-                    style: TextStyle(
-                      color: AppColors.grey,
-                      fontFamily: AppFonts.manrope,
-                      fontWeight: AppFonts.regular,
-                      fontSize: width * 0.04,
-                    ),
+                ),
+                Container(
+                  height: height * 0.05,
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                  child: textFormField(
+                    title: 'Email',
+                    textcontroller: SignUpController.emailController,
                   ),
-                  const Expanded(
-                    child: Divider(
-                      color: AppColors.pink,
-                      height: 20.0,
-                      thickness: 2,
-                      indent: 9,
-                      endIndent: 9,
-                    ),
+                ),
+                Container(
+                  height: height * 0.05,
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                  child: PasswordField(
+                    title: 'Password',
+                    passwordController: SignUpController.passwordController,
                   ),
-                ],
-              ),
-              googleButton(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Already have an account?',
-                    style: TextStyle(
-                      fontSize: width * 0.04,
-                      color: AppColors.grey,
-                      fontFamily: AppFonts.manrope,
-                      fontWeight: AppFonts.medium,
-                    ),
+                ),
+                Container(
+                  height: height * 0.05,
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                  child: PasswordField(
+                    title: 'Confirm Password',
+                    passwordController:
+                        SignUpController.confirmPasswordController,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Get.toNamed('/login');
+                ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
+                Container(
+                  width: width * 0.4,
+                  height: height * 0.06,
+                  margin: EdgeInsets.fromLTRB(0.0, height * 0.035, 0.0, 0.0),
+                  child: button(
+                    label: 'Next',
+                    onpressed: () {
+                      validation();
                     },
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: width * 0.04,
+                    borderRadius: 20,
+                  ),
+                ),
+                SizedBox(height: height * 0.03),
+                Row(
+                  children: [
+                    const Expanded(
+                      child: Divider(
                         color: AppColors.pink,
-                        fontFamily: AppFonts.manrope,
-                        fontWeight: AppFonts.extraBold,
+                        height: 20.0,
+                        thickness: 2,
+                        indent: 9,
+                        endIndent: 9,
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    Text(
+                      'or continue with',
+                      style: TextStyle(
+                        color: AppColors.grey,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.regular,
+                        fontSize: width * 0.04,
+                      ),
+                    ),
+                    const Expanded(
+                      child: Divider(
+                        color: AppColors.pink,
+                        height: 20.0,
+                        thickness: 2,
+                        indent: 9,
+                        endIndent: 9,
+                      ),
+                    ),
+                  ],
+                ),
+                googleButton(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        fontSize: width * 0.04,
+                        color: AppColors.grey,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.medium,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.toNamed('/login');
+                      },
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: width * 0.04,
+                          color: AppColors.pink,
+                          fontFamily: AppFonts.manrope,
+                          fontWeight: AppFonts.extraBold,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
