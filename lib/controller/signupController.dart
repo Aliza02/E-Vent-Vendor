@@ -15,6 +15,7 @@ class signUpController extends GetxController {
       TextEditingController();
   final TextEditingController cnicController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
 
   User? user;
 }

@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:email_auth/email_auth.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,14 +27,36 @@ class _signup_businessState extends State<signup_business> {
   int currentindex = 1;
   bool isChecked = false;
   final businessSignupController = Get.put(signUpController());
+  // final signincontroller = Get.put(signUpController());
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  late EmailAuth emailAuth;
 
   void initState() {
     super.initState();
-    // emailAuth = new EmailAuth(
-    //   sessionName: "Sample session",
-    // );
+    emailAuth = EmailAuth(
+      sessionName: "Sample session",
+    );
+
+    // emailAuth.config();
+  }
+
+  bool submitValid = false;
+
+  /// a void funtion to send the OTP to the user
+  /// Can also be converted into a Boolean function and render accordingly for providers
+  void sendOtp() async {
+    bool result = await emailAuth.sendOtp(
+        recipientMail: businessSignupController.emailController.value.text,
+        otpLength: 6);
+    if (result) {
+      print('otp sent');
+      setState(() {
+        submitValid = true;
+      });
+    } else {
+      print('failed');
+    }
   }
 
   void validationbusiness() {
@@ -84,7 +108,10 @@ class _signup_businessState extends State<signup_business> {
       );
     } else {
       currentindex += 1;
-
+      sendOtp();
+      if (submitValid) {
+        Get.toNamed('/otpverification');
+      }
       print(businessSignupController.emailController.text);
 
       print(businessSignupController.passwordController.text);
@@ -92,19 +119,19 @@ class _signup_businessState extends State<signup_business> {
       // otpVerification(signupcontroller.phoneController.text);
       // Get.toNamed('/otpverification');
 
-      Signup(
-          email: businessSignupController.emailController.text,
-          name: businessSignupController.nameController.text,
-          password: businessSignupController.passwordController.text,
-          confirmPassword:
-              businessSignupController.confirmPasswordController.text,
-          businessName: businessSignupController.businessNameController.text,
-          businessCategory:
-              businessSignupController.businessCategoryController.text,
-          businessLocation:
-              businessSignupController.businessLocationController.text,
-          CNIC: businessSignupController.cnicController.text,
-          phone: businessSignupController.phoneController.text);
+      // Signup(
+      //     email: businessSignupController.emailController.text,
+      //     name: businessSignupController.nameController.text,
+      //     password: businessSignupController.passwordController.text,
+      //     confirmPassword:
+      //         businessSignupController.confirmPasswordController.text,
+      //     businessName: businessSignupController.businessNameController.text,
+      //     businessCategory:
+      //         businessSignupController.businessCategoryController.text,
+      //     businessLocation:
+      //         businessSignupController.businessLocationController.text,
+      //     CNIC: businessSignupController.cnicController.text,
+      //     phone: businessSignupController.phoneController.text);
 
       // Signin(
       //     email: businessSignupController.emailController.text,

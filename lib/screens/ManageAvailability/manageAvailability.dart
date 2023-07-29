@@ -43,9 +43,6 @@ class manageAvailability extends StatelessWidget {
                 ],
               ),
             ),
-            Obx(
-              () => Text(pagecontroller.datesInCurrentMonth.toString()),
-            ),
           ],
         ),
       ),

@@ -9,10 +9,16 @@ import 'activeButton.dart';
 import 'heading.dart';
 import 'inactiveButton.dart';
 
-class service_Header extends StatelessWidget {
-  service_Header({super.key});
+class service_Header extends StatefulWidget {
+  const service_Header({super.key});
 
+  @override
+  State<service_Header> createState() => _service_HeaderState();
+}
+
+class _service_HeaderState extends State<service_Header> {
   final pagecontroller = Get.put(testController());
+
   // function to activate add edit page
   void activeButton() {
     pagecontroller.editServiceSelected.value =

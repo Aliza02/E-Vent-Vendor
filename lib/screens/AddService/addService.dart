@@ -299,20 +299,23 @@ class _AddServiceState extends State<AddService> {
                     ? MainAxisAlignment.center
                     : MainAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(Get.width * 0.08),
-                      bottomLeft: Radius.circular(Get.width * 0.08),
+                  Container(
+                    height: Get.height * 0.16,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(Get.width * 0.08),
+                        bottomLeft: Radius.circular(Get.width * 0.08),
+                      ),
+                      child: pagecontroller.selectedImage.isNotEmpty
+                          ? Image.file(
+                              pagecontroller.selectedImage[0],
+                              width: Get.width * 0.25,
+                              fit: BoxFit.cover,
+                            )
+                          : const SizedBox(),
                     ),
-                    child: pagecontroller.selectedImage.isNotEmpty
-                        ? Image.file(
-                            pagecontroller.selectedImage[0],
-                            width: Get.width * 0.25,
-                            fit: BoxFit.cover,
-                          )
-                        : const SizedBox(),
                   ),
-                  const ServiceCardDetails(),
+                  Expanded(child: const ServiceCardDetails()),
                 ],
               ),
             ),

@@ -1,3 +1,5 @@
+import 'package:email_auth/email_auth.dart';
+import 'package:eventually_vendor/controller/signupController.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,13 @@ class otp_verification extends StatefulWidget {
 }
 
 class _otp_verificationState extends State<otp_verification> {
+  late EmailAuth emailAuth;
+  final businessSignupController = Get.put(signUpController());
+  void initState() {
+    super.initState();
+    emailAuth.sessionName = "Test Session";
+  }
+
   Container buildOTPFields(int index, BuildContext context) {
     return Container(
       width: Get.width * 0.12,
@@ -31,6 +40,12 @@ class _otp_verificationState extends State<otp_verification> {
 
   @override
   Widget build(BuildContext context) {
+    void verify(String otp) {
+      print(emailAuth.validateOtp(
+          recipientMail: businessSignupController.emailController.value.text,
+          userOtp: otp));
+    }
+
     var otp;
     return SafeArea(
       child: Scaffold(
@@ -105,7 +120,8 @@ class _otp_verificationState extends State<otp_verification> {
                 //runs when every textfield is filled
                 onSubmit: (String verificationCode) {
                   otp = verificationCode;
-                  verifyOtp(otp);
+                  verify(otp);
+                  // verifyOtp(otp);
 
                   // showDialog(
                   //     context: context,
@@ -124,7 +140,8 @@ class _otp_verificationState extends State<otp_verification> {
                   child: button(
                     label: 'verify',
                     onpressed: () {
-                      verifyOtp(otp);
+                      // verify();
+                      // verifyOtp(otp);
                     },
                     borderRadius: 20,
                   )),

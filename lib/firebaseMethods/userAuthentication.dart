@@ -34,7 +34,7 @@ Future Signup(
       password: password,
     );
     user = userCredentials?.user;
-    await user!.sendEmailVerification();
+    // await user!.sendEmailVerification();
 
     if (user != null) {
       user?.updateDisplayName(name);
@@ -104,12 +104,12 @@ Future otpVerification(String phoneno) async {
       });
 }
 
-Future<bool> verifyOtp(String otp) async {
-  var credentials = await auth.signInWithCredential(
-      PhoneAuthProvider.credential(
-          verificationId: verification_Id, smsCode: otp));
-  return credentials.user != null ? true : false;
-}
+// Future<bool> verifyOtp(String otp) async {
+//   var credentials = await auth.signInWithCredential(
+//       PhoneAuthProvider.credential(
+//           verificationId: verification_Id, smsCode: otp));
+//   return credentials.user != null ? true : false;
+// }
 
 Future Signout() async {
   await auth.signOut();

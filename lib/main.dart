@@ -14,19 +14,25 @@ import 'package:eventually_vendor/screens/signup.dart';
 import 'package:eventually_vendor/screens/signup_business.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'screens/EditService/EditServiceForm.dart';
 
 bool? isLoggedin;
+int? isViewed;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  isViewed = prefs.getInt('onboard');
   isLoggedin = prefs.getBool('rememberMe');
   runApp(const MyApp());
 }
@@ -128,9 +134,11 @@ class MyApp extends StatelessWidget {
           transitionDuration: const Duration(milliseconds: 500),
         ),
       ],
-      initialRoute: '/profile',
-
-      // isLoggedin == true ? '/drawer' : '/login',
+      initialRoute: isViewed != 0
+          ? '/onboard'
+          : isLoggedin == true
+              ? '/drawer'
+              : '/login',
     );
   }
 }

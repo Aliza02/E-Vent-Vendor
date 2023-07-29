@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:eventually_vendor/models/onboardpage_model.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../constants/images.dart';
@@ -26,6 +27,12 @@ class _onboardState extends State<onboard> {
   void dispose() {
     _pagescontroller!.dispose();
     super.dispose();
+  }
+
+  _storedonBoaredInfo() async {
+    int isViewed = 0;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('onboard', isViewed);
   }
 
   Container buildDot(int index, BuildContext context, Color color) {
@@ -74,7 +81,8 @@ class _onboardState extends State<onboard> {
                               margin: EdgeInsets.only(left: Get.width * 0.2),
                               padding: EdgeInsets.all(Get.width * 0.01),
                               child: TextButton(
-                                onPressed: () {
+                                onPressed: () async {
+                                  await _storedonBoaredInfo();
                                   _pagescontroller?.jumpToPage(2);
                                 },
                                 child: Text(
@@ -132,7 +140,8 @@ class _onboardState extends State<onboard> {
                               borderRadius: BorderRadius.circular(25.0),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
+                            await _storedonBoaredInfo();
                             Get.toNamed('/login');
                           },
                           child: Text(
@@ -140,7 +149,7 @@ class _onboardState extends State<onboard> {
                             style: TextStyle(
                               color: AppColors.grey,
                               fontFamily: AppFonts.signika,
-                              fontSize: Get.width * 0.06,
+                              fontSize: Get.width * 0.05,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -156,7 +165,8 @@ class _onboardState extends State<onboard> {
                           color: AppColors.pageIndicator[currentindex],
                         ),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            await _storedonBoaredInfo();
                             _pagescontroller?.nextPage(
                                 duration: const Duration(milliseconds: 10),
                                 curve: Curves.bounceOut);
