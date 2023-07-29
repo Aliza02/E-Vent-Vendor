@@ -85,27 +85,6 @@ class _profileScreenState extends State<profileScreen> {
     List<String> options = ['Settings', 'Switch Account', 'Logout'];
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.appBar.withOpacity(0.2),
-          elevation: 0.0,
-          actions: [
-            PopupMenuButton(
-              icon: SvgPicture.asset(AppIcons.profileMenuIcon),
-              color: AppColors.cream,
-              itemBuilder: (BuildContext context) {
-                return options.map((String option) {
-                  return PopupMenuItem(
-                    onTap: () {
-                      print(options.indexOf(option));
-                    },
-                    child: Text(option),
-                  );
-                }).toList();
-              },
-            ),
-          ],
-        ),
-        // bottomNavigationBar: bottomNavBar(),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(

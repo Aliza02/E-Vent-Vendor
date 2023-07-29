@@ -231,7 +231,7 @@ class _AddServiceState extends State<AddService> {
       itemBuilder: (context, index) {
         return Slidable(
           endActionPane: ActionPane(
-            motion: ScrollMotion(),
+            motion: const ScrollMotion(),
             children: [
               swipeableButton(
                 buttonColor: AppColors.blue,
@@ -295,9 +295,9 @@ class _AddServiceState extends State<AddService> {
                 borderRadius: BorderRadius.circular(Get.width * 0.08),
               ),
               child: Row(
-                mainAxisAlignment: pagecontroller.selectedImage.isEmpty
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.start,
+                // mainAxisAlignment: pagecontroller.selectedImage.isEmpty
+                //     ? MainAxisAlignment.center
+                //     : MainAxisAlignment.start,
                 children: [
                   Container(
                     height: Get.height * 0.16,
@@ -312,10 +312,14 @@ class _AddServiceState extends State<AddService> {
                               width: Get.width * 0.25,
                               fit: BoxFit.cover,
                             )
-                          : const SizedBox(),
+                          : SizedBox(
+                              width: Get.width * 0.25,
+                            ),
                     ),
                   ),
-                  Expanded(child: const ServiceCardDetails()),
+                  const Expanded(
+                    child: ServiceCardDetails(),
+                  ),
                 ],
               ),
             ),
@@ -329,19 +333,21 @@ class _AddServiceState extends State<AddService> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              service_Header(),
-              Obx(
-                () => pagecontroller.addServiceSelected.value
-                    ? addService(context)
-                    : editService(context),
-              ),
-            ],
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            service_Header(),
+            Obx(
+              () => pagecontroller.addServiceSelected.value
+                  ? addService(context)
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: editService(context),
+                      ),
+                    ),
+            ),
+          ],
         ),
       ),
     );

@@ -34,29 +34,6 @@ class _signup_businessState extends State<signup_business> {
 
   void initState() {
     super.initState();
-    emailAuth = EmailAuth(
-      sessionName: "Sample session",
-    );
-
-    // emailAuth.config();
-  }
-
-  bool submitValid = false;
-
-  /// a void funtion to send the OTP to the user
-  /// Can also be converted into a Boolean function and render accordingly for providers
-  void sendOtp() async {
-    bool result = await emailAuth.sendOtp(
-        recipientMail: businessSignupController.emailController.value.text,
-        otpLength: 6);
-    if (result) {
-      print('otp sent');
-      setState(() {
-        submitValid = true;
-      });
-    } else {
-      print('failed');
-    }
   }
 
   void validationbusiness() {
@@ -108,10 +85,9 @@ class _signup_businessState extends State<signup_business> {
       );
     } else {
       currentindex += 1;
-      sendOtp();
-      if (submitValid) {
-        Get.toNamed('/otpverification');
-      }
+
+      Get.toNamed('/otpverification');
+
       print(businessSignupController.emailController.text);
 
       print(businessSignupController.passwordController.text);
