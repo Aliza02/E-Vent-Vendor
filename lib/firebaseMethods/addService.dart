@@ -1,21 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+
+import '../controller/services.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore firestore = FirebaseFirestore.instance;
+final servicecontroller = Get.put(serviceController());
 
 Future addServices(
     {required String serviceName,
     required String serviceDescription,
-    required String princeRange,
+    required String priceRange,
     required String noOfPerson,
     required String image1URL,
     required String image2URL,
     required String image3URL}) async {
-  await firestore.collection('Services').doc(auth.currentUser?.uid).set({
+  await firestore
+      .collection('Services')
+      .doc(auth.currentUser?.uid)
+      .collection(auth.currentUser!.displayName.toString())
+      .doc(servicecontroller.serviceName.text)
+      .set({
     'Service Name': serviceName,
     'Service Description': serviceDescription,
-    'Service Price': princeRange,
+    'Service Price': priceRange,
     'Service Image': noOfPerson,
     'image1': image1URL.isEmpty ? '' : image1URL,
     'image2': image2URL.isEmpty ? '' : image2URL,

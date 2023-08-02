@@ -12,6 +12,7 @@ import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
+import '../../controller/services.dart';
 import '../../widget/AddEditServices/Button.dart';
 import '../../widget/AddEditServices/ImagesBoxLabels.dart';
 import '../../widget/AddEditServices/buildImage.dart';
@@ -32,6 +33,7 @@ class AddService extends StatefulWidget {
 
 class _AddServiceState extends State<AddService> {
   final pagecontroller = Get.put(testController());
+  final servicecontroller = Get.put(serviceController());
 
   // Rxint imageIndex = 0.obs;
   int imgindex = 0;
@@ -70,7 +72,7 @@ class _AddServiceState extends State<AddService> {
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
     try {
       if (pagecontroller.selectedImage.isNotEmpty) {
-        pagecontroller.uploading.value = true;
+        servicecontroller.uploading.value = true;
         print('upload func');
         await referenceImageToUpload
             .putFile(File(pagecontroller.selectedImage[index].path));
@@ -78,7 +80,7 @@ class _AddServiceState extends State<AddService> {
         imageLink = await referenceImageToUpload.getDownloadURL();
         print(imageLink);
         imageURL.add(imageLink);
-        pagecontroller.uploading.value = false;
+        servicecontroller.uploading.value = false;
 
         print('upload func');
       }
@@ -88,10 +90,10 @@ class _AddServiceState extends State<AddService> {
   }
 
   void validateAddService() {
-    if (pagecontroller.serviceName.text.isEmpty ||
-        pagecontroller.serviceDescription.text.isEmpty ||
-        pagecontroller.priceRange.text.isEmpty ||
-        pagecontroller.noOfPerson.text.isEmpty) {
+    if (servicecontroller.serviceName.text.isEmpty ||
+        servicecontroller.serviceDescription.text.isEmpty ||
+        servicecontroller.priceRange.text.isEmpty ||
+        servicecontroller.noOfPerson.text.isEmpty) {
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Incomplete Details',
@@ -115,13 +117,19 @@ class _AddServiceState extends State<AddService> {
       );
     } else {
       addServices(
-          serviceName: pagecontroller.serviceName.text,
-          serviceDescription: pagecontroller.serviceDescription.text,
-          princeRange: pagecontroller.priceRange.text,
-          noOfPerson: pagecontroller.noOfPerson.text,
+          serviceName: servicecontroller.serviceName.text,
+          serviceDescription: servicecontroller.serviceDescription.text,
+          priceRange: servicecontroller.priceRange.text,
+          noOfPerson: servicecontroller.noOfPerson.text,
           image1URL: imageURL[0],
           image2URL: imageURL[1],
           image3URL: imageURL[2]);
+      servicecontroller.serviceName.clear();
+      servicecontroller.serviceDescription.clear();
+      servicecontroller.noOfPerson.clear();
+      servicecontroller.priceRange.clear();
+      pagecontroller.selectedImage.clear();
+      pagecontroller.imageIndex.value = 0;
     }
   }
 
@@ -132,20 +140,20 @@ class _AddServiceState extends State<AddService> {
         children: [
           const Label(title: 'Service Name'),
           textFormField(
-              textController: pagecontroller.serviceName,
+              textController: servicecontroller.serviceName,
               inputtype: TextInputType.text),
           const Label(title: 'Description'),
           textFormField(
-            textController: pagecontroller.serviceDescription,
+            textController: servicecontroller.serviceDescription,
             inputtype: TextInputType.text,
           ),
           const Label(title: 'Price Range'),
           textFormField(
-              textController: pagecontroller.priceRange,
+              textController: servicecontroller.priceRange,
               inputtype: TextInputType.text),
           const Label(title: 'Number of Person'),
           textFormField(
-              textController: pagecontroller.noOfPerson,
+              textController: servicecontroller.noOfPerson,
               inputtype: TextInputType.number),
           const Label(title: 'Service Images'),
           SizedBox(height: Get.height * 0.01),
@@ -164,7 +172,8 @@ class _AddServiceState extends State<AddService> {
                   children: List.generate(pagecontroller.selectedImage.length,
                       (index) => buildImage(index: index)),
                 ),
-                pagecontroller.imageIndex.value <= 2
+                pagecontroller.imageIndex.value <= 2 ||
+                        pagecontroller.selectedImage.isEmpty
                     ? SizedBox(
                         width: pagecontroller.imageIndex.value > 0
                             ? Get.width * 0.4
@@ -172,7 +181,7 @@ class _AddServiceState extends State<AddService> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            pagecontroller.uploading.value == true
+                            servicecontroller.uploading.value == true
                                 ? CircularProgressIndicator()
                                 : InkWell(
                                     onTap: () {
@@ -242,11 +251,14 @@ class _AddServiceState extends State<AddService> {
             ),
           ),
           const SizedBox(height: 20.0),
-          pagecontroller.uploading.value == true
+          servicecontroller.uploading.value == true
               ? Container(
                   alignment: Alignment.center,
                   width: Get.width * 0.45,
                   height: Get.height * 0.06,
+                  margin: EdgeInsets.symmetric(
+                      vertical: Get.height * 0.06 * 0.1,
+                      horizontal: Get.width * 0.03 * 0.45),
                   decoration: BoxDecoration(
                     color: AppColors.grey.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(16.0),
