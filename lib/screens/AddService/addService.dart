@@ -8,6 +8,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
@@ -22,7 +23,7 @@ import '../../widget/AddEditServices/serviceCardSwipableButton.dart';
 import '../../widget/AddEditServices/textFieldLabel.dart';
 import '../../widget/AddEditServices/textFormField.dart';
 import '../../widget/AddEditServices/serviceCardDetail.dart';
-import '../login.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AddService extends StatefulWidget {
   AddService({super.key});
@@ -130,162 +131,191 @@ class _AddServiceState extends State<AddService> {
       servicecontroller.priceRange.clear();
       pagecontroller.selectedImage.clear();
       pagecontroller.imageIndex.value = 0;
+
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Service Added',
+          message: 'Your Service has been added',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
     }
   }
 
 // add service section
   Widget addService(context) {
     return Obx(
-      () => Column(
-        children: [
-          const Label(title: 'Service Name'),
-          textFormField(
-              textController: servicecontroller.serviceName,
-              inputtype: TextInputType.text),
-          const Label(title: 'Description'),
-          textFormField(
-            textController: servicecontroller.serviceDescription,
-            inputtype: TextInputType.text,
-          ),
-          const Label(title: 'Price Range'),
-          textFormField(
-              textController: servicecontroller.priceRange,
-              inputtype: TextInputType.text),
-          const Label(title: 'Number of Person'),
-          textFormField(
-              textController: servicecontroller.noOfPerson,
-              inputtype: TextInputType.number),
-          const Label(title: 'Service Images'),
-          SizedBox(height: Get.height * 0.01),
-          Container(
-            padding: pagecontroller.imageIndex.value == 0
-                ? EdgeInsets.all(0.0)
-                : EdgeInsets.symmetric(horizontal: Get.width * 0.03),
-            child: Row(
-              mainAxisAlignment: pagecontroller.imageIndex.value == 0 ||
-                      pagecontroller.imageIndex.value == 3
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(pagecontroller.selectedImage.length,
-                      (index) => buildImage(index: index)),
-                ),
-                pagecontroller.imageIndex.value <= 2 ||
-                        pagecontroller.selectedImage.isEmpty
-                    ? SizedBox(
-                        width: pagecontroller.imageIndex.value > 0
-                            ? Get.width * 0.4
-                            : Get.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            servicecontroller.uploading.value == true
-                                ? CircularProgressIndicator()
-                                : InkWell(
-                                    onTap: () {
-                                      _openImagePicker();
-                                      // print(imageIndex);
-                                      // imageIndex++;
-                                    },
-                                    child: DottedBorder(
-                                      // add image box
-                                      color: AppColors.grey,
-                                      strokeWidth: 2,
-                                      dashPattern: const [8, 8],
-                                      child: SizedBox(
-                                        width:
-                                            pagecontroller.imageIndex.value > 0
-                                                ? Get.width * 0.3
-                                                : Get.width * 0.84,
-                                        height: Get.height * 0.09,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AppIcons.addImage,
-                                              height: pagecontroller
-                                                          .imageIndex.value >
+      () => LiquidPullToRefresh(
+        color: AppColors.pink,
+        onRefresh: () async {
+          print('refresh');
+          servicecontroller.serviceName.clear();
+          servicecontroller.serviceDescription.clear();
+          servicecontroller.noOfPerson.clear();
+          servicecontroller.priceRange.clear();
+          pagecontroller.selectedImage.clear();
+          pagecontroller.imageIndex.value = 0;
+          return await Future.delayed(Duration(seconds: 2));
+        },
+        child: Column(
+          children: [
+            const Label(title: 'Service Name'),
+            textFormField(
+                textController: servicecontroller.serviceName,
+                inputtype: TextInputType.text),
+            const Label(title: 'Description'),
+            textFormField(
+              textController: servicecontroller.serviceDescription,
+              inputtype: TextInputType.text,
+            ),
+            const Label(title: 'Price Range'),
+            textFormField(
+                textController: servicecontroller.priceRange,
+                inputtype: TextInputType.text),
+            const Label(title: 'Number of Person'),
+            textFormField(
+                textController: servicecontroller.noOfPerson,
+                inputtype: TextInputType.number),
+            const Label(title: 'Service Images'),
+            SizedBox(height: Get.height * 0.01),
+            Container(
+              padding: pagecontroller.imageIndex.value == 0
+                  ? EdgeInsets.all(0.0)
+                  : EdgeInsets.symmetric(horizontal: Get.width * 0.03),
+              child: Row(
+                mainAxisAlignment: pagecontroller.imageIndex.value == 0 ||
+                        pagecontroller.imageIndex.value == 3
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(pagecontroller.selectedImage.length,
+                        (index) => buildImage(index: index)),
+                  ),
+                  pagecontroller.imageIndex.value <= 2 ||
+                          pagecontroller.selectedImage.isEmpty
+                      ? SizedBox(
+                          width: pagecontroller.imageIndex.value > 0
+                              ? Get.width * 0.4
+                              : Get.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              servicecontroller.uploading.value == true
+                                  ? const SpinKitFadingCircle(
+                                      color: AppColors.pink,
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        _openImagePicker();
+                                        // print(imageIndex);
+                                        // imageIndex++;
+                                      },
+                                      child: DottedBorder(
+                                        // add image box
+                                        color: AppColors.grey,
+                                        strokeWidth: 2,
+                                        dashPattern: const [8, 8],
+                                        child: SizedBox(
+                                          width:
+                                              pagecontroller.imageIndex.value >
                                                       0
-                                                  ? Get.height * 0.03
-                                                  : Get.height * 0.04,
-                                              width: pagecontroller
-                                                          .imageIndex.value >
+                                                  ? Get.width * 0.3
+                                                  : Get.width * 0.84,
+                                          height: Get.height * 0.09,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                AppIcons.addImage,
+                                                height: pagecontroller
+                                                            .imageIndex.value >
+                                                        0
+                                                    ? Get.height * 0.03
+                                                    : Get.height * 0.04,
+                                                width: pagecontroller
+                                                            .imageIndex.value >
+                                                        0
+                                                    ? Get.width * 0.03
+                                                    : Get.width * 0.08,
+                                              ),
+                                              SizedBox(width: Get.width * 0.01),
+                                              pagecontroller.imageIndex.value >
                                                       0
-                                                  ? Get.width * 0.03
-                                                  : Get.width * 0.08,
-                                            ),
-                                            SizedBox(width: Get.width * 0.01),
-                                            pagecontroller.imageIndex.value > 0
-                                                ? addImageBoxLabels(
-                                                    title: 'Add More',
-                                                    fontSize: Get.width * 0.04,
-                                                    fontWeight: AppFonts.bold,
-                                                    fontFamily:
-                                                        AppFonts.manrope)
-                                                : addImageBoxLabels(
-                                                    title: 'Upload Image',
-                                                    fontSize: Get.width * 0.04,
-                                                    fontFamily:
-                                                        AppFonts.manrope,
-                                                    fontWeight: AppFonts.bold,
-                                                  )
-                                          ],
+                                                  ? addImageBoxLabels(
+                                                      title: 'Add More',
+                                                      fontSize:
+                                                          Get.width * 0.04,
+                                                      fontWeight: AppFonts.bold,
+                                                      fontFamily:
+                                                          AppFonts.manrope)
+                                                  : addImageBoxLabels(
+                                                      title: 'Upload Image',
+                                                      fontSize:
+                                                          Get.width * 0.04,
+                                                      fontFamily:
+                                                          AppFonts.manrope,
+                                                      fontWeight: AppFonts.bold,
+                                                    )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                            const SizedBox(height: 10.0),
-                            addImageBoxLabels(
-                                title: 'Upload max 3 images',
-                                fontSize: Get.width * 0.03,
-                                fontWeight: AppFonts.bold,
-                                fontFamily: AppFonts.manrope),
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
+                              const SizedBox(height: 10.0),
+                              addImageBoxLabels(
+                                  title: 'Upload max 3 images',
+                                  fontSize: Get.width * 0.03,
+                                  fontWeight: AppFonts.bold,
+                                  fontFamily: AppFonts.manrope),
+                            ],
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20.0),
-          servicecontroller.uploading.value == true
-              ? Container(
-                  alignment: Alignment.center,
-                  width: Get.width * 0.45,
-                  height: Get.height * 0.06,
-                  margin: EdgeInsets.symmetric(
-                      vertical: Get.height * 0.06 * 0.1,
-                      horizontal: Get.width * 0.03 * 0.45),
-                  decoration: BoxDecoration(
-                    color: AppColors.grey.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: Text(
-                    'Add Service',
-                    style: TextStyle(
-                      color: AppColors.grey.withOpacity(0.1),
-                      fontSize: Get.width * 0.05,
-                      fontFamily: AppFonts.manrope,
-                      fontWeight: AppFonts.bold,
+            const SizedBox(height: 20.0),
+            servicecontroller.uploading.value == true
+                ? Container(
+                    alignment: Alignment.center,
+                    width: Get.width * 0.45,
+                    height: Get.height * 0.06,
+                    margin: EdgeInsets.symmetric(
+                        vertical: Get.height * 0.06 * 0.1,
+                        horizontal: Get.width * 0.03 * 0.45),
+                    decoration: BoxDecoration(
+                      color: AppColors.grey.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
+                    child: Text(
+                      'Add Service',
+                      style: TextStyle(
+                        color: AppColors.grey.withOpacity(0.1),
+                        fontSize: Get.width * 0.05,
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.bold,
+                      ),
+                    ),
+                  )
+                : Button(
+                    onPressed: () {
+                      validateAddService();
+                    },
+                    label: 'Add Service',
+                    width: Get.width * 0.45,
+                    height: Get.height * 0.06,
+                    buttonColor: AppColors.pink,
+                    fontSize: Get.width * 0.05,
+                    borderRadius: 16.0,
                   ),
-                )
-              : Button(
-                  onPressed: () {
-                    validateAddService();
-                  },
-                  label: 'Add Service',
-                  width: Get.width * 0.45,
-                  height: Get.height * 0.06,
-                  buttonColor: AppColors.pink,
-                  fontSize: Get.width * 0.05,
-                  borderRadius: 16.0,
-                ),
-          const SizedBox(height: 10.0),
-        ],
+            const SizedBox(height: 10.0),
+          ],
+        ),
       ),
     );
   }
@@ -403,26 +433,41 @@ class _AddServiceState extends State<AddService> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            service_Header(),
-            Obx(
-              () => pagecontroller.addServiceSelected.value
-                  ? Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: addService(context),
+        body: LiquidPullToRefresh(
+          color: AppColors.pink,
+          height: 200,
+          backgroundColor: AppColors.appBar,
+          onRefresh: () async {
+            servicecontroller.serviceName.clear();
+            servicecontroller.serviceDescription.clear();
+            servicecontroller.noOfPerson.clear();
+            servicecontroller.priceRange.clear();
+            pagecontroller.imageIndex.value = 0;
+            pagecontroller.selectedImage.clear();
+
+            return await Future.delayed(const Duration(seconds: 2));
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              service_Header(),
+              Obx(
+                () => pagecontroller.addServiceSelected.value
+                    ? Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: addService(context),
+                        ),
+                      )
+                    : Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: editService(context),
+                        ),
                       ),
-                    )
-                  : Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: editService(context),
-                      ),
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
