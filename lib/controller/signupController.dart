@@ -17,5 +17,6 @@ class signUpController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
 
+  RxBool NewUser = true.obs;
   User? user;
 }

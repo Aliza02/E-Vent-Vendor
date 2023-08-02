@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class testController extends GetxController {
@@ -30,4 +31,11 @@ class testController extends GetxController {
   Rxn<DateTime> selectedDate = Rxn<DateTime>();
   List datesInCurrentMonth = <DateTime>[].obs;
   RxInt daysInMonth = 0.obs;
+
+//add service
+  RxBool uploading = false.obs;
+  final TextEditingController serviceName = TextEditingController();
+  final TextEditingController serviceDescription = TextEditingController();
+  final TextEditingController priceRange = TextEditingController();
+  final TextEditingController noOfPerson = TextEditingController();
 }

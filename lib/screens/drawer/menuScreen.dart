@@ -143,6 +143,7 @@ class MenuScreen extends GetView<testController> {
             Text(
               auth.currentUser!.email.toString(),
               style: TextStyle(
+                fontSize: Get.width * 0.035,
                 fontFamily: AppFonts.manrope,
                 fontWeight: AppFonts.medium,
                 color: AppColors.grey,
@@ -168,7 +169,10 @@ class MenuScreen extends GetView<testController> {
             InkWell(
               onTap: () {
                 Signout();
+                signincontroller.emailController.clear();
+                signincontroller.passwordController.clear();
                 Get.offAllNamed('/login');
+
                 // Get.back();
               },
               child: Row(

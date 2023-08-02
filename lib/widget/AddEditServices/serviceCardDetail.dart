@@ -55,6 +55,14 @@ class ServiceCardDetails extends StatelessWidget {
               ),
             ],
           ),
+
+          ServiceCardText(
+            text: 'Customized',
+            fontSize: Get.width * 0.03,
+            fontColor: AppColors.grey,
+            fontWeight: AppFonts.regular,
+            opacity: 0.8,
+          ),
         ],
       ),
     );

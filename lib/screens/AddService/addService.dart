@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:eventually_vendor/firebaseMethods/addService.dart';
 import 'package:eventually_vendor/widget/AddEditServices/serviceHeader.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,10 +32,11 @@ class AddService extends StatefulWidget {
 
 class _AddServiceState extends State<AddService> {
   final pagecontroller = Get.put(testController());
+
   // Rxint imageIndex = 0.obs;
   int imgindex = 0;
   File? _image;
-  List<File> selectedImage = [];
+
   // This is the image picker
   final _picker = ImagePicker();
 
@@ -43,43 +46,84 @@ class _AddServiceState extends State<AddService> {
         await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      print(selectedImage.length);
       setState(() {
         _image = File(pickedImage.path);
         pagecontroller.selectedImage.add(_image!);
-        pagecontroller.imageIndex.value++;
-        print('index');
-        print(pagecontroller.imageIndex.value);
-        // imageIndex++;
+
+        // print(pagecontroller.imageIndex.value);
       });
+      print('image picker');
+      uploadImage(pagecontroller.imageIndex.value);
+      pagecontroller.imageIndex.value++;
     }
   }
 
-  // widget to display selected images
-  // Container buildImage(BuildContext context, int index) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.circular(Get.width * 0.02),
-  //       boxShadow: [
-  //         BoxShadow(
-  //           color: AppColors.pink.withOpacity(0.5),
-  //           spreadRadius: 0.1,
-  //           blurRadius: 10.0,
-  //         ),
-  //       ],
-  //     ),
-  //     margin: EdgeInsets.symmetric(horizontal: Get.width * 0.01),
-  //     width: Get.width * 0.25,
-  //     height: Get.height * 0.13,
-  //     child: ClipRRect(
-  //       borderRadius: BorderRadius.circular(Get.width * 0.02),
-  //       child: Image.file(
-  //         selectedImage[index],
-  //         fit: BoxFit.cover,
-  //       ),
-  //     ),
-  //   );
-  // }
+  List<String> imageURL = [];
+  // String imageURl = '';
+  int imageIndex = 0;
+  void uploadImage(int index) async {
+    String imageLink;
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference referenceBoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+        referenceBoot.child(auth.currentUser!.uid.toString());
+    Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+    try {
+      if (pagecontroller.selectedImage.isNotEmpty) {
+        pagecontroller.uploading.value = true;
+        print('upload func');
+        await referenceImageToUpload
+            .putFile(File(pagecontroller.selectedImage[index].path));
+
+        imageLink = await referenceImageToUpload.getDownloadURL();
+        print(imageLink);
+        imageURL.add(imageLink);
+        pagecontroller.uploading.value = false;
+
+        print('upload func');
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  void validateAddService() {
+    if (pagecontroller.serviceName.text.isEmpty ||
+        pagecontroller.serviceDescription.text.isEmpty ||
+        pagecontroller.priceRange.text.isEmpty ||
+        pagecontroller.noOfPerson.text.isEmpty) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Incomplete Details',
+          message: 'Enter all Details',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+
+      //
+    } else if (imageURL.length < 3) {
+      Get.showSnackbar(
+        const GetSnackBar(
+          title: 'Upload Images',
+          message: 'Select 3 Images',
+          backgroundColor: AppColors.pink,
+          duration: Duration(seconds: 2),
+          icon: Icon(Icons.incomplete_circle_rounded),
+        ),
+      );
+    } else {
+      addServices(
+          serviceName: pagecontroller.serviceName.text,
+          serviceDescription: pagecontroller.serviceDescription.text,
+          princeRange: pagecontroller.priceRange.text,
+          noOfPerson: pagecontroller.noOfPerson.text,
+          image1URL: imageURL[0],
+          image2URL: imageURL[1],
+          image3URL: imageURL[2]);
+    }
+  }
 
 // add service section
   Widget addService(context) {
@@ -87,41 +131,22 @@ class _AddServiceState extends State<AddService> {
       () => Column(
         children: [
           const Label(title: 'Service Name'),
-          const textFormField(),
+          textFormField(
+              textController: pagecontroller.serviceName,
+              inputtype: TextInputType.text),
           const Label(title: 'Description'),
-          const textFormField(),
-          const Label(title: 'Price Range'),
-          const textFormField(),
-          const Label(title: 'Number of Person'),
-          const textFormField(),
-          const Label(title: 'Customizable'),
-          Container(
-            margin: EdgeInsets.only(left: Get.width * 0.06),
-            child: Row(
-              children: [
-                // customized button "YES"
-                Button(
-                  label: 'Yes',
-                  width: Get.width * 0.25,
-                  height: Get.height * 0.06,
-                  buttonColor: AppColors.blue,
-                  fontSize: Get.width * 0.04,
-                  borderRadius: 18.0,
-                ),
-
-                // customized button "NO"
-                Button(
-                  label: 'No',
-                  width: Get.width * 0.25,
-                  height: Get.height * 0.06,
-                  buttonColor: AppColors.pink,
-                  fontSize: Get.width * 0.04,
-                  borderRadius: 18.0,
-                ),
-              ],
-            ),
+          textFormField(
+            textController: pagecontroller.serviceDescription,
+            inputtype: TextInputType.text,
           ),
-          SizedBox(height: Get.height * 0.01),
+          const Label(title: 'Price Range'),
+          textFormField(
+              textController: pagecontroller.priceRange,
+              inputtype: TextInputType.text),
+          const Label(title: 'Number of Person'),
+          textFormField(
+              textController: pagecontroller.noOfPerson,
+              inputtype: TextInputType.number),
           const Label(title: 'Service Images'),
           SizedBox(height: Get.height * 0.01),
           Container(
@@ -147,52 +172,62 @@ class _AddServiceState extends State<AddService> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            InkWell(
-                              onTap: () {
-                                _openImagePicker();
-                              },
-                              child: DottedBorder(
-                                // add image box
-                                color: AppColors.grey,
-                                strokeWidth: 2,
-                                dashPattern: const [8, 8],
-                                child: SizedBox(
-                                  width: pagecontroller.imageIndex.value > 0
-                                      ? Get.width * 0.3
-                                      : Get.width * 0.84,
-                                  height: Get.height * 0.09,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        AppIcons.addImage,
-                                        height:
-                                            pagecontroller.imageIndex.value > 0
-                                                ? Get.height * 0.03
-                                                : Get.height * 0.04,
+                            pagecontroller.uploading.value == true
+                                ? CircularProgressIndicator()
+                                : InkWell(
+                                    onTap: () {
+                                      _openImagePicker();
+                                      // print(imageIndex);
+                                      // imageIndex++;
+                                    },
+                                    child: DottedBorder(
+                                      // add image box
+                                      color: AppColors.grey,
+                                      strokeWidth: 2,
+                                      dashPattern: const [8, 8],
+                                      child: SizedBox(
                                         width:
                                             pagecontroller.imageIndex.value > 0
-                                                ? Get.width * 0.03
-                                                : Get.width * 0.08,
+                                                ? Get.width * 0.3
+                                                : Get.width * 0.84,
+                                        height: Get.height * 0.09,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              AppIcons.addImage,
+                                              height: pagecontroller
+                                                          .imageIndex.value >
+                                                      0
+                                                  ? Get.height * 0.03
+                                                  : Get.height * 0.04,
+                                              width: pagecontroller
+                                                          .imageIndex.value >
+                                                      0
+                                                  ? Get.width * 0.03
+                                                  : Get.width * 0.08,
+                                            ),
+                                            SizedBox(width: Get.width * 0.01),
+                                            pagecontroller.imageIndex.value > 0
+                                                ? addImageBoxLabels(
+                                                    title: 'Add More',
+                                                    fontSize: Get.width * 0.04,
+                                                    fontWeight: AppFonts.bold,
+                                                    fontFamily:
+                                                        AppFonts.manrope)
+                                                : addImageBoxLabels(
+                                                    title: 'Upload Image',
+                                                    fontSize: Get.width * 0.04,
+                                                    fontFamily:
+                                                        AppFonts.manrope,
+                                                    fontWeight: AppFonts.bold,
+                                                  )
+                                          ],
+                                        ),
                                       ),
-                                      SizedBox(width: Get.width * 0.01),
-                                      pagecontroller.imageIndex.value > 0
-                                          ? addImageBoxLabels(
-                                              title: 'Add More',
-                                              fontSize: Get.width * 0.04,
-                                              fontWeight: AppFonts.bold,
-                                              fontFamily: AppFonts.manrope)
-                                          : addImageBoxLabels(
-                                              title: 'Upload Image',
-                                              fontSize: Get.width * 0.04,
-                                              fontFamily: AppFonts.manrope,
-                                              fontWeight: AppFonts.bold,
-                                            )
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
                             const SizedBox(height: 10.0),
                             addImageBoxLabels(
                                 title: 'Upload max 3 images',
@@ -202,19 +237,41 @@ class _AddServiceState extends State<AddService> {
                           ],
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             ),
           ),
           const SizedBox(height: 20.0),
-          Button(
-            label: 'Add Service',
-            width: Get.width * 0.45,
-            height: Get.height * 0.06,
-            buttonColor: AppColors.pink,
-            fontSize: Get.width * 0.05,
-            borderRadius: 16.0,
-          ),
+          pagecontroller.uploading.value == true
+              ? Container(
+                  alignment: Alignment.center,
+                  width: Get.width * 0.45,
+                  height: Get.height * 0.06,
+                  decoration: BoxDecoration(
+                    color: AppColors.grey.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Text(
+                    'Add Service',
+                    style: TextStyle(
+                      color: AppColors.grey.withOpacity(0.1),
+                      fontSize: Get.width * 0.05,
+                      fontFamily: AppFonts.manrope,
+                      fontWeight: AppFonts.bold,
+                    ),
+                  ),
+                )
+              : Button(
+                  onPressed: () {
+                    validateAddService();
+                  },
+                  label: 'Add Service',
+                  width: Get.width * 0.45,
+                  height: Get.height * 0.06,
+                  buttonColor: AppColors.pink,
+                  fontSize: Get.width * 0.05,
+                  borderRadius: 16.0,
+                ),
           const SizedBox(height: 10.0),
         ],
       ),
@@ -333,13 +390,19 @@ class _AddServiceState extends State<AddService> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             service_Header(),
             Obx(
               () => pagecontroller.addServiceSelected.value
-                  ? addService(context)
+                  ? Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: addService(context),
+                      ),
+                    )
                   : Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,

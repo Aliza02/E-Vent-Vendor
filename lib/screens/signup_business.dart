@@ -1,6 +1,3 @@
-import 'dart:isolate';
-
-import 'package:email_auth/email_auth.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +27,6 @@ class _signup_businessState extends State<signup_business> {
   // final signincontroller = Get.put(signUpController());
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late EmailAuth emailAuth;
 
   void initState() {
     super.initState();
@@ -86,7 +82,7 @@ class _signup_businessState extends State<signup_business> {
     } else {
       currentindex += 1;
 
-      Get.toNamed('/otpverification');
+      // Get.toNamed('/otpverification');
 
       print(businessSignupController.emailController.text);
 
@@ -95,19 +91,22 @@ class _signup_businessState extends State<signup_business> {
       // otpVerification(signupcontroller.phoneController.text);
       // Get.toNamed('/otpverification');
 
-      // Signup(
-      //     email: businessSignupController.emailController.text,
-      //     name: businessSignupController.nameController.text,
-      //     password: businessSignupController.passwordController.text,
-      //     confirmPassword:
-      //         businessSignupController.confirmPasswordController.text,
-      //     businessName: businessSignupController.businessNameController.text,
-      //     businessCategory:
-      //         businessSignupController.businessCategoryController.text,
-      //     businessLocation:
-      //         businessSignupController.businessLocationController.text,
-      //     CNIC: businessSignupController.cnicController.text,
-      //     phone: businessSignupController.phoneController.text);
+      Signup(
+          email: businessSignupController.emailController.text,
+          name: businessSignupController.nameController.text,
+          password: businessSignupController.passwordController.text,
+          confirmPassword:
+              businessSignupController.confirmPasswordController.text,
+          businessName: businessSignupController.businessNameController.text,
+          businessCategory:
+              businessSignupController.businessCategoryController.text,
+          businessLocation:
+              businessSignupController.businessLocationController.text,
+          CNIC: businessSignupController.cnicController.text,
+          phone: businessSignupController.phoneController.text);
+
+      // otpVerification(businessSignupController.phoneController.text);
+      print('sad');
 
       // Signin(
       //     email: businessSignupController.emailController.text,
@@ -149,7 +148,7 @@ class _signup_businessState extends State<signup_business> {
                 ),
                 progressbar(index: currentindex),
                 Container(
-                  height: Get.height * 0.05,
+                  height: Get.height * 0.06,
                   margin: EdgeInsets.only(top: Get.height * 0.02),
                   child: textFormField(
                     title: 'Business Name',

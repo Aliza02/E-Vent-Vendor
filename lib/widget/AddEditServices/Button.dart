@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../constants/font.dart';
+import '../../firebaseMethods/addService.dart';
 
 //  button for add/edit service
 class Button extends StatelessWidget {
@@ -12,14 +13,16 @@ class Button extends StatelessWidget {
   final Color buttonColor;
   final double fontSize;
   final double borderRadius;
-  const Button(
+  Function onPressed;
+  Button(
       {super.key,
       required this.label,
       required this.width,
       required this.height,
       required this.buttonColor,
       required this.fontSize,
-      required this.borderRadius});
+      required this.borderRadius,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class Button extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          // Navigator.pushNamed(context, '/editservice');
+          onPressed();
         },
         child: Text(
           label,

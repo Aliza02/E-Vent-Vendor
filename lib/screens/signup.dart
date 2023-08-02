@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -193,7 +194,13 @@ class _signupState extends State<signup> {
                     ),
                   ],
                 ),
-                googleButton(),
+                InkWell(
+                  onTap: () {
+                    print('asda');
+                    signInWithGoogle();
+                  },
+                  child: googleButton(),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

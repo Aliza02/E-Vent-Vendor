@@ -1,15 +1,14 @@
-import 'package:email_auth/email_auth.dart';
 import 'package:eventually_vendor/controller/signupController.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
+import 'package:otp/otp.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../widget/heading.dart';
 import '../widget/logo.dart';
-import '../widget/numberfield.dart';
 import '../widget/subheading.dart';
 
 class otp_verification extends StatefulWidget {
@@ -20,11 +19,9 @@ class otp_verification extends StatefulWidget {
 }
 
 class _otp_verificationState extends State<otp_verification> {
-  late EmailAuth emailAuth;
   final businessSignupController = Get.put(signUpController());
   void initState() {
     super.initState();
-    emailAuth.sessionName = "Test Session";
   }
 
   Container buildOTPFields(int index, BuildContext context) {
@@ -40,13 +37,13 @@ class _otp_verificationState extends State<otp_verification> {
 
   @override
   Widget build(BuildContext context) {
-    void verify(String otp) {
-      print(emailAuth.validateOtp(
-          recipientMail: businessSignupController.emailController.value.text,
-          userOtp: otp));
-    }
-
-    var otp;
+    final userKey = auth.currentUser?.uid;
+    final String code3 = OTP.generateTOTPCodeString(
+        userKey.toString(), DateTime.now().millisecondsSinceEpoch,
+        interval: 20, algorithm: Algorithm.SHA512);
+    print(code3);
+    print(DateTime.now().millisecondsSinceEpoch / 1000);
+    String otp;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -120,17 +117,11 @@ class _otp_verificationState extends State<otp_verification> {
                 //runs when every textfield is filled
                 onSubmit: (String verificationCode) {
                   otp = verificationCode;
-                  verify(otp);
-                  // verifyOtp(otp);
-
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return AlertDialog(
-                  //         title: Text("Verification Code"),
-                  //         content: Text('Code entered is $verificationCode'),
-                  //       );
-                  //     });
+                  if (otp == code3) {
+                    print('verified');
+                  } else {
+                    print('incorrect');
+                  }
                 }, // end onSubmit
               ),
               Container(

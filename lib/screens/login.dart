@@ -56,9 +56,6 @@ class _loginState extends State<login> {
       );
     } else {
       _login();
-      // Signin(
-      //     email: signincontroller.emailController.text,
-      //     password: signincontroller.passwordController.text);
     }
   }
 
