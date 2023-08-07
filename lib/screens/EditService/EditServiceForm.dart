@@ -1,8 +1,18 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventually_vendor/firebaseMethods/addService.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
+import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
+import '../../controller/services.dart';
 import '../../widget/AddEditServices/Button.dart';
 import '../../widget/AddEditServices/buildImage.dart';
 import '../../widget/AddEditServices/textFormField.dart';
@@ -19,10 +29,12 @@ class EditServiceForm extends StatefulWidget {
 
 class _EditServiceFormState extends State<EditServiceForm> {
   final pagecontroller = Get.put(testController());
+  final servicecontroller = Get.put(serviceController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: AppColors.appBar.withOpacity(0.2),
           elevation: 0.0,
@@ -70,29 +82,140 @@ class _EditServiceFormState extends State<EditServiceForm> {
                 ),
                 SizedBox(height: Get.height * 0.06),
                 const Label(title: 'Service Name'),
-                // const textFormField(),
+                textFormField(
+                  maxLines: 1,
+                  enabledField: false,
+                  inputtype: TextInputType.text,
+                  textController: servicecontroller.editServiceName,
+                ),
                 const Label(title: 'Description'),
-                // const textFormField(),
+                textFormField(
+                  maxLines: 5,
+                  enabledField: true,
+                  inputtype: TextInputType.text,
+                  textController: servicecontroller.editServiceDescription,
+                ),
                 const Label(title: 'Price Range'),
-                // const textFormField(),
+                textFormField(
+                  maxLines: 1,
+                  enabledField: true,
+                  inputtype: TextInputType.text,
+                  textController: servicecontroller.editPriceRange,
+                ),
                 const Label(title: 'Number of Person'),
-                // const textFormField(),
+                textFormField(
+                  maxLines: 1,
+                  enabledField: true,
+                  inputtype: TextInputType.number,
+                  textController: servicecontroller.editNoOfPerson,
+                ),
                 const Label(title: 'Service Images'),
                 SizedBox(height: Get.height * 0.025),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(pagecontroller.selectedImage.length,
-                      (index) => buildImage(index: index)),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () => servicecontroller.editImageIndex.value > 0
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: List.generate(
+                                servicecontroller.editImage.length,
+                                (index) => buildImage(index: index),
+                              ),
+                            )
+                          : Container(),
+                    ),
+                    Obx(
+                      () => servicecontroller.editImageIndex.value < 3 &&
+                              servicecontroller.uploading.value == false
+                          ? InkWell(
+                              onTap: () async {
+                                print(servicecontroller.uploading.value);
+                                File? _image;
+                                // This is the image picker
+                                final _picker = ImagePicker();
+                                final XFile? pickedImage = await _picker
+                                    .pickImage(source: ImageSource.gallery);
+                                if (pickedImage != null) {
+                                  setState(() {
+                                    _image = File(pickedImage.path);
+                                  });
+                                }
+                                servicecontroller.uploading.value = true;
+                                String uniqueFileName = DateTime.now()
+                                    .microsecondsSinceEpoch
+                                    .toString();
+                                print(servicecontroller.link.value);
+                                Reference referenceBoot = FirebaseStorage
+                                    .instance
+                                    .refFromURL(servicecontroller.link.value);
+
+                                if (_image != null) {
+                                  await referenceBoot
+                                      .putFile(File(_image!.path));
+
+                                  servicecontroller.editImage
+                                      .add(servicecontroller.link.value);
+                                  print('uploaded');
+                                }
+
+                                servicecontroller.editImageIndex.value++;
+                                servicecontroller.uploading.value = false;
+                              },
+                              child: SvgPicture.asset(AppIcons.addImage))
+                          : servicecontroller.uploading.value == true
+                              ? const SpinKitFadingCircle(
+                                  color: AppColors.pink,
+                                )
+                              : Container(),
+                    ),
+                  ],
                 ),
                 SizedBox(height: Get.height * 0.025),
-                Button(
-                    onPressed: () {},
+                Obx(
+                  () => Button(
+                    onPressed: () {
+                      if (servicecontroller.editImageIndex.value < 3) {
+                        Get.showSnackbar(
+                          const GetSnackBar(
+                            title: 'Upload Image ',
+                            message: 'Add More Images',
+                            backgroundColor: AppColors.pink,
+                            duration: Duration(seconds: 2),
+                            icon: Icon(Icons.incomplete_circle_rounded),
+                          ),
+                        );
+                      } else {
+                        updateService(
+                                servicecontroller.editServiceName.text,
+                                servicecontroller.editServiceDescription.text,
+                                servicecontroller.editPriceRange.text,
+                                servicecontroller.editNoOfPerson.text)
+                            .then(
+                          (value) => Get.showSnackbar(
+                            const GetSnackBar(
+                              title: 'Successfull',
+                              message:
+                                  'Your Service has been updated successfully',
+                              backgroundColor: AppColors.pink,
+                              duration: Duration(seconds: 2),
+                              icon: Icon(Icons.incomplete_circle_rounded),
+                            ),
+                          ),
+                        );
+                        Get.back();
+                      }
+                    },
                     label: 'Save Changes',
                     width: Get.width * 0.45,
                     height: Get.height * 0.06,
-                    buttonColor: AppColors.pink,
+                    buttonColor: servicecontroller.uploading.value == true
+                        ? AppColors.grey.withOpacity(0.5)
+                        : AppColors.pink,
                     fontSize: Get.width * 0.05,
-                    borderRadius: 16.0)
+                    borderRadius: 16.0,
+                  ),
+                ),
               ],
             ),
           ],

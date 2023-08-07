@@ -1,12 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/widget/AddEditServices/serviceCardText.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
+import '../../firebaseMethods/userAuthentication.dart';
 
 class ServiceCardDetails extends StatelessWidget {
-  const ServiceCardDetails({super.key});
+  final String serviceName;
+  final String serviceDesc;
+  final String priceRange;
+  final String noOfperson;
+  ServiceCardDetails(
+      {super.key,
+      required this.serviceName,
+      required this.serviceDesc,
+      required this.priceRange,
+      required this.noOfperson});
 
+  final CollectionReference user = FirebaseFirestore.instance
+      .collection('Services')
+      .doc(auth.currentUser!.uid)
+      .collection(auth.currentUser!.displayName.toString());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,7 +34,7 @@ class ServiceCardDetails extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: Get.height * 0.01),
             child: ServiceCardText(
-              text: 'Birthday Setup',
+              text: serviceName,
               fontSize: Get.width * 0.05,
               fontColor: AppColors.grey,
               fontWeight: AppFonts.semiBold,
@@ -27,8 +42,7 @@ class ServiceCardDetails extends StatelessWidget {
             ),
           ),
           ServiceCardText(
-              text:
-                  'Complete stage decoration, tables setup with real flowers and balloons',
+              text: serviceDesc,
               fontSize: Get.width * 0.03,
               fontColor: AppColors.grey,
               fontWeight: AppFonts.medium,
@@ -38,7 +52,7 @@ class ServiceCardDetails extends StatelessWidget {
           Row(
             children: [
               ServiceCardText(
-                text: 'Rs 20,000',
+                text: "Rs ${priceRange}",
                 fontSize: Get.width * 0.04,
                 fontColor: AppColors.pink,
                 fontWeight: AppFonts.extraBold,
@@ -47,7 +61,7 @@ class ServiceCardDetails extends StatelessWidget {
               //
               const Spacer(),
               ServiceCardText(
-                text: 'Per 20 person',
+                text: "${noOfperson} person",
                 fontSize: Get.width * 0.03,
                 fontColor: AppColors.grey,
                 fontWeight: AppFonts.regular,
@@ -56,13 +70,13 @@ class ServiceCardDetails extends StatelessWidget {
             ],
           ),
 
-          ServiceCardText(
-            text: 'Customized',
-            fontSize: Get.width * 0.03,
-            fontColor: AppColors.grey,
-            fontWeight: AppFonts.regular,
-            opacity: 0.8,
-          ),
+          // ServiceCardText(
+          //   text: 'Customized',
+          //   fontSize: Get.width * 0.03,
+          //   fontColor: AppColors.grey,
+          //   fontWeight: AppFonts.regular,
+          //   opacity: 0.8,
+          // ),
         ],
       ),
     );

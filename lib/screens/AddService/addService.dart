@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:eventually_vendor/firebaseMethods/addService.dart';
 import 'package:eventually_vendor/widget/AddEditServices/serviceHeader.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -36,8 +38,6 @@ class _AddServiceState extends State<AddService> {
   final pagecontroller = Get.put(testController());
   final servicecontroller = Get.put(serviceController());
 
-  // Rxint imageIndex = 0.obs;
-  int imgindex = 0;
   File? _image;
 
   // This is the image picker
@@ -52,8 +52,6 @@ class _AddServiceState extends State<AddService> {
       setState(() {
         _image = File(pickedImage.path);
         pagecontroller.selectedImage.add(_image!);
-
-        // print(pagecontroller.imageIndex.value);
       });
       print('image picker');
       uploadImage(pagecontroller.imageIndex.value);
@@ -61,15 +59,14 @@ class _AddServiceState extends State<AddService> {
     }
   }
 
-  List<String> imageURL = [];
-  // String imageURl = '';
-  int imageIndex = 0;
+  //upload seleccted image to firebase storage
   void uploadImage(int index) async {
     String imageLink;
     String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
     Reference referenceBoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages =
-        referenceBoot.child(auth.currentUser!.uid.toString());
+    Reference referenceDirImages = referenceBoot
+        .child(auth.currentUser!.uid.toString())
+        .child(servicecontroller.serviceName.text);
     Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
     try {
       if (pagecontroller.selectedImage.isNotEmpty) {
@@ -77,10 +74,10 @@ class _AddServiceState extends State<AddService> {
         print('upload func');
         await referenceImageToUpload
             .putFile(File(pagecontroller.selectedImage[index].path));
-
         imageLink = await referenceImageToUpload.getDownloadURL();
         print(imageLink);
-        imageURL.add(imageLink);
+
+        servicecontroller.uploadImage.add(imageLink);
         servicecontroller.uploading.value = false;
 
         print('upload func');
@@ -89,6 +86,8 @@ class _AddServiceState extends State<AddService> {
       print(error);
     }
   }
+
+// delete selected image from firebase storage
 
   void validateAddService() {
     if (servicecontroller.serviceName.text.isEmpty ||
@@ -106,7 +105,7 @@ class _AddServiceState extends State<AddService> {
       );
 
       //
-    } else if (imageURL.length < 3) {
+    } else if (servicecontroller.uploadImage.length < 3) {
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Upload Images',
@@ -122,14 +121,15 @@ class _AddServiceState extends State<AddService> {
           serviceDescription: servicecontroller.serviceDescription.text,
           priceRange: servicecontroller.priceRange.text,
           noOfPerson: servicecontroller.noOfPerson.text,
-          image1URL: imageURL[0],
-          image2URL: imageURL[1],
-          image3URL: imageURL[2]);
+          image1URL: servicecontroller.uploadImage[0],
+          image2URL: servicecontroller.uploadImage[1],
+          image3URL: servicecontroller.uploadImage[2]);
       servicecontroller.serviceName.clear();
       servicecontroller.serviceDescription.clear();
       servicecontroller.noOfPerson.clear();
       servicecontroller.priceRange.clear();
       pagecontroller.selectedImage.clear();
+      servicecontroller.uploadImage.clear();
       pagecontroller.imageIndex.value = 0;
 
       Get.showSnackbar(
@@ -157,32 +157,40 @@ class _AddServiceState extends State<AddService> {
           servicecontroller.priceRange.clear();
           pagecontroller.selectedImage.clear();
           pagecontroller.imageIndex.value = 0;
-          return await Future.delayed(Duration(seconds: 2));
+          return await Future.delayed(const Duration(seconds: 2));
         },
         child: Column(
           children: [
             const Label(title: 'Service Name'),
             textFormField(
+                maxLines: 1,
+                enabledField: true,
                 textController: servicecontroller.serviceName,
                 inputtype: TextInputType.text),
             const Label(title: 'Description'),
             textFormField(
+              maxLines: 5,
+              enabledField: true,
               textController: servicecontroller.serviceDescription,
               inputtype: TextInputType.text,
             ),
             const Label(title: 'Price Range'),
             textFormField(
+                maxLines: 1,
+                enabledField: true,
                 textController: servicecontroller.priceRange,
                 inputtype: TextInputType.text),
             const Label(title: 'Number of Person'),
             textFormField(
+                maxLines: 1,
+                enabledField: true,
                 textController: servicecontroller.noOfPerson,
                 inputtype: TextInputType.number),
             const Label(title: 'Service Images'),
             SizedBox(height: Get.height * 0.01),
             Container(
               padding: pagecontroller.imageIndex.value == 0
-                  ? EdgeInsets.all(0.0)
+                  ? const EdgeInsets.all(0.0)
                   : EdgeInsets.symmetric(horizontal: Get.width * 0.03),
               child: Row(
                 mainAxisAlignment: pagecontroller.imageIndex.value == 0 ||
@@ -195,8 +203,7 @@ class _AddServiceState extends State<AddService> {
                     children: List.generate(pagecontroller.selectedImage.length,
                         (index) => buildImage(index: index)),
                   ),
-                  pagecontroller.imageIndex.value <= 2 ||
-                          pagecontroller.selectedImage.isEmpty
+                  pagecontroller.imageIndex.value <= 2
                       ? SizedBox(
                           width: pagecontroller.imageIndex.value > 0
                               ? Get.width * 0.4
@@ -210,9 +217,21 @@ class _AddServiceState extends State<AddService> {
                                     )
                                   : InkWell(
                                       onTap: () {
-                                        _openImagePicker();
-                                        // print(imageIndex);
-                                        // imageIndex++;
+                                        if (servicecontroller
+                                            .serviceName.text.isNotEmpty) {
+                                          _openImagePicker();
+                                        } else {
+                                          Get.showSnackbar(
+                                            const GetSnackBar(
+                                              title: 'No Service Name',
+                                              message: 'Enter Service Name',
+                                              backgroundColor: AppColors.pink,
+                                              duration: Duration(seconds: 2),
+                                              icon: Icon(Icons
+                                                  .incomplete_circle_rounded),
+                                            ),
+                                          );
+                                        }
                                       },
                                       child: DottedBorder(
                                         // add image box
@@ -320,110 +339,185 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
+  final CollectionReference services = FirebaseFirestore.instance
+      .collection('Services')
+      .doc(auth.currentUser!.uid)
+      .collection(auth.currentUser!.displayName.toString());
+
+  int selectedDocIndex = 0;
   // Edit Services
   Widget editService(context) {
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return Slidable(
-          endActionPane: ActionPane(
-            motion: const ScrollMotion(),
-            children: [
-              swipeableButton(
-                buttonColor: AppColors.blue,
-                buttonIcon: AppIcons.editActive,
-                onPressed: () {
-                  Get.toNamed('/editServiceForm');
-                },
-              ),
-              swipeableButton(
-                buttonColor: AppColors.pink,
-                buttonIcon: AppIcons.delete,
-                onPressed: () {
-                  Get.dialog(
-                    transitionCurve: const ElasticInCurve(0.4),
-                    transitionDuration: const Duration(milliseconds: 800),
-                    AlertDialog(
-                      shadowColor: AppColors.pink,
-                      actionsAlignment: MainAxisAlignment.center,
-                      content: dialog_Text(
-                        text: "Are you sure you want to delete this service?",
-                        fontSize: Get.width * 0.04,
-                        fontWeight: AppFonts.regular,
-                        textColor: AppColors.grey,
-                      ),
-                      title: dialog_Text(
-                        text: "Confirm Deletion",
-                        fontSize: Get.width * 0.06,
-                        fontWeight: AppFonts.extraBold,
-                        textColor: AppColors.pink,
-                      ),
-                      actions: [
-                        dialogButton(
-                          buttonTitle: 'Yes',
-                          buttonColor: AppColors.blue,
+    return StreamBuilder(
+      stream: services.snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              DocumentSnapshot doc = snapshot.data!.docs[index];
+
+              return Slidable(
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    swipeableButton(
+                      buttonColor: AppColors.blue,
+                      buttonIcon: AppIcons.editActive,
+                      onPressed: () {
+                        selectedDocIndex = index;
+                        print(selectedDocIndex);
+                        doc = snapshot.data!.docs[selectedDocIndex];
+
+                        servicecontroller.editServiceName.text =
+                            doc['Service Name'];
+                        servicecontroller.editServiceDescription.text =
+                            doc['Service Description'];
+                        servicecontroller.editNoOfPerson.text =
+                            doc['NoOfPerson'];
+                        servicecontroller.editPriceRange.text =
+                            doc['Service Price'];
+
+                        servicecontroller.editImage = [
+                          doc['image1'],
+                          doc['image2'],
+                          doc['image3'],
+                        ];
+
+                        servicecontroller.editImageIndex.value = 3;
+                        Get.toNamed('/editServiceForm');
+
+                        print(servicecontroller.editImage);
+                      },
+                    ),
+                    swipeableButton(
+                      buttonColor: AppColors.pink,
+                      buttonIcon: AppIcons.delete,
+                      onPressed: () {
+                        Get.dialog(
+                          transitionCurve: const ElasticInCurve(0.4),
+                          transitionDuration: const Duration(milliseconds: 800),
+                          AlertDialog(
+                            shadowColor: AppColors.pink,
+                            actionsAlignment: MainAxisAlignment.center,
+                            content: dialog_Text(
+                              text:
+                                  "Are you sure you want to delete this service?",
+                              fontSize: Get.width * 0.04,
+                              fontWeight: AppFonts.regular,
+                              textColor: AppColors.grey,
+                            ),
+                            title: dialog_Text(
+                              text: "Confirm Deletion",
+                              fontSize: Get.width * 0.06,
+                              fontWeight: AppFonts.extraBold,
+                              textColor: AppColors.pink,
+                            ),
+                            actions: [
+                              dialogButton(
+                                buttonTitle: 'Yes',
+                                buttonColor: AppColors.blue,
+                                onpressed: () async {
+                                  selectedDocIndex = index;
+                                  doc = snapshot.data!.docs[selectedDocIndex];
+                                  servicecontroller.serviceName.text =
+                                      doc['Service Name'];
+                                  print(servicecontroller.serviceName.text);
+                                  await FirebaseStorage.instance
+                                      .ref(
+                                          "${FirebaseAuth.instance.currentUser!.uid}/${servicecontroller.serviceName.text}")
+                                      .listAll()
+                                      .then((value) {
+                                    value.items.forEach((element) {
+                                      FirebaseStorage.instance
+                                          .ref(element.fullPath)
+                                          .delete();
+                                    });
+                                  });
+                                  deleteService(
+                                          servicecontroller.serviceName.text)
+                                      .then(
+                                    (value) => Get.showSnackbar(
+                                      const GetSnackBar(
+                                        title: 'Successfull',
+                                        message:
+                                            'Your Service has been deleted',
+                                        backgroundColor: AppColors.pink,
+                                        duration: Duration(seconds: 2),
+                                        icon: Icon(
+                                            Icons.incomplete_circle_rounded),
+                                      ),
+                                    ),
+                                  );
+
+                                  Get.back();
+                                },
+                              ),
+                              dialogButton(
+                                onpressed: () {
+                                  Get.back();
+                                },
+                                buttonTitle: 'No',
+                                buttonColor: AppColors.pink,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: Get.height * 0.015),
+                    width: Get.width * 0.86,
+                    height: Get.height * 0.16,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.grey.withOpacity(0.1),
+                          blurRadius: 6.0,
+                          spreadRadius: 2.0,
                         ),
-                        dialogButton(
-                          buttonTitle: 'No',
-                          buttonColor: AppColors.pink,
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(Get.width * 0.08),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: Get.height * 0.16,
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(Get.width * 0.08),
+                                bottomLeft: Radius.circular(Get.width * 0.08),
+                              ),
+                              child: Image.network(
+                                doc['image1'],
+                                width: Get.width * 0.25,
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                        Expanded(
+                          child: ServiceCardDetails(
+                            serviceName: doc['Service Name'],
+                            serviceDesc: doc['Service Description'],
+                            priceRange: doc['Service Price'],
+                            noOfperson: doc['NoOfPerson'],
+                          ),
                         ),
                       ],
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
-          child: Center(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: Get.height * 0.015),
-              width: Get.width * 0.86,
-              height: Get.height * 0.16,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.grey.withOpacity(0.1),
-                    blurRadius: 6.0,
-                    spreadRadius: 2.0,
                   ),
-                ],
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Get.width * 0.08),
-              ),
-              child: Row(
-                // mainAxisAlignment: pagecontroller.selectedImage.isEmpty
-                //     ? MainAxisAlignment.center
-                //     : MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: Get.height * 0.16,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Get.width * 0.08),
-                        bottomLeft: Radius.circular(Get.width * 0.08),
-                      ),
-                      child: pagecontroller.selectedImage.isNotEmpty
-                          ? Image.file(
-                              pagecontroller.selectedImage[0],
-                              width: Get.width * 0.25,
-                              fit: BoxFit.cover,
-                            )
-                          : SizedBox(
-                              width: Get.width * 0.25,
-                            ),
-                    ),
-                  ),
-                  const Expanded(
-                    child: ServiceCardDetails(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+                ),
+              );
+            },
+          );
+        } else {
+          return Container();
+        }
       },
     );
   }
@@ -450,21 +544,19 @@ class _AddServiceState extends State<AddService> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              service_Header(),
-              Obx(
-                () => pagecontroller.addServiceSelected.value
-                    ? Expanded(
-                        child: SingleChildScrollView(
+              const service_Header(),
+              Expanded(
+                child: Obx(
+                  () => pagecontroller.addServiceSelected.value
+                      ? SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: addService(context),
-                        ),
-                      )
-                    : Expanded(
-                        child: SingleChildScrollView(
+                        )
+                      : SingleChildScrollView(
                           scrollDirection: Axis.vertical,
                           child: editService(context),
                         ),
-                      ),
+                ),
               ),
             ],
           ),

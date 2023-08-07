@@ -3,11 +3,18 @@ import 'package:get/get.dart';
 import '../../constants/colors.dart';
 
 class textFormField extends StatelessWidget {
-  textFormField(
-      {super.key, required this.textController, required this.inputtype});
+  textFormField({
+    super.key,
+    required this.textController,
+    required this.inputtype,
+    required this.enabledField,
+    required this.maxLines,
+  });
 
   TextEditingController textController = TextEditingController();
   TextInputType inputtype;
+  bool enabledField;
+  int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +32,14 @@ class textFormField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
+        enabled: enabledField,
         controller: textController,
         keyboardType: inputtype,
+        maxLines: maxLines,
         cursorColor: AppColors.pink,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(5.0),
+          // isCollapsed: true,
           fillColor: Colors.white,
           filled: true,
           focusedBorder: OutlineInputBorder(
