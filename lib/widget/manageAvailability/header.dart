@@ -8,6 +8,7 @@ import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
+import '../../firebaseMethods/addService.dart';
 
 class header extends StatefulWidget {
   const header({super.key});
@@ -32,20 +33,36 @@ class _headerState extends State<header> {
     );
   }
 
+  Future add() async {
+    await firestore
+        .collection('Orders')
+        .doc(auth.currentUser?.uid)
+        .collection(auth.currentUser!.displayName.toString())
+        .doc('Birthday Package')
+        .set(
+      {
+        'OrderNo': '12445',
+        'ServiceName': 'Birthday Package',
+        'UserName': 'Aliza',
+        'Time': '9:00 AM - 12:00 PM',
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<DateTime> datesInCurrentMonth = [];
-    pagecontroller.daysInMonth.value = DateTime(pagecontroller.date.value.year,
-            pagecontroller.date.value.month + 1, 0)
+    pagecontroller.getMonth.value = pagecontroller.date.value.month;
+    print(pagecontroller.getMonth.value);
+    print(pagecontroller.date.value.weekday);
+    pagecontroller.daysInMonth.value = DateTime(
+            pagecontroller.date.value.year, pagecontroller.date.value.month, 0)
         .day;
-
     for (int day = 1; day <= pagecontroller.daysInMonth.value; day++) {
       DateTime date = DateTime(
           pagecontroller.date.value.year, pagecontroller.date.value.month, day);
       pagecontroller.datesInCurrentMonth.add(date);
-
-      // print(datesInCurrentMonth.length);
     }
+
     pagecontroller.currentDateIndex.value = DateTime.now().day.toDouble();
 
     Map<int, String> weekdays = {
@@ -72,6 +89,20 @@ class _headerState extends State<header> {
       11: 'Nov',
       12: 'Dec',
     };
+// function to get number of days of previous and next month
+    void getDaysOfMonth() {
+      pagecontroller.daysInMonth.value = DateTime(
+              pagecontroller.date.value.year,
+              pagecontroller.getMonth.value + 1,
+              0)
+          .day;
+      for (int day = 1; day <= pagecontroller.daysInMonth.value; day++) {
+        DateTime date = DateTime(
+            pagecontroller.date.value.year, pagecontroller.getMonth.value, day);
+        pagecontroller.datesInCurrentMonth.add(date);
+      }
+    }
+
     return Stack(children: [
       Container(
         height: Get.height * 0.3,
@@ -90,30 +121,46 @@ class _headerState extends State<header> {
             padding: EdgeInsets.symmetric(horizontal: Get.width * 0.03),
             child: Row(
               children: [
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.arrow_back_outlined,
-                      size: 20,
-                    ),
-                    Obx(
-                      () => text(
-                        title: pagecontroller.date.value.month == 1
-                            ? months[pagecontroller.date.value.month + 11]
-                                .toString()
-                            : months[pagecontroller.date.value.month - 1]
-                                .toString(),
-                        fontSize: Get.width * 0.035,
-                        fontWeight: AppFonts.regular,
-                        fontColor: AppColors.grey,
+                InkWell(
+                  onTap: () async {
+                    pagecontroller.getMonth.value--;
+                    if (pagecontroller.getMonth.value == 0) {
+                      pagecontroller.getMonth.value =
+                          pagecontroller.date.value.month;
+                    }
+
+                    add();
+
+                    print('success');
+
+                    pagecontroller.datesInCurrentMonth.clear();
+                    getDaysOfMonth();
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.arrow_back_outlined,
+                        size: 20,
                       ),
-                    ),
-                  ],
+                      Obx(
+                        () => text(
+                          title: pagecontroller.getMonth.value == 1
+                              ? months[pagecontroller.getMonth.value + 11]
+                                  .toString()
+                              : months[pagecontroller.getMonth.value - 1]
+                                  .toString(),
+                          fontSize: Get.width * 0.035,
+                          fontWeight: AppFonts.regular,
+                          fontColor: AppColors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 Obx(
                   () => text(
-                    title: months[pagecontroller.date.value.month].toString(),
+                    title: months[pagecontroller.getMonth.value].toString(),
                     fontSize: Get.width * 0.1,
                     fontWeight: AppFonts.bold,
                     fontColor: AppColors.grey,
@@ -131,6 +178,9 @@ class _headerState extends State<header> {
                     if (selected != null) {
                       pagecontroller.datesInCurrentMonth.clear();
                       pagecontroller.date.value = selected;
+                      pagecontroller.getMonth.value =
+                          pagecontroller.date.value.month;
+
                       pagecontroller.daysInMonth.value = DateTime(
                               pagecontroller.date.value.year,
                               pagecontroller.date.value.month + 1,
@@ -148,25 +198,38 @@ class _headerState extends State<header> {
                   child: SvgPicture.asset(AppIcons.calendar),
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    Obx(
-                      () => text(
-                        title: pagecontroller.date.value.month == 12
-                            ? months[pagecontroller.date.value.month - 11]
-                                .toString()
-                            : months[pagecontroller.date.value.month + 1]
-                                .toString(),
-                        fontSize: Get.width * 0.035,
-                        fontWeight: AppFonts.regular,
-                        fontColor: AppColors.grey,
+                InkWell(
+                  onTap: () {
+                    pagecontroller.getMonth.value++;
+                    if (pagecontroller.getMonth.value > 12) {
+                      pagecontroller.getMonth.value =
+                          pagecontroller.date.value.month;
+                    }
+
+                    pagecontroller.datesInCurrentMonth.clear();
+
+                    getDaysOfMonth();
+                  },
+                  child: Row(
+                    children: [
+                      Obx(
+                        () => text(
+                          title: pagecontroller.getMonth.value == 12
+                              ? months[pagecontroller.getMonth.value - 11]
+                                  .toString()
+                              : months[pagecontroller.getMonth.value + 1]
+                                  .toString(),
+                          fontSize: Get.width * 0.035,
+                          fontWeight: AppFonts.regular,
+                          fontColor: AppColors.grey,
+                        ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward_outlined,
-                      size: 20,
-                    ),
-                  ],
+                      const Icon(
+                        Icons.arrow_forward_outlined,
+                        size: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -180,8 +243,6 @@ class _headerState extends State<header> {
                   pagecontroller.datesInCurrentMonth.length,
                   (index) {
                     DateTime date = pagecontroller.datesInCurrentMonth[index];
-                    // pagecontroller.date.value = datesInCurrentMonth[index];
-                    print(date.day);
 
                     return Container(
                       width: Get.width * 0.17,
@@ -217,6 +278,7 @@ class _headerState extends State<header> {
                                 : AppColors.grey,
                           ),
                           text(
+                            // title: date.toString(),
                             title: weekdays[date.weekday].toString(),
                             fontSize: Get.width * 0.035,
                             fontWeight: AppFonts.bold,

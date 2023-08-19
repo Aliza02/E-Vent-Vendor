@@ -1,7 +1,7 @@
-import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../OTPMethods/otpmethods.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../controller/signupController.dart';
@@ -24,12 +24,25 @@ class _signup_businessState extends State<signup_business> {
   int currentindex = 1;
   bool isChecked = false;
   final businessSignupController = Get.put(signUpController());
-  // final signincontroller = Get.put(signUpController());
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late Timer timer;
 
   void initState() {
     super.initState();
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (businessSignupController.secondsRemainingforOtp.value > 0) {
+          businessSignupController.secondsRemainingforOtp.value--;
+        } else {
+          timer.cancel();
+          businessSignupController.secondsRemainingforOtp.value = 40;
+          generateOtp();
+        }
+      });
+    });
   }
 
   void validationbusiness() {
@@ -48,7 +61,7 @@ class _signup_businessState extends State<signup_business> {
         ),
       );
     } else if (businessSignupController.cnicController.text.toString().length <
-        14) {
+        13) {
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Incomplete',
@@ -81,39 +94,24 @@ class _signup_businessState extends State<signup_business> {
       );
     } else {
       currentindex += 1;
+      startTimer();
+      generateOtp();
+      print(businessSignupController.OTPCode.value);
+      // sendOTP();
 
-      // Get.toNamed('/otpverification');
-
-      print(businessSignupController.emailController.text);
-
-      print(businessSignupController.passwordController.text);
-
-      // otpVerification(signupcontroller.phoneController.text);
-      // Get.toNamed('/otpverification');
-
-      Signup(
-          email: businessSignupController.emailController.text,
-          name: businessSignupController.nameController.text,
-          password: businessSignupController.passwordController.text,
-          confirmPassword:
-              businessSignupController.confirmPasswordController.text,
-          businessName: businessSignupController.businessNameController.text,
-          businessCategory:
-              businessSignupController.businessCategoryController.text,
-          businessLocation:
-              businessSignupController.businessLocationController.text,
-          CNIC: businessSignupController.cnicController.text,
-          phone: businessSignupController.phoneController.text);
-
-      // otpVerification(businessSignupController.phoneController.text);
-      print('sad');
-
-      // Signin(
-      //     email: businessSignupController.emailController.text,
-      //     password: businessSignupController.passwordController.text);
+      Get.toNamed('/otpverification');
     }
   }
 
+  final business_type = [
+    'Venue',
+    'Caterers',
+    'Photographer',
+    'Florist',
+    'Card Printing',
+    'Decorators',
+  ];
+  var selected = 'business category';
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -158,12 +156,92 @@ class _signup_businessState extends State<signup_business> {
                 ),
                 Container(
                   height: Get.height * 0.05,
+
                   margin: EdgeInsets.only(top: Get.height * 0.02),
-                  child: textFormField(
-                    title: 'Business Category',
-                    textcontroller:
-                        businessSignupController.businessCategoryController,
+                  child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 12.0),
+                      hintText: 'Business Type',
+                      hintStyle: TextStyle(
+                        color: AppColors.grey,
+                        fontFamily: AppFonts.manrope,
+                        fontSize: Get.width * 0.04,
+                      ),
+                      fillColor: AppColors.fieldFillColor.withOpacity(0.5),
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(color: AppColors.pink),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(color: AppColors.pink),
+                      ),
+                    ),
+
+                    // value: selected,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selected = newValue!;
+                        businessSignupController
+                            .businessCategoryController.text = selected;
+                      });
+                    },
+                    items: <String>[
+                      'Venue',
+                      'Caterers',
+                      'Photographer',
+                      'Florist',
+                      'Card Printing',
+                      'Decorators',
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: Get.width * 0.04),
+                        ),
+                      );
+                    }).toList(),
                   ),
+                  // child: DropdownButtonFormField(
+                  //   value: selected,
+                  //   items: business_type
+                  //       .map((e) => DropdownMenuItem(
+                  //             child: Text(e),
+                  //             value: e,
+                  //           ))
+                  //       .toList(),
+                  //   onChanged: (val) {
+                  //     setState(() {
+                  //       selected = val as String;
+                  //       print(val);
+                  //     });
+
+                  //     // businessType.text = selected;
+                  //   },
+                  //   decoration: InputDecoration(
+                  //     hintText: 'Business Type',
+                  //     hintStyle: TextStyle(
+                  //       color: Colors.grey,
+                  //       fontFamily: AppFonts.manrope,
+                  //       fontSize: Get.width * 0.045,
+                  //     ),
+                  //     // fillColor: Colors.white,
+                  //     filled: true,
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(10.0),
+                  //       borderSide: BorderSide.none,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // textFormField(
+                  //   title: 'Business Category',
+                  //   textcontroller:
+                  //       businessSignupController.businessCategoryController,
+                  // ),
                 ),
                 Container(
                   height: Get.height * 0.05,
@@ -179,7 +257,7 @@ class _signup_businessState extends State<signup_business> {
                   margin: EdgeInsets.only(top: Get.height * 0.02),
                   child: numberField(
                     title: 'CNIC',
-                    maxLength: 14,
+                    maxLength: 13,
                     controller: businessSignupController.cnicController,
                   ),
                 ),
@@ -188,7 +266,7 @@ class _signup_businessState extends State<signup_business> {
                   margin: EdgeInsets.only(top: Get.height * 0.02),
                   child: numberField(
                     title: 'Contact Number',
-                    maxLength: 13,
+                    maxLength: 11,
                     controller: businessSignupController.phoneController,
                   ),
                 ),

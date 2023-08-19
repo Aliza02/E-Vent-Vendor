@@ -89,7 +89,7 @@ class _AddServiceState extends State<AddService> {
 
 // delete selected image from firebase storage
 
-  void validateAddService() {
+  void validateAddService() async {
     if (servicecontroller.serviceName.text.isEmpty ||
         servicecontroller.serviceDescription.text.isEmpty ||
         servicecontroller.priceRange.text.isEmpty ||
@@ -345,7 +345,9 @@ class _AddServiceState extends State<AddService> {
       .collection(auth.currentUser!.displayName.toString());
 
   int selectedDocIndex = 0;
+
   // Edit Services
+
   Widget editService(context) {
     return StreamBuilder(
       stream: services.snapshots(),
@@ -366,7 +368,7 @@ class _AddServiceState extends State<AddService> {
                     swipeableButton(
                       buttonColor: AppColors.blue,
                       buttonIcon: AppIcons.editActive,
-                      onPressed: () {
+                      onPressed: () async {
                         selectedDocIndex = index;
                         print(selectedDocIndex);
                         doc = snapshot.data!.docs[selectedDocIndex];
@@ -422,12 +424,13 @@ class _AddServiceState extends State<AddService> {
                                 onpressed: () async {
                                   selectedDocIndex = index;
                                   doc = snapshot.data!.docs[selectedDocIndex];
-                                  servicecontroller.serviceName.text =
-                                      doc['Service Name'];
+                                  String serviceName = doc['Service Name'];
+                                  // servicecontroller.serviceName.text =
+                                  //     doc['Service Name'];
                                   print(servicecontroller.serviceName.text);
                                   await FirebaseStorage.instance
                                       .ref(
-                                          "${FirebaseAuth.instance.currentUser!.uid}/${servicecontroller.serviceName.text}")
+                                          "${FirebaseAuth.instance.currentUser!.uid}/$serviceName")
                                       .listAll()
                                       .then((value) {
                                     value.items.forEach((element) {
@@ -436,9 +439,7 @@ class _AddServiceState extends State<AddService> {
                                           .delete();
                                     });
                                   });
-                                  deleteService(
-                                          servicecontroller.serviceName.text)
-                                      .then(
+                                  deleteService(serviceName).then(
                                     (value) => Get.showSnackbar(
                                       const GetSnackBar(
                                         title: 'Successfull',
@@ -536,6 +537,7 @@ class _AddServiceState extends State<AddService> {
             servicecontroller.serviceDescription.clear();
             servicecontroller.noOfPerson.clear();
             servicecontroller.priceRange.clear();
+            servicecontroller.uploading.value = false;
             pagecontroller.imageIndex.value = 0;
             pagecontroller.selectedImage.clear();
 

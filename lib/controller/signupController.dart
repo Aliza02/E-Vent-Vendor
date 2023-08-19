@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,4 +21,10 @@ class signUpController extends GetxController {
 
   RxBool NewUser = true.obs;
   User? user;
+
+  //OTP verification
+
+  RxString OTPCode = ''.obs;
+  RxInt secondsRemainingforOtp = 50.obs;
+  RxBool successfullSignup = false.obs;
 }

@@ -31,4 +31,6 @@ class testController extends GetxController {
   Rxn<DateTime> selectedDate = Rxn<DateTime>();
   List datesInCurrentMonth = <DateTime>[].obs;
   RxInt daysInMonth = 0.obs;
+
+  RxInt getMonth = 0.obs; // to get current month
 }

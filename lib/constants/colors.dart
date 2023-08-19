@@ -30,10 +30,18 @@ class AppColors {
     Color(0xFF43FD6C),
     Color(0xFF6D529D),
   ];
-
+  // colors fore review containers
   static const List<Color> reviewsColor = [
     Color(0xFFF8E0E0),
     Color(0xFFFAE2CE),
     Color(0xFFE0F0CC),
+  ];
+
+  // colors for order container on availability screen
+
+  static const List<Color> orderColors = [
+    Color(0xFFBBDEFF),
+    Color(0xFF42CF96),
+    Color(0xFFE48FFF),
   ];
 }

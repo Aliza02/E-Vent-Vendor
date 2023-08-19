@@ -62,7 +62,7 @@ class _profileScreenState extends State<profileScreen> {
               ),
               Container(
                 width: Get.width * 0.7,
-                padding: EdgeInsets.only(bottom: 10.0),
+                padding: const EdgeInsets.only(bottom: 10.0),
                 child: Text(
                   reviews[index],
                   style: TextStyle(

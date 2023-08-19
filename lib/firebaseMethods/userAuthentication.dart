@@ -16,8 +16,6 @@ final signincontroller = Get.put(signinController());
 UserCredential? userCredentials;
 User? user;
 
-var verification_Id;
-
 // var user;
 
 Future Signup(
@@ -30,6 +28,7 @@ Future Signup(
     required String businessLocation,
     required String CNIC,
     required String phone}) async {
+  signupcontroller.successfullSignup.value = true;
   try {
     userCredentials = await auth.createUserWithEmailAndPassword(
       email: email,
@@ -57,7 +56,10 @@ Future Signup(
       'Business Location': businessLocation,
       'CNIC': CNIC,
       'Phone': phone,
+      'userId': auth.currentUser!.uid,
     });
+    Get.toNamed('/drawer');
+    signupcontroller.successfullSignup.value = false;
   } on FirebaseException catch (e) {
     switch (e.code) {
       case "email-already-in-use":
@@ -76,34 +78,6 @@ Future Signup(
 
     print(e);
   }
-}
-
-Future otpVerification(String phoneno) async {
-  await auth.verifyPhoneNumber(
-      phoneNumber: phoneno,
-      verificationCompleted: (credential) async {
-        await auth.signInWithCredential(credential);
-      },
-      verificationFailed: (e) {
-        if (e.code == 'invalid phone number') {
-          Get.snackbar('Error', 'The provided number is invalid');
-        } else {
-          Get.snackbar('Error', e.toString());
-        }
-      },
-      codeSent: (verificationId, resendToken) {
-        verification_Id = verificationId;
-      },
-      codeAutoRetrievalTimeout: (verificationId) {
-        verification_Id = verificationId;
-      });
-}
-
-Future<bool> verifyOtp(String otp) async {
-  var credentials = await auth.signInWithCredential(
-      PhoneAuthProvider.credential(
-          verificationId: verification_Id, smsCode: otp));
-  return credentials.user != null ? true : false;
 }
 
 Future Signin({

@@ -18,7 +18,7 @@ Future addServices(
     required String image3URL}) async {
   await firestore
       .collection('Services')
-      .doc(auth.currentUser?.uid)
+      .doc(auth.currentUser!.uid)
       .collection(auth.currentUser!.displayName.toString())
       .doc(servicecontroller.serviceName.text)
       .set(

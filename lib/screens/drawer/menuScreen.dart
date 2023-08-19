@@ -131,6 +131,7 @@ class MenuScreen extends GetView<testController> {
             Container(
               margin: EdgeInsets.only(top: Get.height * 0.02),
               child: Text(
+                // 'aa',
                 auth.currentUser!.displayName!.toString(),
                 style: TextStyle(
                   fontFamily: AppFonts.manrope,
