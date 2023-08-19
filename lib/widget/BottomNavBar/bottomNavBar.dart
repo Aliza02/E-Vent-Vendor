@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -56,8 +57,36 @@ class bottomNavBar extends StatelessWidget {
                           : SvgPicture.asset(AppIcons.message),
                     )),
                 IconButton(
-                    onPressed: () {
+                    onPressed: () async {
                       pagecontroller.changeIndex(2);
+
+                      // await FirebaseFirestore.instance
+                      //     .collection("Services")
+                      //     .doc('BqrU80Zcd5PnosXngI8yLwhLQvX2')
+                      //     .collection('ibad')
+                      //     .get()
+                      //     .then((value) => {
+                      //           value.docs.forEach((element) {
+                      //             print(element.data());
+                      //             print(element.id);
+                      //           })
+                      //         });
+
+                      // var result = await FirebaseFirestore.instance
+                      //     .collection('Services')
+                      //     .get();
+
+                      // print(result.docs.length);
+
+                      // await FirebaseFirestore.instance
+                      //     .collection('test')
+                      //     .get()
+                      //     .then((value) => {
+                      //           value.docs.forEach((element) {
+                      //             print(element.id);
+                      //             print(element.data());
+                      //           })
+                      //         });
                     },
                     icon: Obx(
                       () => pagecontroller.currentindex.value == 2
