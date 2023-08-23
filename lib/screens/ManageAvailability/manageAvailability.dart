@@ -43,11 +43,11 @@ class manageAvailability extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: Get.width * 0.9,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Expanded(
+            Expanded(
+              child: SizedBox(
+                width: Get.width * 0.9,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),

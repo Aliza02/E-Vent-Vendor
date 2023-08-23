@@ -21,4 +21,5 @@ class serviceController extends GetxController {
   RxInt editImageIndex = 0.obs;
 
   RxString link = ''.obs;
+  RxString currentUserBusinessCategory = ''.obs;
 }

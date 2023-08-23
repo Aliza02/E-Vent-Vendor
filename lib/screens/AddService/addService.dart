@@ -124,13 +124,6 @@ class _AddServiceState extends State<AddService> {
           image1URL: servicecontroller.uploadImage[0],
           image2URL: servicecontroller.uploadImage[1],
           image3URL: servicecontroller.uploadImage[2]);
-      servicecontroller.serviceName.clear();
-      servicecontroller.serviceDescription.clear();
-      servicecontroller.noOfPerson.clear();
-      servicecontroller.priceRange.clear();
-      pagecontroller.selectedImage.clear();
-      servicecontroller.uploadImage.clear();
-      pagecontroller.imageIndex.value = 0;
 
       Get.showSnackbar(
         const GetSnackBar(
@@ -141,6 +134,14 @@ class _AddServiceState extends State<AddService> {
           icon: Icon(Icons.incomplete_circle_rounded),
         ),
       );
+
+      servicecontroller.serviceDescription.clear();
+      servicecontroller.noOfPerson.clear();
+      servicecontroller.priceRange.clear();
+      pagecontroller.selectedImage.clear();
+      servicecontroller.uploadImage.clear();
+      servicecontroller.serviceName.clear();
+      pagecontroller.imageIndex.value = 0;
     }
   }
 
@@ -339,16 +340,15 @@ class _AddServiceState extends State<AddService> {
     );
   }
 
-  final CollectionReference services = FirebaseFirestore.instance
-      .collection('Services')
-      .doc(auth.currentUser!.uid)
-      .collection(auth.currentUser!.displayName.toString());
-
   int selectedDocIndex = 0;
 
   // Edit Services
 
   Widget editService(context) {
+    final CollectionReference services = FirebaseFirestore.instance
+        .collection('Services')
+        .doc(servicecontroller.currentUserBusinessCategory.value)
+        .collection(auth.currentUser!.uid.toString());
     return StreamBuilder(
       stream: services.snapshots(),
       builder: (context, snapshot) {
@@ -474,7 +474,7 @@ class _AddServiceState extends State<AddService> {
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: Get.height * 0.015),
                     width: Get.width * 0.86,
-                    height: Get.height * 0.16,
+                    // height: Get.height * 0.16,
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -517,7 +517,9 @@ class _AddServiceState extends State<AddService> {
             },
           );
         } else {
-          return Container();
+          return Container(
+            child: Text('You have no Service added.'),
+          );
         }
       },
     );

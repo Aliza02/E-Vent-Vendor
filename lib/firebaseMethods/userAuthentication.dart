@@ -11,6 +11,7 @@ import '../controller/signupController.dart';
 import '../main.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
+FirebaseFirestore store = FirebaseFirestore.instance;
 final signupcontroller = Get.put(signUpController());
 final signincontroller = Get.put(signinController());
 UserCredential? userCredentials;
@@ -42,7 +43,9 @@ Future Signup(
 
       await user?.reload();
     }
-
+    // await store.collection('User').doc(businessCategory).set({
+    //   'userName': ' ',
+    // });
     await FirebaseFirestore.instance
         .collection('User')
         .doc(auth.currentUser?.uid)

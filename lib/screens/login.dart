@@ -55,6 +55,8 @@ class _loginState extends State<login> {
       );
     } else {
       _login();
+
+      // logincontroller.
     }
   }
 
@@ -76,6 +78,7 @@ class _loginState extends State<login> {
           saveRememberMeStatus(true);
           Get.toNamed('/drawer');
         }
+        Get.toNamed('/drawer');
       }
     } on FirebaseAuthException catch (e) {
       print('Failed to log in: ${e.message}');

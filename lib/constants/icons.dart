@@ -47,4 +47,8 @@ class AppIcons {
   static const profileName = 'assets/icons/profileName.svg';
   static const profileLocation = 'assets/icons/profileLocation.svg';
   static const profilePhone = 'assets/icons/profilePhone.svg';
+
+  //  dashboard
+
+  static const orderStatsArrow = 'assets/icons/arrow.svg';
 }

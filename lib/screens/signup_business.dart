@@ -38,7 +38,7 @@ class _signup_businessState extends State<signup_business> {
           businessSignupController.secondsRemainingforOtp.value--;
         } else {
           timer.cancel();
-          businessSignupController.secondsRemainingforOtp.value = 40;
+          businessSignupController.secondsRemainingforOtp.value = 59;
           generateOtp();
         }
       });
@@ -103,14 +103,6 @@ class _signup_businessState extends State<signup_business> {
     }
   }
 
-  final business_type = [
-    'Venue',
-    'Caterers',
-    'Photographer',
-    'Florist',
-    'Card Printing',
-    'Decorators',
-  ];
   var selected = 'business category';
   @override
   Widget build(BuildContext context) {
@@ -156,7 +148,6 @@ class _signup_businessState extends State<signup_business> {
                 ),
                 Container(
                   height: Get.height * 0.05,
-
                   margin: EdgeInsets.only(top: Get.height * 0.02),
                   child: DropdownButtonFormField(
                     decoration: InputDecoration(
@@ -205,43 +196,6 @@ class _signup_businessState extends State<signup_business> {
                       );
                     }).toList(),
                   ),
-                  // child: DropdownButtonFormField(
-                  //   value: selected,
-                  //   items: business_type
-                  //       .map((e) => DropdownMenuItem(
-                  //             child: Text(e),
-                  //             value: e,
-                  //           ))
-                  //       .toList(),
-                  //   onChanged: (val) {
-                  //     setState(() {
-                  //       selected = val as String;
-                  //       print(val);
-                  //     });
-
-                  //     // businessType.text = selected;
-                  //   },
-                  //   decoration: InputDecoration(
-                  //     hintText: 'Business Type',
-                  //     hintStyle: TextStyle(
-                  //       color: Colors.grey,
-                  //       fontFamily: AppFonts.manrope,
-                  //       fontSize: Get.width * 0.045,
-                  //     ),
-                  //     // fillColor: Colors.white,
-                  //     filled: true,
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(10.0),
-                  //       borderSide: BorderSide.none,
-                  //     ),
-                  //   ),
-                  // ),
-
-                  // textFormField(
-                  //   title: 'Business Category',
-                  //   textcontroller:
-                  //       businessSignupController.businessCategoryController,
-                  // ),
                 ),
                 Container(
                   height: Get.height * 0.05,

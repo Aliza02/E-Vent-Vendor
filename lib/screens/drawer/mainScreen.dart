@@ -7,7 +7,6 @@ import '../../constants/colors.dart';
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
 import '../../widget/BottomNavBar/bottomNavBar.dart';
-import '../EditService/EditServiceForm.dart';
 import '../ManageAvailability/manageAvailability.dart';
 import '../dashboard/dashboard.dart';
 import '../profile/profile.dart';
@@ -49,6 +48,16 @@ class MainScreen extends GetView<testController> {
               ),
             ),
             actions: [
+              pagecontroller.currentindex.value == 0
+                  ? IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.notifications,
+                        color: AppColors.pink,
+                        size: 30,
+                      ),
+                    )
+                  : const SizedBox(),
               pagecontroller.currentindex.value == 4
                   ? PopupMenuButton(
                       icon: SvgPicture.asset(AppIcons.profileMenuIcon),

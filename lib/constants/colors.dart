@@ -44,4 +44,36 @@ class AppColors {
     Color(0xFF42CF96),
     Color(0xFFE48FFF),
   ];
+
+  // dashboard order stats box colors
+
+  static const List<Color> gradientColor1 = [
+    Color(0xFFDF4E52),
+    Color(0xFFAED37F),
+    Color(0xFFF77000),
+    Color(0xFF5F4392),
+  ];
+
+  static const List<Color> gradientColor2 = [
+    Color.fromARGB(255, 230, 172, 172),
+    Color.fromARGB(255, 207, 229, 180),
+    Color.fromARGB(255, 243, 212, 188),
+    Color(0xFFD2C1F0),
+  ];
+
+  static const List<Color> overlapContainerColor = [
+    Color(0xFFEDA3A4),
+    Color(0xFFD5E9BC),
+    Color(0xFFF9D0AE),
+    Color(0xFFC6B4E6),
+  ];
+
+  // top orders container color
+
+  static const List<Color> topOrdersContainerColors = [
+    Color(0xFFEFE9FA),
+    Color(0xFFFBECEC),
+    Color(0xFFEDF6E0),
+    Color(0xFFFCEEE2),
+  ];
 }

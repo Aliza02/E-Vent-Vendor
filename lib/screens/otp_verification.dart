@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/controller/signupController.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/button.dart';

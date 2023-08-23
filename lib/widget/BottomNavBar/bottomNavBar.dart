@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
+import '../../controller/services.dart';
+import '../../firebaseMethods/addService.dart';
 
 class bottomNavBar extends StatelessWidget {
   bottomNavBar({super.key});
   final pagecontroller = Get.put(testController());
+  final servicecontroller = Get.put(serviceController());
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +62,24 @@ class bottomNavBar extends StatelessWidget {
                 IconButton(
                     onPressed: () async {
                       pagecontroller.changeIndex(2);
+
+                      // await firestore
+                      //     .collection('Services')
+                      //     .doc('Photographer')
+                      //     .collection(auth.currentUser!.uid.toString())
+                      //     .doc('Silver Package')
+                      //     .set(
+                      //   {
+                      //     'Service Name': 'Silver Package',
+                      //     'Service Description':
+                      //         '100 copies of 4x6 photos and 1 album of 26 pages',
+                      //     'Service Price': '1k-2k',
+                      //     'NoOfPerson': 0,
+                      //     'image1': '',
+                      //     'image2': ' ',
+                      //     'image3': ' ',
+                      //   },
+                      // );
 
                       // await FirebaseFirestore.instance
                       //     .collection("Services")

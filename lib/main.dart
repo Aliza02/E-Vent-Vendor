@@ -137,7 +137,7 @@ class MyApp extends StatelessWidget {
       initialRoute: isViewed != 0
           ? '/onboard'
           : isLoggedin == true
-              ? '/signup'
+              ? '/drawer'
               : '/login',
     );
   }

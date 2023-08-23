@@ -37,6 +37,7 @@ dependencies:
   flutter_email_sender: ^6.0.1
   http: ^0.13.6
   emailjs: ^1.1.0
+  syncfusion_flutter_charts: ^21.2.4
   
   
   
@@ -79,6 +80,10 @@ flutter:
     - assets/images/food.png
     - assets/images/unavailable.png
     - assets/images/trophy.png
+    - assets/images/topOrderImage1.png
+    - assets/images/topOrderImage2.png
+    - assets/images/topOrderImage3.png
+    - assets/images/topOrderImage4.png
     # icons
     - assets/icons/home.svg
     - assets/icons/addcircle.svg
@@ -120,6 +125,7 @@ flutter:
     - assets/icons/profileName.svg
     - assets/icons/profilePhone.svg
     - assets/icons/profileLocation.svg
+    - assets/icons/arrow.svg
     
     
 
