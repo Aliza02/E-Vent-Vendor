@@ -62,7 +62,7 @@ class ServiceCardDetails extends StatelessWidget {
               const Spacer(),
               ServiceCardText(
                 text: "${noOfperson} person",
-                fontSize: Get.width * 0.03,
+                fontSize: Get.width * 0.025,
                 fontColor: AppColors.grey,
                 fontWeight: AppFonts.regular,
                 opacity: 0.8,

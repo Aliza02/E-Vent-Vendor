@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../constants/font.dart';
+import '../../controller/firebaseController.dart';
 import '../../firebaseMethods/addService.dart';
 import '../../widget/dashboard.dart/chart.dart';
 import '../../widget/dashboard.dart/order_stats_section.dart';
@@ -18,6 +19,7 @@ class dashboard extends StatefulWidget {
 }
 
 class _dashboardState extends State<dashboard> {
+  final firebasecontroller = Get.put(firebaseController());
   @override
   void initState() {
     final docRef = firestore.collection("User").doc(auth.currentUser!.uid);
@@ -27,9 +29,19 @@ class _dashboardState extends State<dashboard> {
         final data = doc.data() as Map<String, dynamic>;
 
         final business = data['Business Category'];
+        firebasecontroller.userId.value = data['userId'];
+        firebasecontroller.businessCategory.value = data['Business Category'];
+        firebasecontroller.businessName.value = data['Business Name'];
+        firebasecontroller.location.value = data['Business Location'];
+        firebasecontroller.phone.value = data['Phone'];
+        firebasecontroller.userName.value = data['name'];
+        firebasecontroller.profileImageLink.value = data['Profile image'];
+        firebasecontroller.profileImageUploaded.value = true;
+
+        // print(firebasecontroller.userId.value);
         servicecontroller.currentUserBusinessCategory.value = business;
         // print(business);
-        print(servicecontroller.currentUserBusinessCategory.value);
+        // print(servicecontroller.currentUserBusinessCategory.value);
         // ...
       },
       onError: (e) => print("Error getting document: $e"),

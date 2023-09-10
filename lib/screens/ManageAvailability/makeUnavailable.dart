@@ -100,7 +100,30 @@ class _makeUnavailableState extends State<makeUnavailable> {
             dropdownField(hintText: 'End Time', icon: AppIcons.endFlag),
             Center(
                 child: button(
-                    label: 'Unavailable', onpressed: () {}, borderRadius: 10.0))
+                    label: 'Unavailable',
+                    onpressed: () {
+                      Get.dialog(
+                        AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text(
+                              'Do you want to make this time unavailable?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Get.back(),
+                              child: const Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                                Get.back();
+                              },
+                              child: const Text('Yes'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    borderRadius: 10.0))
           ],
         ),
       ),

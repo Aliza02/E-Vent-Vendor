@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../constants/icons.dart';
+import '../../controller/firebaseController.dart';
 import '../../controller/pagecontroller.dart';
 import '../../controller/signinController.dart';
 
@@ -20,36 +21,44 @@ class MenuScreen extends GetView<testController> {
 
   final signupcontroller = Get.put(signUpController());
   final signincontroller = Get.put(signinController());
+  final firebasecontroller = Get.put(firebaseController());
 
   // String? userName = auth.currentUser?.displayName;
 
   // final username=_auth.currentUser!.displayName;
 
   final List<String> menuItems = [
-    'Orders',
-    'Payment',
-    'Tell a Friend',
+    // 'Finance',
+    'Finances',
+    'ID Verification',
+    // 'Bank Information',
     'Settings',
-    'Profile',
-    'Help Center'
+    // 'Tutorial',
+    'Payment Policy',
+    'Help Center',
+    'About'
   ];
 
   final List<String> menuIcons = [
-    AppIcons.order,
-    AppIcons.payment,
-    AppIcons.share,
+    AppIcons.finance,
+    AppIcons.idVerification,
+    // AppIcons.bank,
     AppIcons.setting,
-    AppIcons.Profile,
+    // AppIcons.tutorial,
+    AppIcons.paymentPolicy,
     AppIcons.helpCenter,
+    AppIcons.about,
   ];
 
   final List<String> menuIconsFilled = [
-    AppIcons.orderFill,
-    AppIcons.paymentFill,
-    AppIcons.shareFill,
+    AppIcons.financeFill,
+    AppIcons.idVerificationFill,
+    // AppIcons.bankFill,
     AppIcons.settingFill,
-    AppIcons.ProfileFill,
+    // AppIcons.tutorialFill,
+    AppIcons.paymentPolicyFill,
     AppIcons.helpCenterFill,
+    AppIcons.aboutFill
   ];
 
   Widget buildMenuItems(BuildContext context, int index) {
@@ -156,15 +165,20 @@ class MenuScreen extends GetView<testController> {
               thickness: 2.0,
             ),
             Column(
-              children: List.generate(
-                menuItems.length,
-                (index) => GestureDetector(
-                  onTap: () {
-                    pagecontroller.indexOfDrawerMenuItems.value = index;
-                  },
-                  child: buildMenuItems(context, index),
-                ),
-              ),
+              children: [
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: menuItems.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          pagecontroller.indexOfDrawerMenuItems.value = index;
+                        },
+                        child: buildMenuItems(context, index),
+                      );
+                    }),
+              ],
             ),
             const Spacer(),
             InkWell(

@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/screens/AddService/addService.dart';
+import 'package:eventually_vendor/screens/chat/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
@@ -20,7 +21,7 @@ class MainScreen extends GetView<testController> {
 
   final List<Widget> _pages = [
     dashboard(),
-    const pageTwo(),
+    ChatHomeScreen(),
     AddService(),
     manageAvailability(),
     profileScreen(),

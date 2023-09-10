@@ -11,19 +11,28 @@ class AppIcons {
   static const profile = 'assets/icons/profilecircle.svg';
   static const profileFill = 'assets/icons/profilecircle_fill.svg';
   // drawer menu icons
-  static const payment = 'assets/icons/payment.svg';
-  static const Profile = 'assets/icons/Profile.svg';
-  static const share = 'assets/icons/Share.svg';
+
+  static const finance = 'assets/icons/finance.svg';
+  static const financeFill = 'assets/icons/financeFill.svg';
+  static const idVerification = 'assets/icons/IDVerification.svg';
+  static const idVerificationFill = 'assets/icons/IDVerificationFill.svg';
+
+  static const bank = 'assets/icons/bank.svg';
+  static const bankFill = 'assets/icons/bankFill.svg';
+  static const tutorial = 'assets/icons/tutorial.svg';
+  static const tutorialFill = 'assets/icons/tutorialFill.svg';
+  static const paymentPolicy = 'assets/icons/paymentPolicy.svg';
+  static const paymentPolicyFill = 'assets/icons/paymentPolicyFill.svg';
+  static const about = 'assets/icons/about.svg';
+  static const aboutFill = 'assets/icons/aboutFill.svg';
+
   static const setting = 'assets/icons/setting.svg';
   static const helpCenter = 'assets/icons/helpCenter.svg';
   static const logout = 'assets/icons/logout.svg';
-  static const order = 'assets/icons/order.svg';
-  static const orderFill = 'assets/icons/order_fill.svg';
+
   static const settingFill = 'assets/icons/setting_fill.svg';
   static const helpCenterFill = 'assets/icons/helpCenter_fill.svg';
-  static const paymentFill = 'assets/icons/payment_fill.svg';
-  static const ProfileFill = 'assets/icons/profile_fill.svg';
-  static const shareFill = 'assets/icons/share_fill.svg';
+
   static const menu = 'assets/icons/menu.svg';
   static const editInactive = 'assets/icons/edit_inactive.svg';
   static const editActive = 'assets/icons/edit_active.svg';

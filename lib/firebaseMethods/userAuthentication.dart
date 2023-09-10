@@ -60,6 +60,7 @@ Future Signup(
       'CNIC': CNIC,
       'Phone': phone,
       'userId': auth.currentUser!.uid,
+      'Profile image': "abc",
     });
     Get.toNamed('/drawer');
     signupcontroller.successfullSignup.value = false;

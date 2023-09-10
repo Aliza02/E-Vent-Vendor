@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../controller/pagecontroller.dart';
 import '../../controller/services.dart';
-import '../../firebaseMethods/addService.dart';
-import '../../screens/AddService/addService.dart';
 
 class buildImage extends StatelessWidget {
   int index;

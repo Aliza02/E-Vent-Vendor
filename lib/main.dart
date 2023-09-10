@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/bindings/all_controller_bindings.dart';
 import 'package:eventually_vendor/controller/signinController.dart';
 import 'package:eventually_vendor/screens/ManageAvailability/makeOtherDayUnavailable.dart';
 import 'package:eventually_vendor/screens/ManageAvailability/makeUnavailable.dart';
@@ -9,6 +10,7 @@ import 'package:eventually_vendor/screens/login.dart';
 import 'package:eventually_vendor/screens/onboard.dart';
 import 'package:eventually_vendor/screens/otp_verification.dart';
 import 'package:eventually_vendor/screens/password_reset.dart';
+import 'package:eventually_vendor/screens/profile/editProfile.dart';
 import 'package:eventually_vendor/screens/profile/profile.dart';
 import 'package:eventually_vendor/screens/signup.dart';
 import 'package:eventually_vendor/screens/signup_business.dart';
@@ -47,6 +49,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: AllControllerBinding(),
       // initialRoute: '/drawer',
       getPages: [
         GetPage(
@@ -123,13 +126,19 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/makeOtherDayUnavailable',
-          page: () => makeOtherDayUnavailable(),
+          page: () => const makeOtherDayUnavailable(),
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),
         GetPage(
           name: '/profile',
           page: () => profileScreen(),
+          transition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+        ),
+        GetPage(
+          name: '/editprofile',
+          page: () => editProfile(),
           transition: Transition.leftToRightWithFade,
           transitionDuration: const Duration(milliseconds: 500),
         ),

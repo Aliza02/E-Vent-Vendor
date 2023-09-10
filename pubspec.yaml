@@ -25,7 +25,8 @@ dependencies:
   firebase_auth: ^4.6.3
   cloud_firestore: ^4.8.2
   email_validator: ^2.1.17
-  month_year_picker: ^0.2.0+4
+ 
+  # month_year_picker: ^0.2.0+4
   flutter_month_picker: ^0.0.2
   shared_preferences: ^2.2.0
   flutter_otp_text_field: ^1.1.1
@@ -38,6 +39,7 @@ dependencies:
   http: ^0.13.6
   emailjs: ^1.1.0
   syncfusion_flutter_charts: ^21.2.4
+  custom_clippers: ^2.0.0
   
   
   
@@ -85,6 +87,23 @@ flutter:
     - assets/images/topOrderImage3.png
     - assets/images/topOrderImage4.png
     # icons
+
+    - assets/icons/finance.svg
+    - assets/icons/financeFill.svg
+    - assets/icons/IDVerification.svg
+    - assets/icons/IDVerificationFill.svg
+    - assets/icons/bank.svg
+    - assets/icons/bankFill.svg
+    - assets/icons/paymentPolicy.svg
+    - assets/icons/paymentPolicyFill.svg
+    - assets/icons/tutorial.svg
+    - assets/icons/tutorialFill.svg
+    - assets/icons/about.svg
+    - assets/icons/aboutFill.svg
+
+   
+
+
     - assets/icons/home.svg
     - assets/icons/addcircle.svg
     - assets/icons/calendaredit.svg
@@ -95,19 +114,19 @@ flutter:
     - assets/icons/calendaredit_fill.svg
     - assets/icons/profilecircle_fill.svg
     - assets/icons/addcircle_fill.svg
-    - assets/icons/payment.svg
+    
     - assets/icons/Profile.svg
-    - assets/icons/Share.svg
+    
     - assets/icons/setting.svg
     - assets/icons/helpCenter.svg
     - assets/icons/logout.svg
-    - assets/icons/order.svg
-    - assets/icons/order_fill.svg
+    
+    
     - assets/icons/setting_fill.svg
     - assets/icons/helpCenter_fill.svg
-    - assets/icons/payment_fill.svg
+    
     - assets/icons/profile_fill.svg
-    - assets/icons/share_fill.svg
+    
     - assets/icons/menu.svg
     - assets/icons/edit_inactive.svg
     - assets/icons/edit_active.svg
@@ -126,7 +145,10 @@ flutter:
     - assets/icons/profilePhone.svg
     - assets/icons/profileLocation.svg
     - assets/icons/arrow.svg
-    
+    - assets/icons/make_offer_selected.svg
+    - assets/icons/make_offer_unselected.svg
+    - assets/icons/customize_offer_selected.svg
+    - assets/icons/customize_offer_unselected.svg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

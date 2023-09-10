@@ -58,6 +58,6 @@ Future updateService(String serviceName, String serviceDescription,
       .update({
     'Service Description': serviceDescription,
     'Service Price': priceRange,
-    'No of Person': noOfPerson
+    'NoOfPerson': noOfPerson
   });
 }

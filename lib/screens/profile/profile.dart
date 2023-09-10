@@ -6,7 +6,9 @@ import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
 import '../../constants/images.dart';
+import '../../controller/firebaseController.dart';
 import '../../controller/pagecontroller.dart';
+import '../../firebaseMethods/userAuthentication.dart';
 import '../../widget/manageAvailability/heading.dart';
 import '../../widget/manageAvailability/text.dart';
 import '../../widget/profile/personalInfo.dart';
@@ -83,11 +85,12 @@ class _profileScreenState extends State<profileScreen> {
   @override
   Widget build(BuildContext context) {
     List<String> options = ['Settings', 'Switch Account', 'Logout'];
+    final firebasecontroller = Get.put(firebaseController());
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Container(
+          child: SizedBox(
             width: Get.width,
             height: Get.height,
             child: Stack(
@@ -117,32 +120,37 @@ class _profileScreenState extends State<profileScreen> {
                             left: Get.width * 0.07,
                           ),
                           padding: EdgeInsets.all(Get.width * 0.01),
-                          child: const CircleAvatar(
+                          child: CircleAvatar(
                             radius: 50.0,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                AssetImage('assets/images/profileimage.png'),
+                            backgroundColor: Colors.grey.withOpacity(0.2),
+                            backgroundImage: NetworkImage(
+                                firebasecontroller.profileImageLink.value),
                           ),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(top: Get.height * 0.03),
-                              child: text(
-                                title: 'Sari Banquet',
-                                fontColor: AppColors.grey,
-                                fontSize: Get.width * 0.07,
-                                fontWeight: AppFonts.bold,
+                            Obx(
+                              () => Container(
+                                margin: EdgeInsets.only(top: Get.height * 0.03),
+                                child: text(
+                                  title: firebasecontroller.businessName.value,
+                                  fontColor: AppColors.grey,
+                                  fontSize: Get.width * 0.07,
+                                  fontWeight: AppFonts.bold,
+                                ),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(left: Get.width * 0.01),
-                              child: text(
-                                title: 'Business Category',
-                                fontColor: AppColors.grey.withOpacity(0.5),
-                                fontSize: Get.width * 0.04,
-                                fontWeight: AppFonts.bold,
+                            Obx(
+                              () => Container(
+                                margin: EdgeInsets.only(left: Get.width * 0.01),
+                                child: text(
+                                  title:
+                                      firebasecontroller.businessCategory.value,
+                                  fontColor: AppColors.grey.withOpacity(0.5),
+                                  fontSize: Get.width * 0.04,
+                                  fontWeight: AppFonts.bold,
+                                ),
                               ),
                             ),
                             Row(
@@ -197,31 +205,47 @@ class _profileScreenState extends State<profileScreen> {
                           ],
                         ),
                         const Spacer(),
-                        Container(
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed('/editprofile');
+                          },
+                          child: Container(
                             margin: EdgeInsets.only(
                                 top: Get.height * 0.02,
                                 right: Get.width * 0.04),
-                            child: SvgPicture.asset(AppIcons.editPersonalInfo)),
+                            child: SvgPicture.asset(AppIcons.editPersonalInfo),
+                          ),
+                        ),
                       ],
                     ),
-                    personalInfo(
-                      textTitle: 'UserName',
-                      fontSize: Get.width * 0.04,
-                      icon: AppIcons.profileName,
-                      height: Get.height * 0.02,
+
+                    Obx(
+                      () => personalInfo(
+                        textTitle: firebasecontroller.userName.value,
+                        fontSize: Get.width * 0.04,
+                        icon: AppIcons.profileName,
+                        height: Get.height * 0.02,
+                      ),
                     ),
-                    personalInfo(
-                      textTitle: 'UserPhone',
-                      fontSize: Get.width * 0.04,
-                      icon: AppIcons.profilePhone,
-                      height: Get.height * 0.02,
+
+                    Obx(
+                      () => personalInfo(
+                        textTitle: firebasecontroller.phone.value,
+                        fontSize: Get.width * 0.04,
+                        icon: AppIcons.profilePhone,
+                        height: Get.height * 0.02,
+                      ),
                     ),
-                    personalInfo(
-                      textTitle: 'UserLocation',
-                      fontSize: Get.width * 0.04,
-                      icon: AppIcons.profileLocation,
-                      height: Get.height * 0.02,
+
+                    Obx(
+                      () => personalInfo(
+                        textTitle: firebasecontroller.location.value,
+                        fontSize: Get.width * 0.04,
+                        icon: AppIcons.profileLocation,
+                        height: Get.height * 0.02,
+                      ),
                     ),
+
                     Divider(
                       color: AppColors.pink.withOpacity(0.6),
                       height: 20.0,
@@ -244,11 +268,14 @@ class _profileScreenState extends State<profileScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              text(
-                                title: 'Congrates UserName!',
-                                fontSize: Get.width * 0.055,
-                                fontWeight: AppFonts.extraBold,
-                                fontColor: AppColors.grey,
+                              Obx(
+                                () => text(
+                                  title:
+                                      "Congrats ${firebasecontroller.userName.value}",
+                                  fontSize: Get.width * 0.055,
+                                  fontWeight: AppFonts.extraBold,
+                                  fontColor: AppColors.grey,
+                                ),
                               ),
                               RichText(
                                 text: TextSpan(
