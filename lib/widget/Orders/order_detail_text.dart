@@ -13,6 +13,7 @@ class order_detail_text extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+      textAlign: TextAlign.justify,
       title,
       style: TextStyle(
         fontSize: Get.width * 0.03,

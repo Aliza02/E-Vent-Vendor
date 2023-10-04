@@ -8,6 +8,7 @@ import 'package:eventually_vendor/models/message_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/chat_user.dart';
 import 'widgets/chat_offer_toggler.dart';
 import 'widgets/message_card.dart';
@@ -36,8 +37,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
   //for handling text message changes
   final _textController = TextEditingController();
+  final controller = Get.put(ButtonController());
+
   @override
   Widget build(BuildContext context) {
+    String msgSendBy = firebasecontroller.businessName.value;
     return SafeArea(
       child: WillPopScope(
         onWillPop: () {
@@ -51,10 +55,11 @@ class _ChatScreenState extends State<ChatScreen> {
           return Future.value(true);
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
               backgroundColor: AppColors.appBar,
               elevation: 0,
-              shape: Border(
+              shape: const Border(
                 bottom: BorderSide(
                   color:
                       AppColors.pink, // Change the color to your desired color
@@ -106,43 +111,104 @@ class _ChatScreenState extends State<ChatScreen> {
                 //     },
                 //   ),
                 // ),
+
                 Expanded(
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('messages')
-                          .doc(
-                              'RDK5EqIBGUWpfKSsoF4XzsxRB3y2AfV27IqvuOgBuchsG8wua6R8zuE3')
+                          .doc(_msgController.chatRoomId.value)
                           .collection('chat')
+                          .orderBy('sent')
                           .snapshots(),
                       builder: (context, snapshot) {
-                        print(
-                            "${auth.currentUser!.uid}${_msgController.userId.value}");
+                        // print(
+                        //     "${auth.currentUser!.uid}${_msgController.userId.value}");
                         if (snapshot.hasData) {
                           print('has data');
                           return ListView.builder(
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
+                                _msgController.viewMoreButtonLength.value =
+                                    snapshot.data!.docs.length;
+
                                 DocumentSnapshot doc =
                                     snapshot.data!.docs[index];
-                                print(doc.data());
 
-                                _msgController.list.add(MessageModel(
-                                    msg: doc['msg'],
-                                    toID: '121',
-                                    read: '121',
-                                    type: MsgType.text,
-                                    fromID: '121',
-                                    sent: '212'));
-                                return MessageCard(
-                                  index: doc['sendby'],
-                                  message: MessageModel(
-                                      msg: doc['msg'],
-                                      toID: '121',
-                                      read: '121',
-                                      type: MsgType.text,
-                                      fromID: '121',
-                                      sent: '212'),
-                                );
+                                if (doc['type'] == 'offer') {
+                                  _msgController.packageName.value =
+                                      doc['package'];
+                                  print('off');
+                                  if (doc['accept'] == 'true') {
+                                    _buttonController.acceptOfferList[index] =
+                                        true;
+                                  }
+
+                                  if (doc['amount'].length == 3) {
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']));
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 100);
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 200);
+                                  } else if (doc['amount'].length == 4) {
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']));
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 500);
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 1000);
+                                  } else if (doc['amount'].length == 5) {
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']));
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 1000);
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 2000);
+                                  } else if (doc['amount'].length == 6) {
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']));
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 10000);
+                                    _msgController.servicePriceOnChatOffer
+                                        .add(int.parse(doc['amount']) + 20000);
+                                  }
+                                }
+
+                                return doc['type'] == 'text'
+                                    ? MessageCard(
+                                        serviceName: ' ',
+                                        sendby: doc['sendby'],
+                                        index: index,
+                                        message: MessageModel(
+                                            msg: doc['msg'],
+                                            toID: _msgController.userId.value,
+                                            read: '121',
+                                            type: MsgType.text,
+                                            fromID: auth.currentUser!.uid,
+                                            sent: doc['sent']),
+                                      )
+                                    : MessageCard(
+                                        serviceName: doc['package'],
+                                        sendby: doc['sendby'],
+                                        index: index,
+                                        message: MessageModel(
+                                            msg: doc['amount'],
+                                            toID: _msgController.userId.value,
+                                            read: doc['details'],
+                                            type: MsgType.offer,
+                                            fromID: auth.currentUser!.uid,
+                                            sent: doc['sent']),
+                                      );
+                                // : MessageCard(
+                                //     index: doc['sendby'],
+                                //     message: MessageModel(
+                                //         msg: doc['msg'],
+                                //         toID: '121',
+                                //         read: '121',
+                                //         type: MsgType.offer,
+                                //         fromID: '121',
+                                //         sent: '212'),
+                                //   );
                               });
                         }
                         return Container();
@@ -177,7 +243,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 SizedBox(height: Get.height * .01),
-                OfferToggler(),
+                OfferToggler(sendby: msgSendBy),
                 Obx(
                   () => !_buttonController.isExpanded.value
                       ? _chatInput()
@@ -207,7 +273,10 @@ class _ChatScreenState extends State<ChatScreen> {
       children: [
         //Back Button
         IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            _msgController.servicePriceOnChatOffer.clear();
+            Get.back();
+          },
           icon: const Icon(CupertinoIcons.back),
           color: AppColors.black,
         ),
@@ -250,16 +319,16 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Text(
                   widget.user.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: AppColors.grey),
                 ),
                 const SizedBox(width: 2),
-                Text(
-                  'Online',
-                  style: TextStyle(color: AppColors.grey, fontSize: 12),
-                ),
+                // Text(
+                //   widget.user.isOnline.toString(),
+                //   style: TextStyle(color: AppColors.grey, fontSize: 12),
+                // ),
               ],
             ),
           ),
@@ -319,47 +388,36 @@ class _ChatScreenState extends State<ChatScreen> {
               onPressed: () async {
                 _msgController.list.clear();
                 if (_textController.text.isNotEmpty) {
-                  message = MessageModel(
-                      msg: _textController.text,
-                      toID: 'a1',
-                      read: 'true',
-                      type: MsgType.text,
-                      fromID: auth.currentUser!.uid,
-                      sent: DateTime.now().millisecondsSinceEpoch.toString());
                   final Map<String, dynamic> message1 = {
                     'msg': _textController.text,
-                    'toID': '111',
+                    'toID': _msgController.userId.value,
                     'read': 'true',
                     'sendby': firebasecontroller.businessName.value,
                     'fromID': auth.currentUser!.uid,
-                    'sent': DateTime.now().toString(),
+                    'sent': DateTime.now().millisecondsSinceEpoch.toString(),
+                    'type': 'text',
+                    // 'type':
                   };
+
+                  await FirebaseFirestore.instance
+                      .collection('messages')
+                      .doc(_msgController.chatRoomId.value)
+                      .collection('chat')
+                      .doc()
+                      .set(message1);
 
                   await FirebaseFirestore.instance
                       .collection('User')
                       .doc(auth.currentUser!.uid)
                       .set(
-                    {'hasChat': _msgController.userName.value},
+                    {
+                      'lastActive':
+                          DateTime.now().millisecondsSinceEpoch.toString(),
+                    },
                     SetOptions(merge: true),
                   );
 
-                  print(arg[0]);
-
-                  await FirebaseFirestore.instance
-                      .collection('messages')
-                      .doc(
-                          'RDK5EqIBGUWpfKSsoF4XzsxRB3y2AfV27IqvuOgBuchsG8wua6R8zuE3')
-                      .set(
-                    {'abc': 'test'},
-                  );
-                  await FirebaseFirestore.instance
-                      .collection('messages')
-                      .doc(
-                          'RDK5EqIBGUWpfKSsoF4XzsxRB3y2AfV27IqvuOgBuchsG8wua6R8zuE3')
-                      .collection('chat')
-                      .doc()
-                      .set(message1);
-                  // _msgController.addMessage(message);
+                  print('sent');
                   _textController.text = '';
                   //Add the send logic
                 }

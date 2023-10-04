@@ -5,7 +5,20 @@ import '../../controller/pagecontroller.dart';
 import 'Order_Card_Text.dart';
 
 class order_card extends StatelessWidget {
-  order_card({super.key});
+  final String orderNo;
+  final String bookedServiceName;
+  final String userName;
+  final String timeOfService;
+  final String servicePrice;
+  final String orderStatus;
+  order_card(
+      {super.key,
+      required this.orderNo,
+      required this.bookedServiceName,
+      required this.userName,
+      required this.timeOfService,
+      required this.servicePrice,
+      required this.orderStatus});
   final pagecontroller = Get.put(testController());
 
   Container status(BuildContext context, Color statusColor) {
@@ -24,7 +37,7 @@ class order_card extends StatelessWidget {
     return Center(
       child: Container(
         width: Get.width * 0.85,
-        height: Get.height * 0.15,
+        // height: Get.height * 0.15,
         margin: EdgeInsets.symmetric(vertical: Get.height * 0.015),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -45,7 +58,7 @@ class order_card extends StatelessWidget {
               child: Image.asset(
                 'assets/images/food.png',
                 width: Get.width * 0.28,
-                height: Get.height * 0.15,
+                height: Get.height * 0.18,
                 fit: BoxFit.cover,
               ),
             ),
@@ -56,11 +69,11 @@ class order_card extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   order_card_text(
-                      text: 'Order Number:1234',
+                      text: "Order Number: $orderNo",
                       fontColor: AppColors.pink,
                       fontSize: Get.width * 0.04),
                   order_card_text(
-                      text: 'Shadi package',
+                      text: bookedServiceName,
                       fontColor: AppColors.grey,
                       fontSize: Get.width * 0.04),
                   pagecontroller.allOrdersActive.value == true
@@ -69,7 +82,7 @@ class order_card extends StatelessWidget {
                           height: Get.height * 0.02,
                         ),
                   order_card_text(
-                      text: 'Fahim Khan',
+                      text: userName,
                       fontColor: AppColors.grey,
                       fontSize: Get.width * 0.03),
                   Obx(
@@ -125,12 +138,16 @@ class order_card extends StatelessWidget {
                                             false
                                         ? Row(
                                             children: [
-                                              status(context,
-                                                  AppColors.statusColor[2]),
+                                              status(
+                                                  context,
+                                                  orderStatus == "active"
+                                                      ? AppColors.statusColor[1]
+                                                      : AppColors
+                                                          .statusColor[2]),
                                               SizedBox(
                                                 width: Get.width * 0.01,
                                               ), //status
-                                              const Text('Order Completed'),
+                                              Text(orderStatus),
                                             ],
                                           )
                                         : const SizedBox(),
@@ -138,18 +155,18 @@ class order_card extends StatelessWidget {
                                 ],
                               )
                             : order_card_text(
-                                text: '9:00 pm - 12:00 pm',
+                                text: timeOfService,
                                 fontColor: AppColors.grey,
                                 fontSize: Get.width * 0.03,
                               ),
                       ),
                       const Spacer(),
-                      order_card_text(
-                        text: 'Rs 60,000',
-                        fontColor: AppColors.pink,
-                        fontSize: Get.width * 0.03,
-                      ),
                     ],
+                  ),
+                  order_card_text(
+                    text: "Rs $servicePrice",
+                    fontColor: AppColors.pink,
+                    fontSize: Get.width * 0.03,
                   ),
                 ],
               ),

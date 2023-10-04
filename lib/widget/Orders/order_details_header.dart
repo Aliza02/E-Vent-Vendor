@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/widget/Orders/Order_Card_Text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,21 +8,25 @@ import 'order_heading.dart';
 
 class order_Details_Header extends StatelessWidget {
   order_Details_Header({super.key});
+
+  final orderController = Get.put(OrderController());
   List<String> statusLabel = [
     'Order \n Pending',
     'Order \n Complete',
-    'Payment \n Pending',
-    'Payment \n Recieved'
+    // 'Payment \n Pending',
+    // 'Payment \n Recieved'
   ];
-  int indec = 0;
+
+  // List<bool> statusProgress = [true, true];
   Container progressBar(BuildContext context, int index) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: Get.height * 0.01),
-      width: Get.width * 0.2,
+      width: Get.width * 0.4,
       height: Get.height * 0.015,
       decoration: BoxDecoration(
-        color:
-            index == indec ? AppColors.pink : AppColors.grey.withOpacity(0.33),
+        color: orderController.orderStatusOnHeader[index] == true
+            ? AppColors.pink
+            : AppColors.grey.withOpacity(0.33),
         borderRadius: BorderRadius.circular(50),
       ),
     );
@@ -32,8 +37,9 @@ class order_Details_Header extends StatelessWidget {
       statusLabel[index],
       textAlign: TextAlign.center,
       style: TextStyle(
-        color:
-            index == indec ? AppColors.grey : AppColors.grey.withOpacity(0.3),
+        color: orderController.orderStatusOnHeader[index] == true
+            ? AppColors.grey
+            : AppColors.grey.withOpacity(0.3),
         fontWeight: AppFonts.extraBold,
         fontFamily: AppFonts.manrope,
       ),
@@ -61,6 +67,8 @@ class order_Details_Header extends StatelessWidget {
               child: IconButton(
                 alignment: Alignment.topLeft,
                 onPressed: () {
+                  // indec++;
+                  // print(indec);
                   Get.back();
                 },
                 icon: const Icon(
@@ -81,7 +89,7 @@ class order_Details_Header extends StatelessWidget {
               alignment: Alignment.topLeft,
               margin: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
               child: order_card_text(
-                text: 'Order # 1234',
+                text: "Order #${orderController.orderId.value}",
                 fontColor: AppColors.grey,
                 fontSize: Get.width * 0.04,
               ),
@@ -128,14 +136,14 @@ class order_Details_Header extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(
-                          4,
+                          statusLabel.length,
                           (index) => progressBar(context, index),
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: List.generate(
-                          4,
+                          statusLabel.length,
                           (index) => statusText(context, index),
                         ),
                       )

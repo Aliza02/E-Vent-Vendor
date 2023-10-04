@@ -34,11 +34,11 @@ class buildImage extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(Get.width * 0.02),
-                  // child: Image.asset('assets/images/food.png'),
-                  child: Image.network(
-                    servicecontroller.editImage[index],
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.asset('assets/images/food.png'),
+                  // child: Image.network(
+                  //   servicecontroller.editImage[index],
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 IconButton(
                   alignment: Alignment.topRight,

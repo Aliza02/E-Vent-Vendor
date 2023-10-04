@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventually_vendor/controller/message_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class bottomNavBar extends StatelessWidget {
   bottomNavBar({super.key});
   final pagecontroller = Get.put(testController());
   final servicecontroller = Get.put(serviceController());
+  final msgController = Get.put(MessageController());
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class bottomNavBar extends StatelessWidget {
                 IconButton(
                     onPressed: () {
                       pagecontroller.changeIndex(0);
+                      msgController.chatUserId.clear();
                     },
                     icon: Obx(
                       () => pagecontroller.currentindex.value == 0

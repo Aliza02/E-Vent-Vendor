@@ -9,6 +9,13 @@ class MessageController extends GetxController {
 
   final RxString userId = ''.obs;
   final RxString userName = ''.obs;
+  final RxString packageName = ''.obs;
+
+  final RxString chatRoomId = ''.obs;
+  final RxInt viewMoreButtonLength = 0.obs;
+  RxList<int> servicePriceOnChatOffer = <int>[].obs;
+
+  RxList<String> chatUserId = <String>[].obs;
 
   @override
   void onInit() {

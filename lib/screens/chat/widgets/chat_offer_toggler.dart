@@ -1,5 +1,6 @@
 import 'package:eventually_vendor/constants/colors.dart';
 import 'package:eventually_vendor/constants/constant.dart';
+import 'package:eventually_vendor/controller/message_controller.dart';
 import 'package:eventually_vendor/controller/offer_btn_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,10 +10,13 @@ import 'chat_offer_btn.dart';
 import 'chat_offer_container.dart';
 
 class OfferToggler extends StatelessWidget {
+  final String sendby;
   OfferToggler({
     super.key,
+    required this.sendby,
   });
-  final ButtonController _buttonController = Get.find<ButtonController>();
+  final ButtonController _buttonController = Get.put(ButtonController());
+  final msgController = Get.put(MessageController());
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,14 @@ class OfferToggler extends StatelessWidget {
         Obx(
           () => !_buttonController.isExpanded.value
               ? GestureDetector(
-                  onTap: _buttonController.toggleContainer,
+                  onTap: () {
+                    if (msgController.servicePriceOnChatOffer.isEmpty) {
+                      Get.snackbar('No service is available for negotiation',
+                          'No service to negotiate');
+                    } else {
+                      _buttonController.toggleContainer();
+                    }
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: Get.width * .02),
                     width: Get.width * .4,
@@ -104,8 +115,10 @@ class OfferToggler extends StatelessWidget {
                 Obx(
                   () => _buttonController.isExpanded.value
                       ? _buttonController.isCatBtnToggled.value
-                          ? ChatOfferContainer()
-                          : ChatOfferContainer()
+                          ? ChatOfferContainer(sendby: sendby)
+                          : ChatOfferContainer(
+                              sendby: sendby,
+                            )
                       : const SizedBox(),
                 ),
               ],

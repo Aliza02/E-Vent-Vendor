@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventually_vendor/controller/message_controller.dart';
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -20,6 +22,27 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   final firebasecontroller = Get.put(firebaseController());
+  final _msgController = Get.put(MessageController());
+  final orderController = Get.put(OrderController());
+  void getResult() async {
+    await FirebaseFirestore.instance.collection('messages').get().then((value) {
+      value.docs.forEach((element) {
+        print(element.id);
+
+        if (element.id.contains(auth.currentUser!.uid)) {
+          List<String> parts = element.id.split(auth.currentUser!.uid);
+          if (parts[0].contains(auth.currentUser!.uid)) {
+            print('oo');
+            _msgController.chatUserId.add(parts[1]);
+          } else {
+            print('p');
+            _msgController.chatUserId.add(parts[0]);
+          }
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     final docRef = firestore.collection("User").doc(auth.currentUser!.uid);
@@ -48,6 +71,8 @@ class _dashboardState extends State<dashboard> {
     );
 
     super.initState();
+    _msgController.chatUserId.clear();
+    getResult();
   }
 
   @override
@@ -88,7 +113,7 @@ class _dashboardState extends State<dashboard> {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   order_stats_section(),
                   top_orders(),
                 ],
@@ -96,7 +121,7 @@ class _dashboardState extends State<dashboard> {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              review(),
+              const review(),
             ],
           ),
         ),

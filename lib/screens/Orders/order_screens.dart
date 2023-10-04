@@ -17,29 +17,32 @@ class Orders extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: bottomNavBar(),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              order_header(),
-              Obx(
-                () => pagecontroller.toCompleteActive.value == true
-                    ? toComplete()
-                    : Container(),
-              ),
-              Obx(
-                () => pagecontroller.completeActive.value == true
-                    ? const complete_order()
-                    : Container(),
-              ),
-              Obx(
-                () => pagecontroller.allOrdersActive.value == true
-                    ? const All_orders()
-                    : Container(),
-              ),
-            ],
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            order_header(),
+            Obx(
+              () => pagecontroller.toCompleteActive.value == true
+                  ? Expanded(
+                      child: toComplete(),
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => pagecontroller.completeActive.value == true
+                  ? Expanded(
+                      child: complete_order(),
+                    )
+                  : Container(),
+            ),
+            Obx(
+              () => pagecontroller.allOrdersActive.value == true
+                  ? Expanded(
+                      child: All_orders(),
+                    )
+                  : Container(),
+            ),
+          ],
         ),
       ),
     );

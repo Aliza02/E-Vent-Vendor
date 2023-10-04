@@ -12,8 +12,13 @@ import '../profile/reviewerImage.dart';
 class reviewContainer extends StatelessWidget {
   final int colorIndex;
   final String review;
-  const reviewContainer(
-      {super.key, required this.colorIndex, required this.review});
+  final int ratings;
+  const reviewContainer({
+    super.key,
+    required this.colorIndex,
+    required this.review,
+    required this.ratings,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class reviewContainer extends StatelessWidget {
             children: [
               Row(
                 children: List.generate(
-                  4,
+                  ratings,
                   (index) => Container(
                     margin: EdgeInsets.only(
                       left: Get.width * 0.001,

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/bindings/all_controller_bindings.dart';
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/controller/signinController.dart';
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/screens/ManageAvailability/makeOtherDayUnavailable.dart';
 import 'package:eventually_vendor/screens/ManageAvailability/makeUnavailable.dart';
 import 'package:eventually_vendor/screens/Orders/order_details.dart';
@@ -24,6 +27,7 @@ import 'screens/EditService/EditServiceForm.dart';
 
 bool? isLoggedin;
 int? isViewed;
+final orderController = Get.put(OrderController());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(
@@ -36,7 +40,8 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onboard');
   isLoggedin = prefs.getBool('rememberMe');
-  runApp(const MyApp());
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

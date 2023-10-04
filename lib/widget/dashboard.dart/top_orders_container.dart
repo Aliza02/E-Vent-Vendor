@@ -9,9 +9,13 @@ import '../manageAvailability/text.dart';
 
 class top_orders_container extends StatelessWidget {
   final Color containerBGColor;
+  final String event;
+  final String eventRatio;
   const top_orders_container({
     super.key,
     required this.containerBGColor,
+    required this.event,
+    required this.eventRatio,
   });
 
   @override
@@ -42,7 +46,7 @@ class top_orders_container extends StatelessWidget {
             width: Get.width * 0.18,
             // padding: EdgeInsets.symmetric(horizontal: Get.width * 0.01),
             child: text(
-              title: 'Birthdays',
+              title: event,
               fontSize: Get.width * 0.03,
               fontColor: AppColors.grey,
               fontWeight: AppFonts.semiBold,
@@ -53,7 +57,7 @@ class top_orders_container extends StatelessWidget {
               right: Get.width * 0.01,
             ),
             child: text(
-              title: '30%',
+              title: eventRatio,
               fontColor: AppColors.grey,
               fontSize: Get.width * 0.032,
               fontWeight: AppFonts.bold,

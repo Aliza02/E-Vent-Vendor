@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/constants/colors.dart';
+import 'package:eventually_vendor/controller/message_controller.dart';
 import 'package:eventually_vendor/controller/offer_btn_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,20 +8,27 @@ import 'custom_amount_button.dart';
 import 'offer_custom_texts.dart';
 
 class ChatOfferContainer extends StatelessWidget {
+  final String sendby;
   ChatOfferContainer({
+    required this.sendby,
     super.key,
   });
   // final MessageController _msgController = Get.find<MessageController>();
   final ButtonController _buttonController = Get.find<ButtonController>();
+  final msgController = Get.put(MessageController());
 
   @override
   Widget build(BuildContext context) {
+    final price1 = msgController.servicePriceOnChatOffer[0];
+    final price2 = msgController.servicePriceOnChatOffer[1];
+    final price3 = msgController.servicePriceOnChatOffer[2];
+    // _buttonController.offerAmountEditingController.text = price1.toString();
     return SafeArea(
       child: Obx(
         () => Container(
           margin: const EdgeInsets.fromLTRB(2, 0, 2, 0),
           width: Get.width * .9,
-          height: Get.height * .35,
+          height: Get.height * .45,
           child: Stack(
             children: [
               Positioned(
@@ -30,7 +38,8 @@ class ChatOfferContainer extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   width: Get.width * .9,
-                  height: Get.height * .3,
+                  height: Get.height * .4,
+                  margin: const EdgeInsets.symmetric(vertical: 2),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: _buttonController.isCatBtnToggled.value
@@ -55,7 +64,7 @@ class ChatOfferContainer extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomAmountButton(
-                              amount: '45000',
+                              amount: price1.toString(),
                               index: 0,
                               selectedButtonIndex: _buttonController
                                   .selectedButtonIndex.value.obs,
@@ -64,7 +73,7 @@ class ChatOfferContainer extends StatelessWidget {
                             ),
                             SizedBox(width: Get.width * .01),
                             CustomAmountButton(
-                              amount: '35000',
+                              amount: price2.toString(),
                               index: 1,
                               selectedButtonIndex: _buttonController
                                   .selectedButtonIndex.value.obs,
@@ -73,7 +82,7 @@ class ChatOfferContainer extends StatelessWidget {
                             ),
                             SizedBox(width: Get.width * .01),
                             CustomAmountButton(
-                              amount: '30000',
+                              amount: price3.toString(),
                               index: 2,
                               selectedButtonIndex: _buttonController
                                   .selectedButtonIndex.value.obs,
@@ -185,7 +194,7 @@ class ChatOfferContainer extends StatelessWidget {
                                     Expanded(
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          _buttonController.sendOffer();
+                                          _buttonController.sendOffer(sendby);
                                         },
                                         style: ElevatedButton.styleFrom(
                                           shape: RoundedRectangleBorder(

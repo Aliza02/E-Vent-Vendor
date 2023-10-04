@@ -9,8 +9,15 @@ import '../../constants/font.dart';
 import '../manageAvailability/text.dart';
 
 class top_orders extends StatelessWidget {
-  const top_orders({super.key});
+  top_orders({super.key});
 
+  final List<String> events = [
+    'Engagement',
+    'Baraat',
+    'Birthdays',
+    'Farewells'
+  ];
+  final List<String> eventRatio = ['10%', '20%', '30%', '40%'];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,6 +59,8 @@ class top_orders extends StatelessWidget {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return top_orders_container(
+                        eventRatio: eventRatio[index],
+                        event: events[index],
                         containerBGColor:
                             AppColors.topOrdersContainerColors[index],
                       );
