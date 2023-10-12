@@ -25,7 +25,7 @@ class reviewerImage extends StatelessWidget {
       height: Get.height * 0.05,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(Get.width * 0.02),
-        child: Image.asset('assets/images/food.png'),
+        child: Image.asset('assets/images/profileimage.png'),
         // child: Image.file(
         //   pagecontroller.selectedImage[index],
         //   fit: BoxFit.cover,

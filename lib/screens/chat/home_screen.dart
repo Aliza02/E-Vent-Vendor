@@ -71,15 +71,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
-              leading: IconButton(
-                icon: Icon(
-                  CupertinoIcons.back,
-                  color: AppColors.black,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
               title: _isSearching
                   ? TextField(
                       decoration: const InputDecoration(

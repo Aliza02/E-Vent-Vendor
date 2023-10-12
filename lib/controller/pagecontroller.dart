@@ -33,4 +33,8 @@ class testController extends GetxController {
   RxInt daysInMonth = 0.obs;
 
   RxInt getMonth = 0.obs; // to get current month
+
+  Rx<DateTime> getDateForOrders = DateTime.now().obs;
+  RxBool hasOrder = false.obs;
+ 
 }

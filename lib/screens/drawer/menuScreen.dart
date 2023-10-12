@@ -2,6 +2,11 @@ import 'package:eventually_vendor/constants/colors.dart';
 import 'package:eventually_vendor/constants/font.dart';
 import 'package:eventually_vendor/controller/signupController.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
+import 'package:eventually_vendor/screens/Finances/finances.dart';
+import 'package:eventually_vendor/screens/Help_center/help.dart';
+import 'package:eventually_vendor/screens/aboutus/aboutus.dart';
+import 'package:eventually_vendor/screens/dashboard/dashboard.dart';
+import 'package:eventually_vendor/screens/privacyPolicy/privacy.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -29,10 +34,10 @@ class MenuScreen extends GetView<testController> {
 
   final List<String> menuItems = [
     // 'Finance',
+    'Home',
     'Finances',
-    'ID Verification',
     // 'Bank Information',
-    'Settings',
+    // 'Settings',
     // 'Tutorial',
     'Payment Policy',
     'Help Center',
@@ -40,10 +45,10 @@ class MenuScreen extends GetView<testController> {
   ];
 
   final List<String> menuIcons = [
-    AppIcons.finance,
-    AppIcons.idVerification,
-    // AppIcons.bank,
-    AppIcons.setting,
+    AppIcons.home,
+    // AppIcons.idVerification,
+    AppIcons.bank,
+    // AppIcons.setting,
     // AppIcons.tutorial,
     AppIcons.paymentPolicy,
     AppIcons.helpCenter,
@@ -51,14 +56,27 @@ class MenuScreen extends GetView<testController> {
   ];
 
   final List<String> menuIconsFilled = [
-    AppIcons.financeFill,
-    AppIcons.idVerificationFill,
-    // AppIcons.bankFill,
-    AppIcons.settingFill,
+    AppIcons.homeFill,
+    // AppIcons.idVerificationFill,
+    AppIcons.bankFill,
+    // AppIcons.settingFill,
     // AppIcons.tutorialFill,
     AppIcons.paymentPolicyFill,
     AppIcons.helpCenterFill,
     AppIcons.aboutFill
+  ];
+
+  final List<Widget> _drawerPages = [
+    dashboard(),
+    const finances(),
+    privacyPolicy(),
+    const Help(),
+    const aboutus(),
+    // OrdersScreen(),
+    // // PaymentMethods(),
+    // settings(),
+    // profileScreen(),
+    // Help(),
   ];
 
   Widget buildMenuItems(BuildContext context, int index) {
@@ -131,8 +149,8 @@ class MenuScreen extends GetView<testController> {
                   child: const CircleAvatar(
                     radius: 50.0,
                     backgroundColor: Colors.transparent,
-                    backgroundImage:
-                        AssetImage('assets/images/profileimage.png'),
+                    // backgroundImage:firebasecontroller.profileImageLink.value.isNotEmpty?
+                    //     NetworkImage(firebasecontroller.profileImageLink.value): Netw
                   ),
                 ),
               ],
@@ -175,7 +193,11 @@ class MenuScreen extends GetView<testController> {
                         onTap: () {
                           pagecontroller.indexOfDrawerMenuItems.value = index;
                         },
-                        child: buildMenuItems(context, index),
+                        child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => _drawerPages[index]);
+                            },
+                            child: buildMenuItems(context, index)),
                       );
                     }),
               ],

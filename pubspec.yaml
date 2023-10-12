@@ -86,6 +86,8 @@ flutter:
     - assets/images/topOrderImage2.png
     - assets/images/topOrderImage3.png
     - assets/images/topOrderImage4.png
+    - assets/images/down.png
+    - assets/images/arrow.png
     # icons
 
     - assets/icons/finance.svg

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/widget/BottomNavBar/bottomNavBar.dart';
+import 'package:eventually_vendor/widget/dashboard.dart/reviewContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -23,64 +26,94 @@ class profileScreen extends StatefulWidget {
 
 class _profileScreenState extends State<profileScreen> {
   final pagecontroller = Get.put(testController());
+  List<String> reviews = [];
+  List<int> ratings = [];
+  int colorindex = 0;
+  int noOfOrder = 0;
+  final orderController = Get.put(OrderController());
+  int part1 = 0;
+  Future<void> getUserId() async {
+    reviews.clear();
 
-  List<String> reviews = [
-    "Very Nice Services",
-    "Had Bad Experience",
-    "Highly recommended!! Everything went smooth and everyone praised the setting."
-  ];
+    await FirebaseFirestore.instance.collection('Orders').get().then((value) {
+      value.docs.forEach((element) async {
+        print(element.id);
+        if (element.id.contains(auth.currentUser!.uid)) {
+          orderController.userOrderDocId.value = element.id;
+        }
+      });
+    });
 
-  Widget reviewContainer(BuildContext context, int index, int colorIndex) {
-    return Container(
-      width: Get.width * 0.8,
-      margin: EdgeInsets.symmetric(
-        horizontal: Get.width * 0.05,
-        vertical: Get.height * 0.01,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.reviewsColor[colorIndex],
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          reviewerImage(index: 1),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: List.generate(
-                  4,
-                  (index) => Container(
-                    margin: EdgeInsets.only(
-                      left: Get.width * 0.001,
-                      top: Get.height * 0.01,
-                    ),
-                    child: SvgPicture.asset(
-                      AppIcons.star,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: Get.width * 0.7,
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Text(
-                  reviews[index],
-                  style: TextStyle(
-                    fontFamily: AppFonts.manrope,
-                    fontSize: Get.width * 0.035,
-                    fontWeight: AppFonts.medium,
-                    color: AppColors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    await FirebaseFirestore.instance
+        .collection('Orders')
+        .doc(orderController.userOrderDocId.value)
+        .collection('bookings')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        noOfOrder++;
+        reviews.add(element.data()['review']);
+        print(noOfOrder);
+        if (element.data()['rating'].toString().contains('.')) {
+          List<String> parts = element.data()['rating'].toString().split('.');
+          part1 = int.parse(parts[0]);
+        }
+        ratings.add(part1);
+      });
+    });
   }
+
+  // Widget reviewContainer(BuildContext context, int index, int colorIndex) {
+  //   return Container(
+  //     width: Get.width * 0.8,
+  //     margin: EdgeInsets.symmetric(
+  //       horizontal: Get.width * 0.05,
+  //       vertical: Get.height * 0.01,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: AppColors.reviewsColor[colorIndex],
+  //       borderRadius: BorderRadius.circular(10.0),
+  //     ),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         reviewerImage(index: 1),
+  //         Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Row(
+  //               children: List.generate(
+  //                 4,
+  //                 (index) => Container(
+  //                   margin: EdgeInsets.only(
+  //                     left: Get.width * 0.001,
+  //                     top: Get.height * 0.01,
+  //                   ),
+  //                   child: SvgPicture.asset(
+  //                     AppIcons.star,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //             Container(
+  //               width: Get.width * 0.7,
+  //               padding: const EdgeInsets.only(bottom: 10.0),
+  //               child: Text(
+  //                 reviews[index],
+  //                 style: TextStyle(
+  //                   fontFamily: AppFonts.manrope,
+  //                   fontSize: Get.width * 0.035,
+  //                   fontWeight: AppFonts.medium,
+  //                   color: AppColors.grey,
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -277,37 +310,41 @@ class _profileScreenState extends State<profileScreen> {
                                   fontColor: AppColors.grey,
                                 ),
                               ),
-                              RichText(
-                                text: TextSpan(
-                                  text: "You've got ",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.manrope,
-                                    fontWeight: AppFonts.medium,
-                                    fontSize: Get.width * 0.035,
-                                    color: AppColors.grey,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: '78',
-                                      style: TextStyle(
-                                        fontFamily: AppFonts.manrope,
-                                        fontWeight: AppFonts.bold,
-                                        fontSize: Get.width * 0.05,
-                                        color: AppColors.grey,
+                              FutureBuilder(
+                                  future: getUserId(),
+                                  builder: (context, snapshot) {
+                                    return RichText(
+                                      text: TextSpan(
+                                        text: "You've got ",
+                                        style: TextStyle(
+                                          fontFamily: AppFonts.manrope,
+                                          fontWeight: AppFonts.medium,
+                                          fontSize: Get.width * 0.035,
+                                          color: AppColors.grey,
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: noOfOrder.toString(),
+                                            style: TextStyle(
+                                              fontFamily: AppFonts.manrope,
+                                              fontWeight: AppFonts.bold,
+                                              fontSize: Get.width * 0.05,
+                                              color: AppColors.grey,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: ' Orders from EventuAlly.',
+                                            style: TextStyle(
+                                              fontFamily: AppFonts.manrope,
+                                              fontWeight: AppFonts.medium,
+                                              fontSize: Get.width * 0.035,
+                                              color: AppColors.grey,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    TextSpan(
-                                      text: ' Orders from EventuAlly.',
-                                      style: TextStyle(
-                                        fontFamily: AppFonts.manrope,
-                                        fontWeight: AppFonts.medium,
-                                        fontSize: Get.width * 0.035,
-                                        color: AppColors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                    );
+                                  }),
                               text(
                                 title: "Keep Going!.",
                                 fontSize: Get.width * 0.035,
@@ -343,14 +380,27 @@ class _profileScreenState extends State<profileScreen> {
                     Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return reviewContainer(context, index, index);
-                          },
-                        ),
+                        child: FutureBuilder(
+                            future: getUserId(),
+                            builder: (context, snapshot) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: reviews.length,
+                                itemBuilder: (context, index) {
+                                  if (colorindex > 2) {
+                                    colorindex = 0;
+                                  }
+                                  return reviews.isNotEmpty
+                                      ? reviewContainer(
+                                          colorIndex: colorindex++,
+                                          ratings: ratings[index],
+                                          review: reviews[index],
+                                        )
+                                      : CircularProgressIndicator();
+                                },
+                              );
+                            }),
                       ),
                     ),
                   ],

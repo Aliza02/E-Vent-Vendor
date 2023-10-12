@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/controller/message_controller.dart';
 import 'package:eventually_vendor/controller/order_controller.dart';
+import 'package:eventually_vendor/controller/pagecontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -24,7 +25,11 @@ class _dashboardState extends State<dashboard> {
   final firebasecontroller = Get.put(firebaseController());
   final _msgController = Get.put(MessageController());
   final orderController = Get.put(OrderController());
+  final pagecontroller = Get.put(testController());
   void getResult() async {
+
+  
+    
     await FirebaseFirestore.instance.collection('messages').get().then((value) {
       value.docs.forEach((element) {
         print(element.id);

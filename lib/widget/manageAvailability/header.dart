@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/widget/manageAvailability/heading.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,10 @@ import '../../constants/colors.dart';
 import '../../constants/font.dart';
 import '../../constants/icons.dart';
 import '../../controller/pagecontroller.dart';
-import '../../firebaseMethods/addService.dart';
 
 class header extends StatefulWidget {
-  const header({super.key});
+  final Future<void> getResultFromFuture;
+  const header({super.key, required this.getResultFromFuture});
 
   @override
   State<header> createState() => _headerState();
@@ -24,28 +25,20 @@ class _headerState extends State<header> {
     scrollController.jumpTo(position);
   }
 
+  List<bool> selectedDate = [];
   @override
+  void getDate() {
+    for (int i = 0; i < pagecontroller.datesInCurrentMonth.length; i++) {
+      selectedDate.add(false);
+    }
+  }
+
   void initState() {
     super.initState();
+    getDate();
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => scroll(70 * pagecontroller.currentDateIndex.value),
-    );
-  }
-
-  Future add() async {
-    await firestore
-        .collection('Orders')
-        .doc(auth.currentUser?.uid)
-        .collection(auth.currentUser!.displayName.toString())
-        .doc('Birthday Package')
-        .set(
-      {
-        'OrderNo': '12445',
-        'ServiceName': 'Birthday Package',
-        'UserName': 'Aliza',
-        'Time': '9:00 AM - 12:00 PM',
-      },
     );
   }
 
@@ -129,7 +122,7 @@ class _headerState extends State<header> {
                           pagecontroller.date.value.month;
                     }
 
-                    add();
+                    // add();
 
                     print('success');
 
@@ -244,49 +237,58 @@ class _headerState extends State<header> {
                   (index) {
                     DateTime date = pagecontroller.datesInCurrentMonth[index];
 
-                    return Container(
-                      width: Get.width * 0.17,
-                      height: Get.height * 0.12,
-                      margin: EdgeInsets.symmetric(
-                          horizontal: Get.width * 0.02,
-                          vertical: Get.height * 0.015),
-                      decoration: ShapeDecoration(
-                        color: date.day == DateTime.now().day
-                            ? AppColors.pink
-                            : Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.97),
+                    return InkWell(
+                      onTap: () {
+                        pagecontroller.hasOrder.value = false;
+                        pagecontroller.getDateForOrders.value =
+                            DateTime(date.year, date.month, date.day);
+
+                        pagecontroller.hasOrder.value = true;
+                      },
+                      child: Container(
+                        width: Get.width * 0.17,
+                        height: Get.height * 0.12,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Get.width * 0.02,
+                            vertical: Get.height * 0.015),
+                        decoration: ShapeDecoration(
+                          color: date.day == DateTime.now().day
+                              ? AppColors.pink
+                              : Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.97),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: AppColors.googleButtonBorder,
+                              blurRadius: Get.width * 0.02,
+                              offset: Offset(0, 3.66),
+                              spreadRadius: 0,
+                            )
+                          ],
                         ),
-                        shadows: [
-                          BoxShadow(
-                            color: AppColors.googleButtonBorder,
-                            blurRadius: Get.width * 0.02,
-                            offset: Offset(0, 3.66),
-                            spreadRadius: 0,
-                          )
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          text(
-                            title: date.day.toString(),
-                            fontSize: Get.width * 0.05,
-                            fontWeight: AppFonts.bold,
-                            fontColor: date.day == DateTime.now().day
-                                ? Colors.white
-                                : AppColors.grey,
-                          ),
-                          text(
-                            // title: date.toString(),
-                            title: weekdays[date.weekday].toString(),
-                            fontSize: Get.width * 0.035,
-                            fontWeight: AppFonts.bold,
-                            fontColor: date.day == DateTime.now().day
-                                ? Colors.white
-                                : AppColors.grey,
-                          ),
-                        ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            text(
+                              title: date.day.toString(),
+                              fontSize: Get.width * 0.05,
+                              fontWeight: AppFonts.bold,
+                              fontColor: date.day == DateTime.now().day
+                                  ? Colors.white
+                                  : AppColors.grey,
+                            ),
+                            text(
+                              // title: date.toString(),
+                              title: weekdays[date.weekday].toString(),
+                              fontSize: Get.width * 0.035,
+                              fontWeight: AppFonts.bold,
+                              fontColor: date.day == DateTime.now().day
+                                  ? Colors.white
+                                  : AppColors.grey,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },

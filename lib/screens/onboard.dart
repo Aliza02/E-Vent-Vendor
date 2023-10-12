@@ -20,7 +20,9 @@ class _onboardState extends State<onboard> {
   @override
   void initState() {
     super.initState();
-    _pagescontroller = PageController(initialPage: 0);
+    _pagescontroller = PageController(
+      initialPage: 0,
+    );
   }
 
   @override
@@ -168,8 +170,8 @@ class _onboardState extends State<onboard> {
                           onTap: () async {
                             await _storedonBoaredInfo();
                             _pagescontroller?.nextPage(
-                                duration: const Duration(milliseconds: 10),
-                                curve: Curves.bounceOut);
+                                duration: const Duration(milliseconds: 100),
+                                curve: Curves.easeInBack);
                           },
                           child: Center(
                             child: Image.asset(
