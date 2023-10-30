@@ -1,4 +1,5 @@
 import 'package:eventually_vendor/constants/colors.dart';
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/widget/BottomNavBar/bottomNavBar.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:eventually_vendor/widget/manageAvailability/header.dart';
@@ -21,6 +22,7 @@ class makeOtherDayUnavailable extends StatefulWidget {
 }
 
 class _makeOtherDayUnavailableState extends State<makeOtherDayUnavailable> {
+  final orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,15 +31,15 @@ class _makeOtherDayUnavailableState extends State<makeOtherDayUnavailable> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: AppColors.grey,
-            ),
-          ),
+          // leading: IconButton(
+          //   onPressed: () {
+          //     Get.back();
+          //   },
+          //   icon: const Icon(
+          //     Icons.arrow_back_ios,
+          //     color: AppColors.grey,
+          //   ),
+          // ),
         ),
         bottomNavigationBar: bottomNavBar(),
         body: SizedBox(
@@ -63,7 +65,8 @@ class _makeOtherDayUnavailableState extends State<makeOtherDayUnavailable> {
                 fontColor: AppColors.grey,
               ),
               text(
-                title: 'April 5th,2023, 6:00PM-11:00PM',
+                title:
+                    "${orderController.unavailabilityDate} ${orderController.unavailabilityTime[0]}- ${orderController.unavailabilityTime[1]}",
                 fontSize: Get.width * 0.035,
                 fontWeight: AppFonts.bold,
                 fontColor: AppColors.grey,
@@ -72,7 +75,12 @@ class _makeOtherDayUnavailableState extends State<makeOtherDayUnavailable> {
                 margin: EdgeInsets.only(top: Get.height * 0.05),
                 child: button(
                   label: 'Manage other days',
-                  onpressed: () {},
+                  onpressed: () {
+                    Get.offAllNamed('/drawer');
+                    
+                    orderController.unavailabilityDate.value = '';
+                    orderController.unavailabilityTime.clear();
+                  },
                   borderRadius: 15.0,
                 ),
               ),

@@ -33,7 +33,42 @@ class _profileScreenState extends State<profileScreen> {
   final orderController = Get.put(OrderController());
   int part1 = 0;
   Future<void> getUserId() async {
+    noOfOrder = 0;
+    // reviews.clear();
+    // ratings.clear();
+
+    await FirebaseFirestore.instance.collection('Orders').get().then((value) {
+      value.docs.forEach((element) async {
+        print(element.id);
+        if (element.id.contains(auth.currentUser!.uid)) {
+          orderController.userOrderDocId.value = element.id;
+        }
+      });
+    });
+if(orderController.userOrderDocId.value.isNotEmpty){
+    await FirebaseFirestore.instance
+        .collection('Orders')
+        .doc(orderController.userOrderDocId.value)
+        .collection('bookings')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        noOfOrder++;
+        // reviews.add(element.data()['review']);
+        // print(noOfOrder);
+        // if (element.data()['rating'].toString().contains('.')) {
+        //   List<String> parts = element.data()['rating'].toString().split('.');
+        //   part1 = int.parse(parts[0]);
+        // }
+        // ratings.add(part1);
+      });
+    });
+}
+  }
+
+  Future<void> getReviewsRatings() async {
     reviews.clear();
+    ratings.clear();
 
     await FirebaseFirestore.instance.collection('Orders').get().then((value) {
       value.docs.forEach((element) async {
@@ -44,6 +79,7 @@ class _profileScreenState extends State<profileScreen> {
       });
     });
 
+if(orderController.userOrderDocId.value.isNotEmpty){
     await FirebaseFirestore.instance
         .collection('Orders')
         .doc(orderController.userOrderDocId.value)
@@ -51,7 +87,7 @@ class _profileScreenState extends State<profileScreen> {
         .get()
         .then((value) {
       value.docs.forEach((element) {
-        noOfOrder++;
+        // noOfOrder++;
         reviews.add(element.data()['review']);
         print(noOfOrder);
         if (element.data()['rating'].toString().contains('.')) {
@@ -61,6 +97,7 @@ class _profileScreenState extends State<profileScreen> {
         ratings.add(part1);
       });
     });
+}
   }
 
   // Widget reviewContainer(BuildContext context, int index, int colorIndex) {
@@ -381,7 +418,7 @@ class _profileScreenState extends State<profileScreen> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: FutureBuilder(
-                            future: getUserId(),
+                            future: getReviewsRatings(),
                             builder: (context, snapshot) {
                               return ListView.builder(
                                 shrinkWrap: true,

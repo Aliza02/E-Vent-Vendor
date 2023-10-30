@@ -121,8 +121,6 @@ class _ChatScreenState extends State<ChatScreen> {
                           .orderBy('sent')
                           .snapshots(),
                       builder: (context, snapshot) {
-                        // print(
-                        //     "${auth.currentUser!.uid}${_msgController.userId.value}");
                         if (snapshot.hasData) {
                           print('has data');
                           return ListView.builder(
@@ -130,10 +128,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               itemBuilder: (context, index) {
                                 _msgController.viewMoreButtonLength.value =
                                     snapshot.data!.docs.length;
-
-                                DocumentSnapshot doc =
+                               DocumentSnapshot doc =
                                     snapshot.data!.docs[index];
-
                                 if (doc['type'] == 'offer') {
                                   _msgController.packageName.value =
                                       doc['package'];
@@ -142,7 +138,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                     _buttonController.acceptOfferList[index] =
                                         true;
                                   }
-
                                   if (doc['amount'].length == 3) {
                                     _msgController.servicePriceOnChatOffer
                                         .add(int.parse(doc['amount']));
@@ -173,7 +168,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                         .add(int.parse(doc['amount']) + 20000);
                                   }
                                 }
-
                                 return doc['type'] == 'text'
                                     ? MessageCard(
                                         serviceName: ' ',
@@ -199,16 +193,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                             fromID: auth.currentUser!.uid,
                                             sent: doc['sent']),
                                       );
-                                // : MessageCard(
-                                //     index: doc['sendby'],
-                                //     message: MessageModel(
-                                //         msg: doc['msg'],
-                                //         toID: '121',
-                                //         read: '121',
-                                //         type: MsgType.offer,
-                                //         fromID: '121',
-                                //         sent: '212'),
-                                //   );
+                               
                               });
                         }
                         return Container();
@@ -370,7 +355,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         setState(() => _sendFile = !_sendFile);
                       }
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Message ...',
                       hintStyle: TextStyle(color: AppColors.grey),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../OTPMethods/otpmethods.dart';
@@ -24,6 +25,7 @@ class _signup_businessState extends State<signup_business> {
   int currentindex = 1;
   bool isChecked = false;
   final businessSignupController = Get.put(signUpController());
+  final signupcontroller = Get.put(signUpController());
 
   late Timer timer;
 
@@ -94,12 +96,16 @@ class _signup_businessState extends State<signup_business> {
       );
     } else {
       currentindex += 1;
-      startTimer();
-      generateOtp();
-      print(businessSignupController.OTPCode.value);
-      // sendOTP();
-
-      Get.toNamed('/otpverification');
+      Signup(
+          email: signupcontroller.emailController.text,
+          name: signupcontroller.nameController.text,
+          password: signupcontroller.passwordController.text,
+          confirmPassword: signupcontroller.confirmPasswordController.text,
+          businessName: signupcontroller.businessNameController.text,
+          businessCategory: signupcontroller.businessCategoryController.text,
+          businessLocation: signupcontroller.businessLocationController.text,
+          CNIC: signupcontroller.cnicController.text,
+          phone: signupcontroller.phoneController.text);
     }
   }
 

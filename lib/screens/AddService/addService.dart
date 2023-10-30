@@ -87,7 +87,7 @@ class _AddServiceState extends State<AddService> {
     }
   }
 
-// delete selected image from firebase storage
+
 
   void validateAddService() async {
     if (servicecontroller.serviceName.text.isEmpty ||
@@ -124,7 +124,6 @@ class _AddServiceState extends State<AddService> {
           image1URL: servicecontroller.uploadImage[0],
           image2URL: servicecontroller.uploadImage[1],
           image3URL: servicecontroller.uploadImage[2]);
-
       Get.showSnackbar(
         const GetSnackBar(
           title: 'Service Added',
@@ -134,7 +133,6 @@ class _AddServiceState extends State<AddService> {
           icon: Icon(Icons.incomplete_circle_rounded),
         ),
       );
-
       servicecontroller.serviceDescription.clear();
       servicecontroller.noOfPerson.clear();
       servicecontroller.priceRange.clear();

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/constants/colors.dart';
+import 'package:eventually_vendor/constants/font.dart';
 import 'package:eventually_vendor/controller/firebaseController.dart';
 import 'package:eventually_vendor/controller/message_controller.dart';
 import 'package:eventually_vendor/controller/offer_btn_controller.dart';
@@ -44,6 +45,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('length');
     print(_msgController.chatUserId.length);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -125,139 +127,74 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _isSearching
-                              ? _searchlist.length
-                              : _msgController.chatUserId.length,
-                          itemBuilder: (context, index) {
-                            print(_msgController.chatUserId.length);
-                            // List<String> currentUserChat = [];
-                            // DocumentSnapshot document = snapshot.data!.docs[index];
-                            // print('id ' + document.id);
-                            // if (document.id.contains(auth.currentUser!.uid)) {
-                            //   // currentUserChat.add(document.id);
-                            //   List<String> parts =
-                            //       document.id.split(auth.currentUser!.uid);
-                            //   print(parts.length);
-                            //   if (parts[0].contains(auth.currentUser!.uid)) {
-                            //     print('if');
-                            //     currentUserChat.add(parts[1]);
-                            //     print(parts[1]);
-                            //   } else {
-                            return StreamBuilder(
-                                stream: FirebaseFirestore.instance
-                                    .collection('User')
-                                    .doc(_msgController.chatUserId[index])
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    print('has data');
-
-                                    print(snapshot.data!.data());
-
-                                    print(snapshot.data!['name']);
-                                    _list.add(ChatUser(
-                                        name: snapshot.data!['name'],
-                                        about: snapshot.data!['email'],
-                                        lastActive:
-                                            snapshot.data!['lastActive'],
-                                        id: 'weqe',
-                                        isOnline: false,
-                                        pushToken: "oo",
-                                        email: snapshot.data!['email']));
-                                    return GestureDetector(
-                                      onTap: () {
-                                        _msgController.userName.value =
-                                            snapshot.data!['name'];
-                                        _msgController.userId.value =
-                                            snapshot.data!['userId'];
-                                        String userId = auth.currentUser!.uid;
-
-                                        _msgController.chatRoomId.value =
-                                            chatroomId(userId,
-                                                snapshot.data!['userId']);
-
-                                        print(_msgController.list.length);
-
-                                        Get.to(
-                                          () => ChatScreen(
-                                            user: ChatUser(
-                                                name: snapshot.data!['name'],
-                                                about: snapshot.data!['email'],
-                                                lastActive: snapshot
-                                                    .data!['lastActive'],
-                                                id: 'sas',
-                                                isOnline: false,
-                                                pushToken: "oo",
-                                                email: snapshot.data!['email']),
-                                          ),
+                      return _msgController.chatUserId.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: _isSearching
+                                  ? _searchlist.length
+                                  : _msgController.chatUserId.length,
+                              itemBuilder: (context, index) {
+                                return StreamBuilder(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('User')
+                                        .doc(_msgController.chatUserId[index])
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        
+                                        _list.add(ChatUser(
+                                            name: snapshot.data!['name'],
+                                            about: snapshot.data!['email'],
+                                            lastActive:
+                                                snapshot.data!['lastActive'],
+                                            id: snapshot.data!['userId'],
+                                            email: snapshot.data!['email']));
+                                        return GestureDetector(
+                                          onTap: () {
+                                            _msgController.userName.value =
+                                                 snapshot.data!['name'];
+                                            _msgController.userId.value =
+                                                snapshot.data!['userId'];
+                                            String userId =
+                                                auth.currentUser!.uid;
+                                            _msgController.chatRoomId.value =
+                                                chatroomId(userId,
+                                                    snapshot.data!['userId']);
+                                            Get.to(
+                                              () => ChatScreen(
+                                                user: ChatUser(
+                                                    name:
+                                                        snapshot.data!['name'],
+                                                    about:
+                                                        snapshot.data!['email'],
+                                                    lastActive: snapshot
+                                                        .data!['lastActive'],
+                                                    id: snapshot
+                                                        .data!['userId'],
+                                                    email: snapshot
+                                                        .data!['email']),
+                                              ),
+                                            );
+                                          },
+                                          child: ChatUserCard(
+                                              user: _isSearching
+                                                  ? _searchlist[index]
+                                                  : _list[index]),
                                         );
-                                      },
-                                      child: ChatUserCard(
-                                          user: _isSearching
-                                              ? _searchlist[index]
-                                              : _list[index]),
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                });
-
-                            // List<String> ids = [doc['userId']];
-                            // print(document['hasChat']);
-                            // String abc = '';
-
-                            // print(abc);
-
-                            // FirebaseFirestore.instance
-                            //     .collection('messages')
-                            //     .doc(chatroomId.toString())
-                            //     .get();
-                            // _msgController.userName.value = document['name'];
-                            // _msgController.userId.value = document['userId'];
-                            // print(_msgController.userName.value);
-                            // print(_msgController.userId.value);
-
-                            // _list.add(ChatUser(
-                            //     name: document['name'],
-                            //     about: document['email'],
-                            //     lastActive: "1685782402018",
-                            //     id: document['userId'],
-                            //     isOnline: false,
-                            //     pushToken: "oo",
-                            //     email: document['email']));
-
-                            // return GestureDetector(
-                            //   onTap: () async {
-                            //     // _msgController.list.clear();
-                            //     // String userId = auth.currentUser!.uid;
-
-                            //     // _msgController.chatRoomId.value =
-                            //     //     chatroomId(userId, document['userId']);
-
-                            //     // print(_msgController.list.length);
-
-                            //     // Get.to(
-                            //     //   () => ChatScreen(
-                            //     //     user: ChatUser(
-                            //     //         name: document['name'],
-                            //     //         about: document['email'],
-                            //     //         lastActive: "1685782402018",
-                            //     //         id: document['userId'],
-                            //     //         isOnline: false,
-                            //     //         pushToken: "oo",
-                            //     //         email: document['email']),
-                            //     //   ),
-                            //     // );
-                            //   },
-                            //   child: Text('abc'),
-                            //   // child: ChatUserCard(
-                            //   //     user: _isSearching
-                            //   //         ? _searchlist[index]
-                            //   //         : _list[index]),
-                            // );
-                          });
+                                      } else {
+                                        return Container();
+                                      }
+                                    });
+                              })
+                          : Center(
+                              child: Text(
+                              'No Chats to Display',
+                              style: TextStyle(
+                                fontSize: Get.width * 0.04,
+                                fontFamily: AppFonts.manrope,
+                                color: AppColors.grey,
+                              ),
+                            ));
                     } else {
                       return const Center(
                           child: SpinKitFadingCircle(
@@ -265,25 +202,6 @@ class _ChatHomeScreenState extends State<ChatHomeScreen> {
                       ));
                     }
                   }),
-
-              // child: (_list.isNotEmpty)
-              //     ? ListView.builder(
-              //         // itemCount: _isSearching ? _searchlist.length : _list.length,
-              //         itemCount: _isSearching ? _searchlist.length : _list.length,
-              //         padding: EdgeInsets.symmetric(vertical: Get.height * 0.01),
-              //         physics: const BouncingScrollPhysics(),
-              //         itemBuilder: (context, index) {
-              //           return ChatUserCard(
-              //               user:
-              //                   _isSearching ? _searchlist[index] : _list[index]);
-              //         },
-              //       )
-              //     : const Center(
-              //         child: Text(
-              //           'No Connections found.',
-              //           style: TextStyle(fontSize: 20),
-              //         ),
-              //       ),
             ),
           ),
         ),

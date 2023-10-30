@@ -33,32 +33,37 @@ class _order_stats_sectionState extends State<order_stats_section> {
   Future<int> activeOrders() async {
     await FirebaseFirestore.instance.collection('Orders').get().then((value) {
       value.docs.forEach((element) async {
-        print(element.id);
         if (element.id.contains(auth.currentUser!.uid)) {
           orderController.userOrderDocId.value = element.id;
         }
       });
     });
-
-    CollectionReference activeOrderReference = await FirebaseFirestore.instance
-        .collection('Orders')
-        .doc(orderController.userOrderDocId.value)
-        .collection('bookings');
-    QuerySnapshot querySnapshot =
-        await activeOrderReference.where('status', isEqualTo: 'active').get();
-    // completedOrders();
-    return querySnapshot.size;
+    if (orderController.userOrderDocId.value.isEmpty) {
+      return 0;
+    } else {
+      CollectionReference activeOrderReference = await FirebaseFirestore
+          .instance
+          .collection('Orders')
+          .doc(orderController.userOrderDocId.value)
+          .collection('bookings');
+      QuerySnapshot querySnapshot =
+          await activeOrderReference.where('status', isEqualTo: 'active').get();
+      // completedOrders();
+      return querySnapshot.size;
+    }
   }
 
   Future<int> completedOrders() async {
     await FirebaseFirestore.instance.collection('Orders').get().then((value) {
       value.docs.forEach((element) async {
-        print(element.id);
         if (element.id.contains(auth.currentUser!.uid)) {
           orderController.userOrderDocId.value = element.id;
         }
       });
     });
+    if(orderController.userOrderDocId.value.isEmpty){
+      return 0;
+    }
     CollectionReference completeOrdersRefdrence = await FirebaseFirestore
         .instance
         .collection('Orders')
@@ -70,6 +75,7 @@ class _order_stats_sectionState extends State<order_stats_section> {
     return querySnapshot.size;
   }
 
+  @override
   void initState() {
     activeOrdersCount = activeOrders();
     completedOrdersCount = completedOrders();

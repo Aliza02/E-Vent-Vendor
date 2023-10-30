@@ -4,8 +4,8 @@ class ChatUser {
     required this.about,
     required this.lastActive,
     required this.id,
-    required this.isOnline,
-    required this.pushToken,
+    // required this.isOnline,
+    // required this.pushToken,
     required this.email,
   });
   late String name;

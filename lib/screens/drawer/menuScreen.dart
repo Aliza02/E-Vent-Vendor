@@ -11,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../constants/icons.dart';
 import '../../controller/firebaseController.dart';
@@ -23,6 +24,7 @@ class MenuScreen extends GetView<testController> {
   int currentindex = 0;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+  // final GoogleSignIn google=GoogleSignIn().signOut()
 
   final signupcontroller = Get.put(signUpController());
   final signincontroller = Get.put(signinController());
@@ -149,6 +151,8 @@ class MenuScreen extends GetView<testController> {
                   child: const CircleAvatar(
                     radius: 50.0,
                     backgroundColor: Colors.transparent,
+                    backgroundImage:
+                        AssetImage('assets/images/profileimage.png'),
                     // backgroundImage:firebasecontroller.profileImageLink.value.isNotEmpty?
                     //     NetworkImage(firebasecontroller.profileImageLink.value): Netw
                   ),
@@ -205,6 +209,7 @@ class MenuScreen extends GetView<testController> {
             const Spacer(),
             InkWell(
               onTap: () {
+                GoogleSignIn().signOut();
                 Signout();
                 signincontroller.emailController.clear();
                 signincontroller.passwordController.clear();

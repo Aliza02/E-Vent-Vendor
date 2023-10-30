@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:io';
 import 'package:eventually_vendor/bindings/all_controller_bindings.dart';
 import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/controller/signinController.dart';
@@ -40,10 +41,16 @@ void main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isViewed = prefs.getInt('onboard');
   isLoggedin = prefs.getBool('rememberMe');
-
+ HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
 }
-
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

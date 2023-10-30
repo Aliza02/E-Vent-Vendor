@@ -21,4 +21,8 @@ class OrderController extends GetxController {
   ].obs;
 // doc id of orders collection of user to retreieve order information
   RxString userOrderDocId = ''.obs;
+
+  RxList<String> unavailabilityTime = <String>[].obs;
+  RxString unavailabilityDate=''.obs;
+
 }

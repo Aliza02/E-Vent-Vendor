@@ -29,9 +29,11 @@ Future sendEmail(
     {required String email,
     required String subject,
     required String message}) async {
-  const serviceId = 'service_hyta9ug';
+  // print('send');
+  const serviceId = 'service_jj7w46j';
   const templateId = 'template_msvsubc';
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  print(url);
   final response = await http.post(
     url,
     headers: {
@@ -41,8 +43,8 @@ Future sendEmail(
     body: json.encode({
       'service_id': serviceId,
       'template_id': templateId,
-      'user_id': 'NDyE00Tk9HPhXioxy',
-      'accessToken': 'CGiWPCJQEM0VHqHeIW4y6',
+      'user_id': 'i4Gwvjef3t3JpMTZh',
+      'accessToken': 's_UDdFSxxhjZ1z_2YX3yd',
       'template_params': {
         'to_email': email,
         'user_subject': subject,
@@ -50,5 +52,6 @@ Future sendEmail(
       },
     }),
   );
+
   print(response.body);
 }

@@ -40,7 +40,7 @@ class manageAvailability extends StatelessWidget {
         }
       });
     });
-
+    if(orderController.userOrderDocId.value.isNotEmpty){
     await FirebaseFirestore.instance
         .collection('Orders')
         .doc(orderController.userOrderDocId.value)
@@ -50,18 +50,11 @@ class manageAvailability extends StatelessWidget {
         .then((value) {
       value.docs.forEach((element) {
         Timestamp firestoreTimestamp = element.data()['Date of Delivery'];
-
         DateTime dateTime = firestoreTimestamp.toDate();
-
-        // print("${dateTime.day}-${dateTime.month}-${dateTime.year}");
-        // print(pagecontroller.getDateForOrders.value);
-
         if (dateTime.day == pagecontroller.getDateForOrders.value.day &&
             dateTime.month == pagecontroller.getDateForOrders.value.month &&
             dateTime.year == pagecontroller.getDateForOrders.value.year) {
-          print('hello');
           isloading = true;
-          // pagecontroller.hasOrder.value = true;
           orderNo.add(element.data()['Order No']);
           customerName.add(element.data()['Customer Name']);
           startTime.add(element.data()['Start time']);
@@ -70,6 +63,7 @@ class manageAvailability extends StatelessWidget {
         }
       });
     });
+    }
 
     isloading = false;
 

@@ -3,6 +3,7 @@ import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
 import '../controller/signupController.dart';
@@ -197,7 +198,9 @@ class _signupState extends State<signup> {
                 InkWell(
                   onTap: () {
                     print('asda');
+                    GoogleSignIn().signOut;
                     signInWithGoogle();
+                   
                   },
                   child: googleButton(),
                 ),

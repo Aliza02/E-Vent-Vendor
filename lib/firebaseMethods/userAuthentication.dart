@@ -29,23 +29,18 @@ Future Signup(
     required String businessLocation,
     required String CNIC,
     required String phone}) async {
-  signupcontroller.successfullSignup.value = true;
   try {
     userCredentials = await auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
     user = userCredentials?.user;
-
     if (user != null) {
       user?.updateDisplayName(name);
       user?.updateEmail(email);
 
       await user?.reload();
     }
-    // await store.collection('User').doc(businessCategory).set({
-    //   'userName': ' ',
-    // });
     await FirebaseFirestore.instance
         .collection('User')
         .doc(auth.currentUser?.uid)
@@ -63,11 +58,9 @@ Future Signup(
       'Profile image': "abc",
     });
     Get.toNamed('/drawer');
-    signupcontroller.successfullSignup.value = false;
   } on FirebaseException catch (e) {
     switch (e.code) {
       case "email-already-in-use":
-        signupcontroller.NewUser.value = false;
         Get.showSnackbar(
           const GetSnackBar(
             title: 'Email Already Exists',
@@ -79,7 +72,6 @@ Future Signup(
         );
         break;
     }
-
     print(e);
   }
 }
@@ -106,13 +98,13 @@ Future Signin({
 }
 
 Future Signout() async {
-  await auth.signOut();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('rememberMe', false);
 }
 
-Future<UserCredential> signInWithGoogle() async {
+Future<void> signInWithGoogle() async {
   // Trigger the authentication flow
+
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
   // Obtain the auth details from the request
@@ -125,6 +117,7 @@ Future<UserCredential> signInWithGoogle() async {
     idToken: googleAuth?.idToken,
   );
 
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  UserCredential? user =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+  Get.toNamed('/drawer');
 }

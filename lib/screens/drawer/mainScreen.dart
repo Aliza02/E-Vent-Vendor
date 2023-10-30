@@ -49,16 +49,16 @@ class MainScreen extends GetView<testController> {
               ),
             ),
             actions: [
-              pagecontroller.currentindex.value == 0
-                  ? IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.notifications,
-                        color: AppColors.pink,
-                        size: 30,
-                      ),
-                    )
-                  : const SizedBox(),
+              // pagecontroller.currentindex.value == 0
+              //     // ? IconButton(
+              //     //     onPressed: () {},
+              //     //     icon: const Icon(
+              //     //       Icons.notifications,
+              //     //       color: AppColors.pink,
+              //     //       size: 30,
+              //     //     ),
+              //     //   )
+              //     : const SizedBox(),
               pagecontroller.currentindex.value == 4
                   ? PopupMenuButton(
                       icon: SvgPicture.asset(AppIcons.profileMenuIcon),

@@ -36,7 +36,7 @@ class _reviewState extends State<review> {
         }
       });
     });
-
+    if(orderController.userOrderDocId.value.isNotEmpty){
     await FirebaseFirestore.instance
         .collection('Orders')
         .doc(orderController.userOrderDocId.value)
@@ -52,6 +52,7 @@ class _reviewState extends State<review> {
         ratings.add(part1);
       });
     });
+    }
   }
 
   void initState() {

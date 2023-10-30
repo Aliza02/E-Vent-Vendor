@@ -30,41 +30,36 @@ class _chartState extends State<chart> {
   Future<void> getChartData() async {
     await FirebaseFirestore.instance.collection('Orders').get().then((value) {
       value.docs.forEach((element) async {
-        print(element.id);
         if (element.id.contains(auth.currentUser!.uid)) {
           orderController.userOrderDocId.value = element.id;
         }
       });
     });
-
-    await FirebaseFirestore.instance
-        .collection('Orders')
-        .doc(orderController.userOrderDocId.value)
-        .collection('bookings')
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        if (element.data()['Service Price'].toString().contains('-')) {
-          print('cart if');
-          List<String> parts =
-              element.data()['Service Price'].toString().split('-');
-          int part1 = int.parse(parts[0]);
-          int part2 = int.parse(parts[1]);
-          price = (part1 + part2) / 2;
-          data.add(chart_data(price, month));
-          print(data.length);
-          month++;
-        } else {
-          print('cart ielse');
-          double price = double.parse(element.data()['Service Price']);
-          data.add(chart_data(price, month));
-
-          // data.add(chart_data(5000, month));
-          print(data[0].price);
-          month++;
-        }
+    if (orderController.userOrderDocId.value.isNotEmpty) {
+      await FirebaseFirestore.instance
+          .collection('Orders')
+          .doc(orderController.userOrderDocId.value)
+          .collection('bookings')
+          .get()
+          .then((value) {
+        value.docs.forEach((element) {
+          if (element.data()['Service Price'].toString().contains('-')) {
+            print('cart if');
+            List<String> parts =
+                element.data()['Service Price'].toString().split('-');
+            int part1 = int.parse(parts[0]);
+            int part2 = int.parse(parts[1]);
+            price = (part1 + part2) / 2;
+            data.add(chart_data(price, month));
+            month++;
+          } else {
+            double price = double.parse(element.data()['Service Price']);
+            data.add(chart_data(price, month));
+            month++;
+          }
+        });
       });
-    });
+    }
   }
 
   @override
@@ -73,20 +68,6 @@ class _chartState extends State<chart> {
     super.initState();
     // getChartData();
     print(data.length);
-    // data = [
-    //   chart_data(15000, 1),
-    //   chart_data(17000, 2),
-    //   chart_data(15670, 3),
-    //   chart_data(25000, 4),
-    //   chart_data(25800, 5),
-    //   chart_data(30500, 6),
-    //   chart_data(31000, 7),
-    //   chart_data(25650, 8),
-    //   chart_data(34000, 9),
-    //   chart_data(39870, 10),
-    //   chart_data(42480, 11),
-    //   chart_data(40980, 12),
-    // ];
   }
 
   @override
@@ -120,7 +101,7 @@ class _chartState extends State<chart> {
           FutureBuilder(
               future: getChartData(),
               builder: (context, snapshot) {
-                return Container(
+                return SizedBox(
                   height: Get.height * 0.3,
                   child: SfCartesianChart(
                     primaryXAxis: NumericAxis(
@@ -138,10 +119,8 @@ class _chartState extends State<chart> {
                         splineType: SplineType.natural,
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFF5F4392).withOpacity(0.3),
-                            Color(0xFF5F4392).withOpacity(0.3),
-                            // Color.fromARGB(255, 192, 158, 198),
-                            // Color.fromARGB(255, 229, 187, 236),
+                            const Color(0xFF5F4392).withOpacity(0.3),
+                            const Color(0xFF5F4392).withOpacity(0.3),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,

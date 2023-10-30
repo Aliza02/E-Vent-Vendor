@@ -1,3 +1,5 @@
+import 'package:eventually_vendor/constants/colors.dart';
+import 'package:eventually_vendor/constants/font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +10,8 @@ class ComplainSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.appBar.withOpacity(0.3),
+        elevation: 0.0,
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -17,7 +21,10 @@ class ComplainSuccess extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        title: const Text('Help Center'),
+        title: const Text('Help Center',
+            style: TextStyle(
+              color: AppColors.grey,
+            )),
         centerTitle: true,
       ),
       body: Center(
@@ -37,10 +44,16 @@ class ComplainSuccess extends StatelessWidget {
                   alignment: Alignment.center,
                   width: 296,
                   height: 66,
-                  child: Text(
-                    "     Your Complaint is Successfully registered",
-                    style: TextStyle(
-                        fontSize: 24, color: Color.fromRGBO(203, 88, 90, 1)),
+                  child: Center(
+                    child: Text(
+                      "     Your Complaint is Successfully registered",
+                      style: TextStyle(
+                        fontSize: Get.width * 0.06,
+                        color: Color.fromRGBO(203, 88, 90, 1),
+                        fontFamily: AppFonts.manrope,
+                        fontWeight: AppFonts.extraBold,
+                      ),
+                    ),
                   )),
             ),
             Padding(
@@ -48,9 +61,11 @@ class ComplainSuccess extends StatelessWidget {
               child: Container(
                   width: 324,
                   height: 44,
-                  child: Text(
-                    "Your complaint will be soon entertained by \n            EventuAlly’s help desk team.",
-                    style: TextStyle(fontSize: 16),
+                  child: Center(
+                    child: Text(
+                      "Your complaint will be soon entertained by \n help desk team.",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   )),
             )
           ],

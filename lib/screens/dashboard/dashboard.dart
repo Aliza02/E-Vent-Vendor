@@ -27,21 +27,25 @@ class _dashboardState extends State<dashboard> {
   final orderController = Get.put(OrderController());
   final pagecontroller = Get.put(testController());
   void getResult() async {
-
-  
-    
     await FirebaseFirestore.instance.collection('messages').get().then((value) {
       value.docs.forEach((element) {
-        print(element.id);
-
         if (element.id.contains(auth.currentUser!.uid)) {
           List<String> parts = element.id.split(auth.currentUser!.uid);
-          if (parts[0].contains(auth.currentUser!.uid)) {
+          print(parts);
+          if (parts[0].isEmpty) {
             print('oo');
+            print(element.id);
             _msgController.chatUserId.add(parts[1]);
           } else {
             print('p');
+            print('qq');
+            // print(parts[0]);
+            // String name = parts[0];
+
             _msgController.chatUserId.add(parts[0]);
+
+            // print(_msgController.chatUserId.length);
+            // print(_msgController.chatUserId[0]);
           }
         }
       });
@@ -54,20 +58,23 @@ class _dashboardState extends State<dashboard> {
 
     docRef.get().then(
       (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
+        if (doc.data() == null) {
+        } else {
+          final data = doc.data() as Map<String, dynamic>;
+          final business = data['Business Category'];
+          firebasecontroller.userId.value = data['userId'];
+          firebasecontroller.businessCategory.value = data['Business Category'];
+          firebasecontroller.businessName.value = data['Business Name'];
+          firebasecontroller.location.value = data['Business Location'];
+          firebasecontroller.phone.value = data['Phone'];
+          firebasecontroller.userName.value = data['name'];
+          firebasecontroller.profileImageLink.value = data['Profile image'];
+          firebasecontroller.profileImageUploaded.value = true;
 
-        final business = data['Business Category'];
-        firebasecontroller.userId.value = data['userId'];
-        firebasecontroller.businessCategory.value = data['Business Category'];
-        firebasecontroller.businessName.value = data['Business Name'];
-        firebasecontroller.location.value = data['Business Location'];
-        firebasecontroller.phone.value = data['Phone'];
-        firebasecontroller.userName.value = data['name'];
-        firebasecontroller.profileImageLink.value = data['Profile image'];
-        firebasecontroller.profileImageUploaded.value = true;
+          // print(firebasecontroller.userId.value);
+          servicecontroller.currentUserBusinessCategory.value = business;
+        }
 
-        // print(firebasecontroller.userId.value);
-        servicecontroller.currentUserBusinessCategory.value = business;
         // print(business);
         // print(servicecontroller.currentUserBusinessCategory.value);
         // ...
@@ -76,7 +83,8 @@ class _dashboardState extends State<dashboard> {
     );
 
     super.initState();
-    _msgController.chatUserId.clear();
+    // _msgController.chatUserId.clear();
+
     getResult();
   }
 

@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eventually_vendor/constants/icons.dart';
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:eventually_vendor/controller/pagecontroller.dart';
+import 'package:eventually_vendor/firebaseMethods/addService.dart';
+import 'package:eventually_vendor/screens/ManageAvailability/makeOtherDayUnavailable.dart';
 import 'package:eventually_vendor/widget/button.dart';
 import 'package:eventually_vendor/widget/manageAvailability/text.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +41,7 @@ class _makeUnavailableState extends State<makeUnavailable> {
       11: 'Nov',
       12: 'Dec',
     };
+    final orderController = Get.put(OrderController());
 
     return SafeArea(
         child: Scaffold(
@@ -81,6 +86,8 @@ class _makeUnavailableState extends State<makeUnavailable> {
                     );
                     if (date != null) {
                       pageController.date.value = date;
+                      orderController.unavailabilityDate.value =
+                          "${pageController.date.value.day}-${pageController.date.value.month}-${pageController.date.value.year}";
                     }
                   },
                   child: SvgPicture.asset(AppIcons.calendar),
@@ -113,9 +120,20 @@ class _makeUnavailableState extends State<makeUnavailable> {
                               child: const Text('No'),
                             ),
                             TextButton(
-                              onPressed: () {
-                                Get.back();
-                                Get.back();
+                              onPressed: () async {
+                                await FirebaseFirestore.instance
+                                    .collection('User')
+                                    .doc(auth.currentUser!.uid)
+                                    .set({
+                                  'unavailable': "true",
+                                  'unavailable Date':
+                                      orderController.unavailabilityDate.value,
+                                  'unavailable start time':
+                                      orderController.unavailabilityTime[0],
+                                  'unavailable end time':
+                                      orderController.unavailabilityTime[1],
+                                }, SetOptions(merge: true));
+                                Get.to(() => makeOtherDayUnavailable());
                               },
                               child: const Text('Yes'),
                             ),

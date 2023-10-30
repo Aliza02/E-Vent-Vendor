@@ -1,8 +1,10 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/colors.dart';
 import '../constants/font.dart';
@@ -55,8 +57,6 @@ class _loginState extends State<login> {
       );
     } else {
       _login();
-
-      // logincontroller.
     }
   }
 
@@ -230,7 +230,14 @@ class _loginState extends State<login> {
                     ),
                   ],
                 ),
-                const googleButton(),
+                InkWell(
+                    onTap: () {
+                      GoogleSignIn().signOut;
+                      signInWithGoogle();
+                      
+                      
+                    },
+                    child: const googleButton()),
                 SizedBox(
                   height: Get.height * 0.04,
                 ),

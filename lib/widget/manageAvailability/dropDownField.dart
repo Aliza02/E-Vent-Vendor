@@ -1,3 +1,4 @@
+import 'package:eventually_vendor/controller/order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -46,6 +47,7 @@ class _dropdownFieldState extends State<dropdownField> {
   ];
   var selected;
   TextEditingController timmingsController = TextEditingController();
+  final orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -87,6 +89,7 @@ class _dropdownFieldState extends State<dropdownField> {
           onChanged: (val) {
             selected = val as String;
             timmingsController.text = selected;
+            orderController.unavailabilityTime.add(selected);
           }),
     );
   }
