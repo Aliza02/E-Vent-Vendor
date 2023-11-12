@@ -96,16 +96,19 @@ class _signup_businessState extends State<signup_business> {
       );
     } else {
       currentindex += 1;
-      Signup(
-          email: signupcontroller.emailController.text,
-          name: signupcontroller.nameController.text,
-          password: signupcontroller.passwordController.text,
-          confirmPassword: signupcontroller.confirmPasswordController.text,
-          businessName: signupcontroller.businessNameController.text,
-          businessCategory: signupcontroller.businessCategoryController.text,
-          businessLocation: signupcontroller.businessLocationController.text,
-          CNIC: signupcontroller.cnicController.text,
-          phone: signupcontroller.phoneController.text);
+      startTimer();
+      // generateOtp();
+      sendOTP();
+      // Signup(
+      //     email: signupcontroller.emailController.text,
+      //     name: signupcontroller.nameController.text,
+      //     password: signupcontroller.passwordController.text,
+      //     confirmPassword: signupcontroller.confirmPasswordController.text,
+      //     businessName: signupcontroller.businessNameController.text,
+      //     businessCategory: signupcontroller.businessCategoryController.text,
+      //     businessLocation: signupcontroller.businessLocationController.text,
+      //     CNIC: signupcontroller.cnicController.text,
+      //     phone: signupcontroller.phoneController.text);
     }
   }
 

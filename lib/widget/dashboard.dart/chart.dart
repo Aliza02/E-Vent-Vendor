@@ -28,38 +28,41 @@ class _chartState extends State<chart> {
   double price = 0;
 
   Future<void> getChartData() async {
-    await FirebaseFirestore.instance.collection('Orders').get().then((value) {
-      value.docs.forEach((element) async {
-        if (element.id.contains(auth.currentUser!.uid)) {
-          orderController.userOrderDocId.value = element.id;
-        }
-      });
-    });
-    if (orderController.userOrderDocId.value.isNotEmpty) {
-      await FirebaseFirestore.instance
-          .collection('Orders')
-          .doc(orderController.userOrderDocId.value)
-          .collection('bookings')
-          .get()
-          .then((value) {
-        value.docs.forEach((element) {
-          if (element.data()['Service Price'].toString().contains('-')) {
-            print('cart if');
-            List<String> parts =
-                element.data()['Service Price'].toString().split('-');
-            int part1 = int.parse(parts[0]);
-            int part2 = int.parse(parts[1]);
-            price = (part1 + part2) / 2;
-            data.add(chart_data(price, month));
-            month++;
-          } else {
-            double price = double.parse(element.data()['Service Price']);
-            data.add(chart_data(price, month));
-            month++;
-          }
-        });
-      });
-    }
+    // await FirebaseFirestore.instance.collection('Orders').get().then((value) {
+    //   value.docs.forEach((element) async {
+    //     if (element.id.contains(auth.currentUser!.uid)) {
+    //       orderController.userOrderDocId.value = element.id;
+    //       print(element.id);
+    //     }
+    //   });
+    // });
+    // if (orderController.userOrderDocId.value.isNotEmpty) {
+    //   await FirebaseFirestore.instance
+    //       .collection('Orders')
+    //       .doc(orderController.userOrderDocId.value)
+    //       .collection('bookings')
+    //       .get()
+    //       .then((value) {
+    //     value.docs.forEach((element) {
+    //       if (element.data()['Service Price'].toString().contains('-')) {
+    //         print('cart if');
+    //         List<String> parts =
+    //             element.data()['Service Price'].toString().split('-');
+    //         int part1 = int.parse(parts[0]);
+    //         int part2 = int.parse(parts[1]);
+    //         price = (part1 + part2) / 2;
+    //         print(price);
+    //         data.add(chart_data(price, month));
+    //         month++;
+    //       } else {
+    //         double price = double.parse(element.data()['Service Price']);
+    //         data.add(chart_data(price, month));
+    //         print(price);
+    //         month++;
+    //       }
+    //     });
+    //   });
+    // }
   }
 
   @override
@@ -68,6 +71,20 @@ class _chartState extends State<chart> {
     super.initState();
     // getChartData();
     print(data.length);
+    data = [
+      chart_data(1500, 1),
+      chart_data(1700, 2),
+      chart_data(1567, 3),
+      chart_data(2500, 4),
+      chart_data(2580, 5),
+      chart_data(3050, 6),
+      chart_data(3100, 7),
+      chart_data(2565, 8),
+      chart_data(3400, 9),
+      chart_data(3987, 10),
+      chart_data(4248, 11),
+      chart_data(4098, 12),
+    ];
   }
 
   @override

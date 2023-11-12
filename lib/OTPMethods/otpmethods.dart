@@ -1,3 +1,4 @@
+import 'package:emailjs/emailjs.dart';
 import 'package:get/get.dart';
 import 'package:otp/otp.dart';
 import 'package:http/http.dart' as http;
@@ -19,11 +20,37 @@ void sendOTP() {
   generateOtp();
 
   sendEmail(
-    email: businessSignupController.emailController.text,
-    message: businessSignupController.OTPCode.value,
-    subject: 'OTP Verification',
+    
+  email:   businessSignupController.emailController.text,
+     message:businessSignupController.OTPCode.value,
+     subject:'OTP Verification',
   );
 }
+  void _sendEmail( String email,
+    String subject,
+     String message) async {
+    try {
+      await EmailJS.send(
+        'service_jj7w46j',
+        'template_msvsubc',
+        {
+           'to_email': email,
+        'user_subject': subject,
+        'message': message,
+        },
+        const Options(
+          publicKey: 'i4Gwvjef3t3JpMTZh',
+          privateKey: 's_UDdFSxxhjZ1z_2YX3yd',
+        ),
+      );
+      print('SUCCESS!');
+    } catch (error) {
+      if (error is EmailJSResponseStatus) {
+        print('ERROR... ${error.status}: ${error.text}');
+      }
+      print(error.toString());
+    }
+  }
 
 Future sendEmail(
     {required String email,

@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:eventually_vendor/OTPMethods/otpmethods.dart';
 import 'package:eventually_vendor/firebaseMethods/userAuthentication.dart';
 import 'package:eventually_vendor/widget/logo.dart';
 import 'package:flutter/material.dart';
@@ -159,6 +160,7 @@ class _signupState extends State<signup> {
                     label: 'Next',
                     onpressed: () {
                       validation();
+                      // sendOTP();
                     },
                     borderRadius: 20,
                   ),
@@ -200,7 +202,6 @@ class _signupState extends State<signup> {
                     print('asda');
                     GoogleSignIn().signOut;
                     signInWithGoogle();
-                   
                   },
                   child: googleButton(),
                 ),
